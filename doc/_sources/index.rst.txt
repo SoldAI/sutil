@@ -1,0 +1,26 @@
+.. sutil documentation master file, created by
+   sphinx-quickstart on Fri Dec  6 18:01:40 2019.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Welcome to sutil's documentation!
+=================================
+SoldAI utils (sutil) is a set of tools to help ML scientist and programmers to build information systems for classification. It let's you define your very own handcrafted models, embed sklearn models or create keras and pytorch models and test it faster. It also includes a set of utilities to work with text perform cleansing and pre processing.
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+   
+   usage/installation
+   usage/quickstart
+   base/base
+   models/models
+   neuralnet/neuralnet
+   
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

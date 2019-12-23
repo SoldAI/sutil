@@ -1,0 +1,91 @@
+Base package
+===============
+
+Base package includes classes that help you make different basic tasks related to ML models and analytics
+
+
+Classes
+===============
+.. py:class:: Coin
+
+        The *Coin* class let's you define a charged coin with some probability value bwtween 0 and 1
+        
+        .. py:attribute:: probability
+
+        It's a float value between 0 and 1 which indicates the probability of the positive event. For ecample a Coin with probability 0.3 will return positive aproximately 30 times fif we run the toss metods 100 tosses.
+        
+        .. py:method:: __init__(probability)
+
+        Instantiates a Coin object with a given probability
+        
+        .. py:method:: toss()
+
+        Return True or False, true if the event were evaluated positively, False otherwise
+        
+        Example:
+        
+        .. code-block:: python
+        
+            from sutil.base.Coin import Coin
+            c = Coin(0.3)
+            positives = 0
+            for i in range(100):
+                if c.toss():
+                    positives += 1
+            print(positives)
+            
+        This example should print a number close to 30
+        
+.. py:class:: Dataset
+
+    The *Dataset* class is a simple abstraction of a dataset multidimensional, wich can be fed to a model, it includes method to normalize the data, add bias plot, and split the data in train, test and validation datasets. Includes functionality to normalize the feature add Bias term to the data and sample a number of examples. It comes handy to load dataset that are expressed as a csv of separeted features and have the class as the last one.
+    
+    .. py:attribute:: X
+
+        It's a float numpy array that represent the fearures in the dataset
+        
+    .. py:attribute:: y
+
+        It's a float numpy array that represents the labels of the examples
+    
+    .. py:attribute:: n
+
+        Number of features on each example of the dataset
+    
+    .. py:attribute:: m
+
+        Number of examples in the dataset. Is synonym of size attribute
+    
+    .. py:attribute:: shape
+
+        Shape of the dataset
+        
+    .. py:method:: sample(percentage)
+
+        Return a Dataset using the percentage of the original dataset to generate the new one
+        
+    .. py:method:: split(train, validation)
+
+        Return three datasets including the train, validation and test using the defined percentages
+        
+    Example:
+        
+    .. code-block:: python
+        
+            from sutil.base.Dataset import Dataset
+            
+            datafile = './sutil/datasets/ex2data1.txt'
+            d = Dataset.fromDataFile(datafile, ',')
+            print(d.size)
+            
+            sample = d.sample(0.3)
+            print(sample.size)        
+            sample.save("modelo_01")
+            train, validation, test = d.split(train = 0.8, validation = 0.2)
+            print(train.size)
+            print(validation.size)
+            print(test.size)
+            
+    This example depicts how to loaf the dataset, make the split in train, validation and test datasets, and sample a 30 percent of the data to create a minor dataset.
+
+

@@ -1,0 +1,3 @@
+Neuralnet
+=========
+Neuralnet is a package that include classes to manage very simple neural netowrks

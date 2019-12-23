@@ -1,0 +1,27 @@
+Base package
+===============
+
+Base package includes classes that help you make different basic tasks related to ML models and analytics
+
+
+Classes
+===============
+.. py:class:: Coin
+
+        The *Coin* class let's you define a charged coin with some probability value bwtween 0 and 1
+        
+        .. py:attribute:: probability
+
+        It's a float value between 0 and 1 which indicates the probability of the positive event. For ecample a Coin with probability 0.3 will return positive aproximately 30 times fif we run the toss metods 100 tosses.
+        
+        .. py:method:: __init__(probability)
+
+        Instantiates a Coin object with a given probability
+        
+        .. py:method:: toss()
+
+        Return True or False, true if the event were evaluated positively, False otherwise
+
+.. py:class:: Dataset
+
+Thr *Dataset* class is a simple abstraction of a dataset multidimensional, wich can be fed to a model, it includes method to normalize the data, add bias plot, and split the data in train, test and validation datasets

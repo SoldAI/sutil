@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Base package &#8212; sutil 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Models package" href="../models/models.html" />
+    <link rel="prev" title="Quick Start" href="../usage/quickstart.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../models/models.html" title="Models package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../usage/quickstart.html" title="Quick Start"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">sutil 0.0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="base-package">
+<h1>Base package<a class="headerlink" href="#base-package" title="Permalink to this headline">¶</a></h1>
+<p>Base package includes classes that help you make different basic tasks related to ML models and analytics</p>
+</div>
+<div class="section" id="classes">
+<h1>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="Coin">
+<em class="property">class </em><code class="descname">Coin</code><a class="headerlink" href="#Coin" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <em>Coin</em> class let’s you define a charged coin with some probability value bwtween 0 and 1</p>
+<dl class="attribute">
+<dt id="Coin.probability">
+<code class="descname">probability</code><a class="headerlink" href="#Coin.probability" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>It’s a float value between 0 and 1 which indicates the probability of the positive event. For ecample a Coin with probability 0.3 will return positive aproximately 30 times fif we run the toss metods 100 tosses.</p>
+<dl class="method">
+<dt id="Coin.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>probability</em><span class="sig-paren">)</span><a class="headerlink" href="#Coin.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Instantiates a Coin object with a given probability</p>
+<dl class="method">
+<dt id="Coin.toss">
+<code class="descname">toss</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Coin.toss" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Return True or False, true if the event were evaluated positively, False otherwise</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="Dataset">
+<em class="property">class </em><code class="descname">Dataset</code><a class="headerlink" href="#Dataset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Thr <em>Dataset</em> class is a simple abstraction of a dataset multidimensional, wich can be fed to a model, it includes method to normalize the data, add bias plot, and split the data in train, test and validation datasets</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Base package</a></li>
+<li><a class="reference internal" href="#classes">Classes</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../usage/quickstart.html"
+                        title="previous chapter">Quick Start</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../models/models.html"
+                        title="next chapter">Models package</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/base/base.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../models/models.html" title="Models package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../usage/quickstart.html" title="Quick Start"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">sutil 0.0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, SoldAI.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>
