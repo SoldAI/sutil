@@ -129,3 +129,33 @@ experiment.addModel(nn, name = 'Sutil Neural Network')
 # Run the experiment
 experiment.run(plot = True)
 ```
+
+# Text utilities
+Sutil includes text utilities to process and transform text for classification
+
+## PreProcessor
+Pre processor class let's you implement text pre processinf functions to transform the data. It wraps nltk methods and uses it's own methods toperform:
+* Case normalization
+* Noise removal
+* Stemming
+* Leammatizing
+* Pattern text normalization
+```python
+from sutil.text.PreProcessor import PreProcessor
+
+string = "La Gata maullaba en la noche $'@|··~½¬½¬{{[[]}aqAs   qasdas 1552638"
+p = PreProcessor.standard()
+print(p.preProcess(string))
+
+patterns = [("\d+", "NUMBER")]
+c = [("case", "lower"), ("denoise", "spanish"), ("stopwords", "spanish"), 
+     ("stem", "spanish"), ("lemmatize", "spanish"), ("normalize", patterns)]
+p2 = PreProcessor(c)
+print(p2.preProcess(string))
+
+
+c = [("case", "lower"), ("denoise", "spanish"), ("stem", "spanish"), 
+     ("normalize", patterns)]
+p3 = PreProcessor(c)
+print(p3.preProcess(string))
+```
