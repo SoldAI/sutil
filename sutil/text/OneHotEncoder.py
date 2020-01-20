@@ -14,14 +14,14 @@ class OneHotEncoder:
             if t in self.dictionary.keys():
                 vector[self.dictionary[t]] = 1
         return vector
-    
+
     def encodePhrase2(self, phrase):
         vector = np.zeros(len(self.dictionary))
         for t in self.tokenizer.getTokens(phrase):
             if t in self.dictionary.keys():
                 vector[self.dictionary[t]] += 1
         return vector
-    
+
     def decodeVector(self, vector):
         inv_dict = {v: k for k, v in self.dictionary.items()}
         out = ""
