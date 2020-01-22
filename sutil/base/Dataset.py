@@ -9,7 +9,7 @@ class Dataset(object):
 
     def __init__(self, X, y, xlabel='x', ylabel="y", legend=["y=1", "y=0"], title="Graph"):
         self.initialize(X, y, xlabel, ylabel, legend, title)
-    
+
     @classmethod
     def fromDataFile(cls, filename, delimiter):
         data = np.loadtxt(filename, delimiter=delimiter)
@@ -18,6 +18,9 @@ class Dataset(object):
         return cls(X, y)
 
     def initialize(self, X, y, xlabel='x', ylabel="y", legend=["y=1", "y=0"], title="Graph"):
+        self.setData(X, y, xlabel, ylabel, legend, title)
+
+    def setData(self, X, y, xlabel='x', ylabel="y", legend=["y=1", "y=0"], title="Graph"):
         self.X = X
         self.y = y
         self.shape = (self.X.shape, self.y.shape)
@@ -48,11 +51,11 @@ class Dataset(object):
         ax.scatter(self.X[neg, 0], self.X[neg, 1], marker='x', c='r')
         ax.set(xlabel=self.xlabel, ylabel=self.ylabel, title=self.title)
         ax.legend(self.legend)
-        
+
         if file:
             plt.savefig(file + '.png')
         plt.show()
-            
+
     def plotDataRegression(self, file=None):
         fig, ax = self.getPlotRegression()
         if file:
@@ -98,17 +101,17 @@ class Dataset(object):
         self.mu = mu
         self.sigma = sigma
         return X_norm, mu, sigma
-    
+
     def isNormalized(self):
         return (self.mu is not None and self.sigma is not None)
-    
+
     def normalizeExample(self, example):
         assert(self.isNormalized() == True, 'The normalization process has not been done')
-        x_norm = example;
+        x_norm = example
         for i in range(len(x_norm)):
             x_norm[:, i] = (self.x_norm[:, i] - self.mu[i]) / self.sigma[i]
         return x_norm
-    
+
     #Returns the test, validation and test datasets
     def split(self, train = 0.8, validation = 0.2):
         #Split train and test
@@ -125,7 +128,7 @@ class Dataset(object):
         filename += ".pickle"
         file = open(filename, 'wb')
         pickle.dump(self, file)
-        
+
     def sample(self, percentage = None, examples = None):
         if not percentage:
             if not examples:
@@ -134,17 +137,17 @@ class Dataset(object):
                 percentage = max(0, examples/self.m)
         X_train, X_test, Y_train, Y_test = train_test_split(self.X, self.y, test_size = percentage)
         return Dataset(X_test, Y_test)
-    
+
     @staticmethod
     def load(filename):
         file = open(filename + '.pickle', 'rb')
         return pickle.load(file)
-    
+
     def getShape(self):
         return self.X.shape, self.y.shape
-    
+
     def getBiasedX(self):
         return np.hstack((np.ones((len(self.X), 1)), self.X))
-    
+
     def clone(self, X, y):
         return  Dataset(X, y, self.xlabel, self.ylabel, self.legend, self.title)

@@ -20,3 +20,6 @@ class PhraseTokenizer():
 
     def getTokens(self, text, delimiter = " "):
         return self.cleanString(text).split(delimiter)
+
+    def tokenize(self, text):
+        return self.getTokens(text)

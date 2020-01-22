@@ -26,21 +26,19 @@ class PreProcessor:
                        "stopwords": "stopWordsRemoval",
                        "stem": "stem",
                        "lemmatize": "lemmatize",
-                       "normalize":"normalize"}
+                       "normalize":"normalize",
+                       "callable":"callable"}
         for entry in configurations:
         	self.actions.append((m2m[entry[0]], entry[1]))
         self.lemmatizer = WordNetLemmatizer()
         self.janitor = StringJanitor.spanish()
-        #self.janitor.space_char = " "
         self.stemmer = PorterStemmer()
 
     def preProcess(self, string):
         result = string
         for a in self.actions:
-            print("Performing " + a[0])
             method = getattr(self, a[0])
             result = method(a[1], result)
-            print(result)
         return result
 
     def stopWordsRemoval(self, idiom, string):
@@ -66,6 +64,15 @@ class PreProcessor:
         words = string.split(" ")
         lemmatized_words = [self.lemmatizer.lemmatize(word=word, pos='v') for word in words]
         return " ".join(lemmatized_words)
+
+    def callable(self, function, string):
+        return function(string)
+
+    def batchPreProcess(self, texts):
+        cleaned = []
+        for t in texts:
+            cleaned.append(self.preProcess(t))
+        return cleaned
 
     #Simple text normalization using regular expressions
     def normalize(self, patterns, string):
