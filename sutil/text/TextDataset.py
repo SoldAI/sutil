@@ -8,20 +8,13 @@ import pandas as pd
 class TextDataset(Dataset):
 
     @classmethod
-    def fromDataFile(cls, filename, delimiter):
-        data = np.loadtxt(filename, delimiter=delimiter)
-        X = data[:, 0:-1]
-        y = data[:, -1]
-        return cls(X, y)
-
-    @classmethod
     def standard(cls, filename, delimiter):
         preprocessor = PreProcessor.standard()
         tokenizer = PhraseTokenizer()
         vectorizer = OneHotVectorizer({}, tokenizer)
         df = pd.read_csv(filename)
-        X = df.columns[0]
-        y = df.columns[-1]
+        X = df[df.columns[0]]
+        y = df[df.columns[-1]].values
         return cls(X, y, vectorizer, preprocessor)
 
     def __init__(self, X, y, vectorizer = None, preprocessor = None, **kwargs):
@@ -33,16 +26,15 @@ class TextDataset(Dataset):
             self.preprocessor = preprocessor 
         else: 
             self.preprocessor = PreProcessor.standard()
+        print(X)
         self.initialize(X, y, **kwargs)
 
     def initialize(self, texts, y, **kwargs):
         self.texts = texts
         processed = self.preprocessor.batchPreProcess(texts)
         self.vectorizer.initialize(processed)
-        self.vectorize(texts)
-        self.setData(self.X, y, kwargs)
-
-    def vectorize(self, texts):
-        self.X = self.vectorizer.textToMatrix(texts)
-        self.n = self.X.shape[1]
+        X = self.vectorizer.textToMatrix(texts)
+        print(X)
+        print(y)
+        self.setData(X, y, kwargs)
         self.X, self.mu, self.sigma = self.normalizeFeatures()

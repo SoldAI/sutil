@@ -96,7 +96,10 @@ class Dataset(object):
         for i in range(self.n):
             mu[i] = np.mean(self.X[:, i])
             sigma[i] = np.std(self.X[:, i])
-            X_norm[:, i] = (self.X[:, i] - mu[i]) / sigma[i]
+            if sigma[i] == 0:
+                X_norm[:, i] = (self.X[:, i] - mu[i])
+            else:
+                X_norm[:, i] = (self.X[:, i] - mu[i]) / sigma[i]
         self.X = X_norm
         self.mu = mu
         self.sigma = sigma
@@ -109,7 +112,10 @@ class Dataset(object):
         assert(self.isNormalized() == True, 'The normalization process has not been done')
         x_norm = example
         for i in range(len(x_norm)):
-            x_norm[:, i] = (self.x_norm[:, i] - self.mu[i]) / self.sigma[i]
+            if self.sigma[i] == 0:
+                x_norm[:, i] = (self.x_norm[:, i] - self.mu[i]) 
+            else:
+                x_norm[:, i] = (self.x_norm[:, i] - self.mu[i]) / self.sigma[i]
         return x_norm
 
     #Returns the test, validation and test datasets
