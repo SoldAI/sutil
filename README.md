@@ -159,3 +159,118 @@ c = [("case", "lower"), ("denoise", "spanish"), ("stem", "spanish"),
 p3 = PreProcessor(c)
 print(p3.preProcess(string))
 ```
+
+## PhraseTokenizer
+PhraseTokenizer lets you split the tokens of a phrase given a delimiter char. There's also the **GramTokenizer** class whihc lets you split words by fixed amounts of characers.
+```python
+from sutil.text.GramTokenizer import GramTokenizer
+from sutil.text.PhraseTokenizer import PhraseTokenizer
+
+string = "Hi I'm a really helpful string"
+t = PhraseTokenizer()
+print(t.tokenize(string))
+
+t2 = GramTokenizer()
+print(t2.tokenize(string))
+```
+
+## TextVectorizer
+TextVectorizer class is an abstraction of methods to vectorize text and transform vectors to texts. Sutil implements, **OneHotVectorizer**, **TFIDFVectorizer**, **CountVectorizer**. 
+```python
+import pandas as pd
+from sutil.text.TFIDFVectorizer import TFIDFVectorizer
+from sutil.text.GramTokenizer import GramTokenizer
+from sutil.text.PreProcessor import PreProcessor
+from nltk.tokenize import TweetTokenizer
+
+# Load the data
+dir_data = "./sutil/datasets/"
+df = pd.read_csv(dir_data + 'tweets.csv')
+
+# Clean the data
+patterns = [("\d+", "NUMBER")]
+c = [("case", "lower"), ("denoise", "english"), ("stopwords", "english"), ("normalize", patterns)]
+p2 = PreProcessor(c)
+df['clean_tweet'] = df.tweet.apply(p2.preProcess)
+
+vectorizer = TFIDFVectorizer({}, TweetTokenizer())
+vectorizer.initialize(df.clean_tweet)
+print(vectorizer.dictionary.head())
+
+
+vectorizer2 = TFIDFVectorizer({}, GramTokenizer())
+vectorizer2.initialize(df.clean_tweet)
+print(vectorizer2.dictionary.head())
+
+vector = vectorizer.encodePhrase(df.clean_tweet[0])
+print(vectorizer.getValues()[0])
+print(vector)
+
+vector2 = vectorizer2.encodePhrase(df.clean_tweet[0])
+print(vectorizer2.getValues()[0])
+print(vector2)
+
+print(df.clean_tweet[0])
+print(vectorizer.decodeVector(vector))
+print("*"*50)
+print(vectorizer2.decodeVector(vector2))
+```
+## TextDataSet
+**TextDataSet** class abstracts a DataSet made by texts, with includes a vectorizer and a pre processor to pre process the text and transform it from text to vector and from vector to text:
+
+```python
+from sutil.text.TextDataset import TextDataset
+from sutil.text.GramTokenizer import GramTokenizer
+from sutil.text.TFIDFVectorizer import TFIDFVectorizer
+from sutil.text.PhraseTokenizer import PhraseTokenizer
+from sutil.text.PreProcessor import PreProcessor
+
+# Load the data in the standard way
+filename = "./sutil/datasets/tweets.csv"
+t = TextDataset.standard(filename, ",")
+print(t.texts)
+print(t.X)
+print(t.shape)
+print(t.X[0])
+print(t.vectorizer.index)
+print(t.vectorizer.encodePhrase("united oh"))
+
+x = input("Presione enter para continuar...")
+# Creaate the dataset witha custom vectorizer and pre processor
+patterns = [("\d+", "NUMBER")]
+c = [("case", "lower"), ("denoise", "spanish"), ("stopwords", "spanish"), ("normalize", patterns)]
+preprocessor = PreProcessor(c)
+vectorizer = TFIDFVectorizer({}, GramTokenizer())
+t2 = TextDataset.setvectorizer(filename, vectorizer, preprocessor)
+print(t2.texts)
+print(t2.X)
+print(t2.shape)
+print(t2.X[0])
+vector = t2.encodePhrase("United oh the")
+i = 0
+for v in vector:
+	if v != 0:
+		print(v)
+		print(i)
+	i += 1
+print(t2.vectorizer.decodeVector(vector))
+
+x = input("Presione enter para continuar...")
+patterns = [("\d+", "NUMBER")]
+c = [("case", "lower"), ("denoise", "spanish"), ("stopwords", "english"), ("normalize", patterns)]
+pre2 = PreProcessor(c)
+vectorizer = TFIDFVectorizer({}, PhraseTokenizer())
+t3 = TextDataset.setvectorizer(filename, vectorizer, pre2)
+print(t3.texts)
+print(t3.X)
+print(t3.shape)
+print(t3.X[0])
+vector = t3.encodePhrase("United oh the")
+i = 0
+for v in vector:
+	if v != 0:
+		print(v)
+		print(i)
+	i += 1
+print(t3.decodeVector(vector))
+```
