@@ -21,6 +21,7 @@ class TextVectorizer():
                 else:
                     self.dictionary[token] = 1
                     self.index[token] = len(self.index)
+        self.entries = len(self.dictionary)
 
     def encodePhrase(self, phrase):
         vector = np.zeros(len(self.dictionary))
@@ -38,10 +39,12 @@ class TextVectorizer():
         return out
 
     def textToMatrix(self, texts):
-        if self.entries < 1:
-            return np.array([0])
-
+        print("Texts: " + str(len(texts)))
+        print("Dictionary: " + str(len(self.dictionary)))
         matrix = np.zeros((len(texts), self.entries))
+        if len(self.dictionary) < 1:
+            return np.array([0])
+            
         i = 0
         for t in texts:
             matrix[i:] = self.encodePhrase(t)

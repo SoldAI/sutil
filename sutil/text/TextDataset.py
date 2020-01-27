@@ -17,6 +17,13 @@ class TextDataset(Dataset):
         y = df[df.columns[-1]].values
         return cls(X, y, vectorizer, preprocessor)
 
+    @classmethod
+    def setvectorizer(cls, filename, vectorizer = None, preprocessor = None, **kwargs):
+        df = pd.read_csv(filename)
+        X = df[df.columns[0]]
+        y = df[df.columns[-1]].values
+        return cls(X, y, vectorizer, preprocessor)
+
     def __init__(self, X, y, vectorizer = None, preprocessor = None, **kwargs):
         if vectorizer:
             self.vectorizer = vectorizer 
@@ -27,7 +34,7 @@ class TextDataset(Dataset):
         else: 
             self.preprocessor = PreProcessor.standard()
         print(X)
-        self.initialize(X, y, **kwargs)
+        self.initialize(X, y)
 
     def initialize(self, texts, y, **kwargs):
         self.texts = texts
@@ -36,5 +43,12 @@ class TextDataset(Dataset):
         X = self.vectorizer.textToMatrix(texts)
         print(X)
         print(y)
-        self.setData(X, y, kwargs)
+        self.setData(X, y)
         self.X, self.mu, self.sigma = self.normalizeFeatures()
+
+    def encodePhrase(self, phrase):
+        phrase = self.preprocessor.preProcess(phrase)
+        return self.vectorizer.encodePhrase(phrase)
+
+    def decodeVector(self, vector):
+        return self.vectorizer.decodeVector(vector)

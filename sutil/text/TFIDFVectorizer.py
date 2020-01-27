@@ -23,6 +23,7 @@ class TFIDFVectorizer(TextVectorizer):
         dense = vectors.todense()
         denselist = dense.tolist()
         self.dictionary = pd.DataFrame(denselist, columns=feature_names)
+        self.entries = len(self.dictionary.columns)
 
     def encodePhrase(self, phrase):
          tokens = self.tokenizer.tokenize(phrase)
