@@ -16,6 +16,8 @@ SoldAI utils (sutil) is a set of tools to help ML scientist and programmers to b
    base/base
    models/models
    neuralnet/neuralnet
+   metrics/metrics
+   text/text
    
 
 Indices and tables

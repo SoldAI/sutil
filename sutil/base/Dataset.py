@@ -4,6 +4,7 @@ import pickle
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 import datetime
+import random
 
 class Dataset(object):
 
@@ -17,10 +18,15 @@ class Dataset(object):
         y = data[:, -1]
         return cls(X, y)
 
-    def initialize(self, X, y, xlabel='x', ylabel="y", legend=["y=1", "y=0"], title="Graph"):
+    @staticmethod
+    def load(filename):
+        file = open(filename + '.pickle', 'rb')
+        return pickle.load(file)
+
+    def initialize(self, X, y, xlabel='x', ylabel="y", legend=None, title="Graph"):
         self.setData(X, y, xlabel, ylabel, legend, title)
 
-    def setData(self, X, y, xlabel='x', ylabel="y", legend=["y=1", "y=0"], title="Graph"):
+    def setData(self, X, y, xlabel='x', ylabel="y", legend=None, title="Graph"):
         self.X = X
         self.y = y
         self.shape = (self.X.shape, self.y.shape)
@@ -30,11 +36,16 @@ class Dataset(object):
         self.xlabel = xlabel
         self.ylabel = ylabel
         self.xsize = len(X[0])
-        self.ysize = len(y)
+        self.ysize = len(y[0])
         self.title = title
-        self.legend = legend
         list_set = {*self.y.flatten().tolist()}
-        self.labels = (list(list_set)) 
+        self.labels = (list(list_set))
+        if not legend:
+            self.legend = []
+            for l in self.labels:
+                self.legend.append("y=" + str(l))
+        else:
+            self.legend = legend
 
     def loadData(self, datafile, delimiter):
         data = np.loadtxt(datafile, delimiter)
@@ -43,18 +54,38 @@ class Dataset(object):
         self.initialize(self.X, self.y)
 
     def plotData(self, file=None):
-        #load the dataset
-        pos = np.where(self.y == 1)
-        neg = np.where(self.y == 0)
+        #The plotted data is assuming 2 dimenssions, check what happened if it's more how to make the projection into 2 dimensions
+        classes = self.labels
         fig, ax = plt.subplots()
-        ax.scatter(self.X[pos, 0], self.X[pos, 1], marker='o', c='b')
-        ax.scatter(self.X[neg, 0], self.X[neg, 1], marker='x', c='r')
+        identifiers = {}
+        used = []
+        colors = ['b', 'g', 'r', 'c', 'm', 'y', 'k', 'w']
+        markers = ['o', 'x', 'v', '^', 's', 'p', 'P', '*', 'h', '1', '2', '3', '4']
+        for c in classes:
+            if len(used) == len(colors) * len(markers):
+                used = []
+            assigned = False
+            c_index, m_index = 0, 0
+            while not assigned:
+                c_index, m_index = self.getRandomIdentifier(colors, markers)
+                string = colors[c_index] + markers[m_index]
+                if string not in used:
+                    used.append(string)
+                    assigned = True
+            index = np.where(self.y == c)
+            identifiers[c] = {'color': colors[c_index], 'marker': markers[m_index], "legend": "y=" + str(c)}
+            ax.scatter(self.X[index, 0], self.X[index, 1], marker=markers[m_index], c=colors[c_index])
         ax.set(xlabel=self.xlabel, ylabel=self.ylabel, title=self.title)
         ax.legend(self.legend)
 
         if file:
             plt.savefig(file + '.png')
         plt.show()
+
+    def getRandomIdentifier(self, colors, markers):
+        color = random.randint(0, len(colors)-1)
+        marker = random.randint(0, len(markers)-1)
+        return (color, marker)
 
     def plotDataRegression(self, file=None):
         fig, ax = self.getPlotRegression()
@@ -68,6 +99,7 @@ class Dataset(object):
         print(self.X.shape, self.y.shape)
         ax.scatter(self.X, self.y, marker='x', c='r')
         ax.set(xlabel=self.xlabel, ylabel=self.ylabel, title=self.title)
+        ax.legend(self.legend)
         ax.grid()
         return fig, ax
 
@@ -143,11 +175,6 @@ class Dataset(object):
                 percentage = max(0, examples/self.m)
         X_train, X_test, Y_train, Y_test = train_test_split(self.X, self.y, test_size = percentage)
         return Dataset(X_test, Y_test)
-
-    @staticmethod
-    def load(filename):
-        file = open(filename + '.pickle', 'rb')
-        return pickle.load(file)
 
     def getShape(self):
         return self.X.shape, self.y.shape

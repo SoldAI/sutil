@@ -8,7 +8,7 @@ Classes
 ===============
 .. py:class:: Coin
 
-        The *Coin* class let's you define a charged coin with some probability value bwtween 0 and 1
+        The *Coin* class let's you define a charged coin with some probability value bwtween 0 and 1. It's useful to model stochastic binary processes using biased probabilities.
         
         .. py:attribute:: probability
 
@@ -38,7 +38,7 @@ Classes
         
 .. py:class:: Dataset
 
-    The *Dataset* class is a simple abstraction of a dataset multidimensional, wich can be fed to a model, it includes method to normalize the data, add bias plot, and split the data in train, test and validation datasets. Includes functionality to normalize the feature add Bias term to the data and sample a number of examples. It comes handy to load dataset that are expressed as a csv of separeted features and have the class as the last one.
+    The *Dataset* class is a simple abstraction of a dataset multidimensional, wich can be fed to a model, it includes method to normalize the data, add bias plot, and split the data in train, test and validation datasets. Includes functionality to normalize the feature add Bias term to the data and sample a number of examples. It comes handy to load dataset that are expressed as a csv of separeted features and have the class as the last one. It's modeled as a couple of matrixes, a train matrix of dimensions ``m x n`` this means the Datset has m examples, each one having n features.
     
     .. py:attribute:: X
 
@@ -55,10 +55,50 @@ Classes
     .. py:attribute:: m
 
         Number of examples in the dataset. Is synonym of size attribute
+
+    .. py:attribute:: size
+
+        Number of examples in the dataset. Is a synonym of the m attribute
     
     .. py:attribute:: shape
 
-        Shape of the dataset
+        Tuple indicating the shape of the dataset
+
+    .. py:attribute:: labels
+
+        List of the existing labels in the dataset
+
+    .. py:attribute:: xsize
+
+        Integer number of feature of each example in the dataset. Synonym of the n attribute
+
+    .. py:attribute:: ysize
+
+        Integer number of features in the label output. Useful for multi labeling classification
+
+    .. py:attribute:: title
+
+        String represeting the title of the graph of the dataset when the plotData method is invoked
+
+    .. py:attribute:: legend
+
+        String representing the legend of the graph of the data when plotData method is invoked
+
+    .. py:attribute:: xlabel
+
+        String label for the x axis when the data graph is generated
+
+    .. py:attribute:: ylabel
+
+        String label for the y axis when the data graph is generated
+
+    .. py:method:: loadData(datafile, delimeter)
+
+        This method loads the data from a csv file using the passed delimiter. The label is the last column of the csv, all the previous columns are considered as features. Process your csv file to this form before invoking the laodData method
+
+    .. py:method:: setData(X, y, xlabel='x', ylabel="y", legend=["y=1", "y=0"], title="Graph")
+
+        This method set the properties using the X and y values given to the method. The rest of the properties are claculated. Also can recieve named arguments to use when the data is ploted
         
     .. py:method:: sample(percentage)
 
