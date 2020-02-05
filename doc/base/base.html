@@ -176,18 +176,73 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="Dataset.sample">
-<code class="descname">sample</code><span class="sig-paren">(</span><em>percentage</em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.sample" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a Dataset using the percentage of the original dataset to generate the new one</p>
+<dt id="Dataset.initialize">
+<code class="descname">initialize</code><span class="sig-paren">(</span><em>X, y, xlabel='x', ylabel=&quot;y&quot;, legend=[&quot;y=1&quot;, &quot;y=0&quot;], title=&quot;Graph&quot;</em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.initialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called to initialize the Dataset using the data, this method is the one to be overwirtten in case you need to subclass the DataSet</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Dataset.plotData">
+<code class="descname">plotData</code><span class="sig-paren">(</span><em>file=None</em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.plotData" title="Permalink to this definition">¶</a></dt>
+<dd><p>This metod plots the different classes in the DataSet using a bidimensional feature array and the classes defined in the labels. It only takes account of the 2 first features of the examples and the class. 3d plotting is not yet available but it would be a really cool feature to add =). If a name of file is passed it saves the graph to a png image. The markers style of the class are randomly selected, for a color and marker fixed array.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Dataset.getRandomIdentifier">
+<code class="descname">getRandomIdentifier</code><span class="sig-paren">(</span><em>colors</em>, <em>markers</em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.getRandomIdentifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method picks randomly two elements of the color and marker lists passed as parameters and return a tuple with the color and marker</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Dataset.plotDataRegression">
+<code class="descname">plotDataRegression</code><span class="sig-paren">(</span><em>file=None</em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.plotDataRegression" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method shows the regression plot for the data. If the file parameters is passed it saves a png image with the result.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Dataset.getPlotRegression">
+<code class="descname">getPlotRegression</code><span class="sig-paren">(</span><em>randomize_marker = False</em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.getPlotRegression" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method creates the graph and axes objects of the pyplot.subplots() method. It uses the first feature of the example as X value and the y feature of the example as y value, so it plots a regression style data. If the randomize_marker parameter is True then a random marker is used to plot the data if not red crosses are used by default.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="Dataset.split">
-<code class="descname">split</code><span class="sig-paren">(</span><em>train</em>, <em>validation</em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.split" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return three datasets including the train, validation and test using the defined percentages</p>
+<code class="descname">split</code><span class="sig-paren">(</span><em>train=0.8</em>, <em>validation=0.2</em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.split" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return three datasets including the train, validation and test using the defined percentages. The train dataset size is set to the value passed as parameter, the test dataset is set to 1 - the size of train dataset and the validation set is set to the validation * train percentage of the dataset. If the validation is set to 0 it return only the train and validation datasets</p>
 </dd></dl>
 
-<p>Example:</p>
+<dl class="method">
+<dt id="Dataset.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>filename=None</em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves a pickle file with the currend Dataset object. If the file name is passed as parameter the file is saved with that name if not it uses the model_currenttime as file to save it</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Dataset.sample">
+<code class="descname">sample</code><span class="sig-paren">(</span><em>percentage</em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a Dataset using the percentage of the original dataset passed as parameter randomly chosen. It includes the y labels and classes</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Dataset.getShape">
+<code class="descname">getShape</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.getShape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the shape of the Dataset in a tuple of the form X.shape, y.shape</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Dataset.getBiasedX">
+<code class="descname">getBiasedX</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.getBiasedX" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the X parameters adding a 1 column as the first column. It comes handy when using neural networks to classify the data</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Dataset.clone">
+<code class="descname">clone</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.clone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new Dataset object with the same plot parameters as the current one but using the X and y data passed as parameters</p>
+</dd></dl>
+
+<p>Examples:</p>
+<p>This example depicts how to loaf the dataset, make the split in train, validation and test datasets, and sample a 30 percent of the data to create a minor dataset:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sutil.base.Dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
 
 <span class="n">datafile</span> <span class="o">=</span> <span class="s1">&#39;./sutil/datasets/ex2data1.txt&#39;</span>
@@ -203,7 +258,19 @@
 <span class="k">print</span><span class="p">(</span><span class="n">test</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This example depicts how to loaf the dataset, make the split in train, validation and test datasets, and sample a 30 percent of the data to create a minor dataset.</p>
+<p>This example show how to normalize the feature and plot the Data using a random generated marker:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sutil.base.Dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
+
+ <span class="n">datafile</span> <span class="o">=</span> <span class="s1">&#39;./sutil/datasets/ex1data1.txt&#39;</span>
+ <span class="n">d</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">fromDataFile</span><span class="p">(</span><span class="n">datafile</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">)</span>
+ <span class="k">print</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+ <span class="k">print</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+ <span class="k">print</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">normalizeFeatures</span><span class="p">())</span>
+ <span class="k">print</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">getBiasedX</span><span class="p">())</span>
+ <span class="n">d</span><span class="o">.</span><span class="n">plotDataRegression</span><span class="p">(</span><span class="s1">&#39;example&#39;</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This example show how to normalize the feature and plot the Data using a random generated marker</p>
 </dd></dl>
 
 </div>

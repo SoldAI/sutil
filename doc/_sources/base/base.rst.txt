@@ -99,17 +99,67 @@ Classes
     .. py:method:: setData(X, y, xlabel='x', ylabel="y", legend=["y=1", "y=0"], title="Graph")
 
         This method set the properties using the X and y values given to the method. The rest of the properties are claculated. Also can recieve named arguments to use when the data is ploted
+
+    .. py:method:: initialize(X, y, xlabel='x', ylabel="y", legend=["y=1", "y=0"], title="Graph")
+
+        This method is called to initialize the Dataset using the data, this method is the one to be overwirtten in case you need to subclass the DataSet
+
+    .. py:method:: plotData(file=None)
+
+        This metod plots the different classes in the DataSet using a bidimensional feature array and the classes defined in the labels. It only takes account of the 2 first features of the examples and the class. 3d plotting is not yet available but it would be a really cool feature to add =). If a name of file is passed it saves the graph to a png image. The markers style of the class are randomly selected, for a color and marker fixed array.
+
+    .. py:method:: getRandomIdentifier(colors, markers)
+
+        This method picks randomly two elements of the color and marker lists passed as parameters and return a tuple with the color and marker
+
+    .. py:method:: plotDataRegression(file=None)
+
+        This method shows the regression plot for the data. If the file parameters is passed it saves a png image with the result.
+
+    .. py:method:: getPlotRegression(randomize_marker = False)
+
+        This method creates the graph and axes objects of the pyplot.subplots() method. It uses the first feature of the example as X value and the y feature of the example as y value, so it plots a regression style data. If the randomize_marker parameter is True then a random marker is used to plot the data if not red crosses are used by default.
+
+    .. py:method::normalizeFeatures
+
+        This method perform a simple normalization of the features by columns, using a normalization formula of the form: (x - mu) / sigma, where x is the value, mu is the mean value of the column and sidma is the standard deviation of the column data. It sets the X values to it's normalized form, and returns a copy of the normalized values, and and 2 arrays mu and sigma, of size n including the means and standard deviations of the columns. Also sets the mu and sigma values of the class to the obtained values
+
+    .. py:method::normalizeExample(example)
+
+        This method perform a (x - mu) / sigma normalization using the menas and standard deviations data obtained by the normalize features method. If the data have been not normalized return the example as it was recieved.
+
+    .. py:method::isNormalized
+
+        This method verifies if  the Dataset have been normalized. The method does this cehcking if the mu and sigma arrays are not None. This means you can performa a "manual normalization", setting the values of the mu and sigma values manually. Be careful to set it to correct dimmension values otherwise you will obtain an error when you try to normalize the example using the normalizeExample method.
+
+    .. py:method:: split(train=0.8, validation=0.2)
+
+        Return three datasets including the train, validation and test using the defined percentages. The train dataset size is set to the value passed as parameter, the test dataset is set to 1 - the size of train dataset and the validation set is set to the validation * train percentage of the dataset. If the validation is set to 0 it return only the train and validation datasets
+
+    .. py:method:: save(filename=None)
+
+        Saves a pickle file with the currend Dataset object. If the file name is passed as parameter the file is saved with that name if not it uses the model_currenttime as file to save it
         
     .. py:method:: sample(percentage)
 
-        Return a Dataset using the percentage of the original dataset to generate the new one
-        
-    .. py:method:: split(train, validation)
+        Return a Dataset using the percentage of the original dataset passed as parameter randomly chosen. It includes the y labels and classes
 
-        Return three datasets including the train, validation and test using the defined percentages
+    .. py:method:: getShape()
+
+        Returns the shape of the Dataset in a tuple of the form X.shape, y.shape
+
+    .. py:method:: getBiasedX()
+
+        Returns the X parameters adding a 1 column as the first column. It comes handy when using neural networks to classify the data
+
+    .. py:method:: clone(X,y)
+
+        Return a new Dataset object with the same plot parameters as the current one but using the X and y data passed as parameters
         
-    Example:
+    Examples:
         
+    This example depicts how to loaf the dataset, make the split in train, validation and test datasets, and sample a 30 percent of the data to create a minor dataset:
+
     .. code-block:: python
         
             from sutil.base.Dataset import Dataset
@@ -126,6 +176,19 @@ Classes
             print(validation.size)
             print(test.size)
             
-    This example depicts how to loaf the dataset, make the split in train, validation and test datasets, and sample a 30 percent of the data to create a minor dataset.
+    This example show how to normalize the feature and plot the Data using a random generated marker:
 
+    .. code-block:: python
+        
+            from sutil.base.Dataset import Dataset
+            
+             datafile = './sutil/datasets/ex1data1.txt'
+             d = Dataset.fromDataFile(datafile, ',')
+             print(d.shape)
+             print(d.X[0])
+             print(d.normalizeFeatures())
+             print(d.getBiasedX())
+             d.plotDataRegression('example', True)
+    
+    This example show how to normalize the feature and plot the Data using a random generated marker
 

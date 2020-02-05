@@ -59,7 +59,7 @@ class Dataset(object):
         fig, ax = plt.subplots()
         identifiers = {}
         used = []
-        colors = ['b', 'g', 'r', 'c', 'm', 'y', 'k', 'w']
+        colors = ['b', 'g', 'r', 'c', 'm', 'y', 'k']
         markers = ['o', 'x', 'v', '^', 's', 'p', 'P', '*', 'h', '1', '2', '3', '4']
         for c in classes:
             if len(used) == len(colors) * len(markers):
@@ -87,39 +87,27 @@ class Dataset(object):
         marker = random.randint(0, len(markers)-1)
         return (color, marker)
 
-    def plotDataRegression(self, file=None):
-        fig, ax = self.getPlotRegression()
+    def plotDataRegression(self, file=None, randomize_marker = False):
+        fig, ax = self.getPlotRegression(randomize_marker)
         if file:
             fig.savefig(file + ".png")
         plt.show()
         return fig, ax
 
-    def getPlotRegression(self):
+    def getPlotRegression(self, randomize_marker = False):
         fig, ax = plt.subplots()
         print(self.X.shape, self.y.shape)
-        ax.scatter(self.X, self.y, marker='x', c='r')
+        if randomize_marker:
+            colors = ['b', 'g', 'r', 'c', 'm', 'y', 'k']
+            markers = ['o', 'x', 'v', '^', 's', 'p', 'P', '*', 'h', '1', '2', '3', '4']
+            c_index, m_index = self.getRandomIdentifier(colors, markers)
+            ax.scatter(self.X, self.y, marker=markers[m_index], c=colors[c_index])
+        else:
+            ax.scatter(self.X, self.y, marker='x', c='r')
         ax.set(xlabel=self.xlabel, ylabel=self.ylabel, title=self.title)
         ax.legend(self.legend)
         ax.grid()
         return fig, ax
-
-    def mapFeature(self, x1, x2):
-        #Maps the two input features to quadratic features.
-        #Returns a new feature array with more features, comprising of
-        #1, X2, X1 ** 2, X2 ** 2, X1*X2, X1*X2 ** 2, etc...
-        #nputs X1, X2 must be the same size
-        x1.shape = (x1.size, 1)
-        x2.shape = (x2.size, 1)
-        degree = 6
-        out = np.ones(shape=(x1[:, 0].size, 1))
-
-        m, n = out.shape
-
-        for i in range(1, degree + 1):
-            for j in range(i + 1):
-                r = (x1 ** (i - j)) * (x2 ** j)
-                out = np.append(out, r, axis=1)
-        return out
 
     def normalizeFeatures(self):
         X_norm = self.X;
@@ -141,7 +129,8 @@ class Dataset(object):
         return (self.mu is not None and self.sigma is not None)
 
     def normalizeExample(self, example):
-        assert(self.isNormalized() == True, 'The normalization process has not been done')
+        if not self.isNormalized():
+            return example
         x_norm = example
         for i in range(len(x_norm)):
             if self.sigma[i] == 0:
