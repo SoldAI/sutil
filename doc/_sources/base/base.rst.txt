@@ -192,3 +192,96 @@ Classes
     
     This example show how to normalize the feature and plot the Data using a random generated marker
 
+.. py:class:: Experiment
+
+        The *Experiment* class let's you define experiments using a single dataset and test how different models fit and evaluate using the same datset
+        
+        .. py:attribute:: models
+
+            Dictionary of the models included in the Experiment, the key is the name of the model and the value the model itself.
+
+        .. py:attribute:: models_index
+
+            Dictionary of the index of each model by it's name is used to translate the model names to positions.
+
+        .. py:attribute:: train_p
+
+            Value of the percentage og the train partition of the dataset
+
+        .. py:attribute:: validation_p
+
+            Value of the percentage of the validation data of the dataset
+
+        .. py:attribute:: train
+
+            Dataset of the train data
+
+        .. py:attribute:: validation
+
+            Dataset of the validation data
+
+        .. py:attribute:: test
+
+            Dataset of the test data
+        
+        .. py:method:: __init__(data, models = None, train = 0.8, validation=0.2)
+
+            Instantiates a Experiment object using the passed data, if no Models are passed creates a new dictionary. It performs the data split in order to apply the experiment
+        
+        .. py:method:: splitData(data)
+
+            This method split the data passed as parameter and sets the train, validation and test attributes of the experiment. Acts as a wrapper of the split method of the Dataset
+
+        .. py:method:: addModel(model, modelClass, name)
+
+            This method adds a model to the model list yo be evaluated
+
+        .. py:method:: run(plot=False)
+
+            This method runs the experiment training the models. If the plot attribute is set to True it shows the ModelRoc of the models.
+        
+        Example:
+        
+        This example perform aexperiment comparing sutil RegularizedLogisticRegression, Sklearn LogisticRegression and sutil NeuralNetworkClassifer. The code load the dataset, setups the experiment, pre train the neural network model and run the experiment showint the Roc curves for the included models
+
+        .. code-block:: python
+        
+            # -*- coding: utf-8 -*-
+            import numpy as np
+            from sutil.base.Dataset import Dataset
+            from sklearn.linear_model import LogisticRegression
+            from sutil.base.Experiment import Experiment
+            from sutil.models.SklearnModel import SklearnModel
+            from sutil.models.RegularizedLogisticRegression import RegularizedLogisticRegression
+            from sutil.neuralnet.NeuralNetworkClassifier import NeuralNetworkClassifier
+
+            # Load the data
+            datafile = './sutil/datasets/ex2data1.txt'
+            d = Dataset.fromDataFile(datafile, ',')
+            d.normalizeFeatures()
+            print("Size of the dataset... ")
+            print(d.size)
+            sample = d.sample(0.3)
+            print("Size of the sample... ")
+            print(d.sample)
+
+
+            # Create the models
+            theta = np.zeros((d.n + 1, 1))
+            lr = RegularizedLogisticRegression(theta, 0.03, 0)
+            m = SklearnModel('Sklearn Logistic', LogisticRegression())
+            # Look for the best parameters using a sample
+            nn = NeuralNetworkClassifier((d.n, len(d.labels)))
+            nn.searchParameters(sample)
+
+            input("Press enter to continue...")
+
+            # Create the experiment
+            experiment = Experiment(d, None, 0.8, 0.2)
+            experiment.addModel(lr, name = 'Sutil Logistic Regression')
+            experiment.addModel(m, name = 'Sklearn Logistic Regression')
+            experiment.addModel(nn, name = 'Sutil Neural Network')
+
+            # Run the experiment
+            experiment.run(plot = True)
+
