@@ -12,15 +12,15 @@ Classes
         
         .. py:attribute:: probability
 
-        It's a float value between 0 and 1 which indicates the probability of the positive event. For ecample a Coin with probability 0.3 will return positive aproximately 30 times fif we run the toss metods 100 tosses.
+            It's a float value between 0 and 1 which indicates the probability of the positive event. For ecample a Coin with probability 0.3 will return positive aproximately 30 times fif we run the toss metods 100 tosses.
         
         .. py:method:: __init__(probability)
 
-        Instantiates a Coin object with a given probability
+            Instantiates a Coin object with a given probability
         
         .. py:method:: toss()
 
-        Return True or False, true if the event were evaluated positively, False otherwise
+            Return True or False, true if the event were evaluated positively, False otherwise
         
         Example:
         
