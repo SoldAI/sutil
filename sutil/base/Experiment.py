@@ -39,12 +39,15 @@ class Experiment:
         for model_name, model in self.models.items():
             print("Training model " + model_name)
             model.trainModel(self.train)
+            print("*" * 30)
             print("Training score")
             model.score(self.train.X, self.train.y)
             if self.validation is not None:
+                print("*" * 30)
                 print("Validation score")
                 model.score(self.validation.X, self.validation.y)
             if self.test is not None:
+                print("*" * 30)
                 print("Test score")
                 model.score(self.test.X, self.test.y)
             if plot:

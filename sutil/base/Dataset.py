@@ -3,6 +3,8 @@ import numpy as np
 import pickle
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
+from sklearn.decomposition import PCA
+from mpl_toolkits.mplot3d import Axes3D  # noqa: F401 unused import
 import datetime
 import random
 
@@ -12,10 +14,10 @@ class Dataset(object):
         self.initialize(X, y, xlabel, ylabel, legend, title)
 
     @classmethod
-    def fromDataFile(cls, filename, delimiter):
+    def fromDataFile(cls, filename, delimiter, ysize = 1):
         data = np.loadtxt(filename, delimiter=delimiter)
-        X = data[:, 0:-1]
-        y = data[:, -1]
+        X = data[:, 0:-ysize]
+        y = data[:, -ysize]
         return cls(X, y)
 
     @staticmethod
@@ -53,12 +55,23 @@ class Dataset(object):
         self.y = data[:, -1]
         self.initialize(self.X, self.y)
 
-    def plotData(self, file=None):
+    def plotData(self, file=None, d3=False):
         #The plotted data is assuming 2 dimenssions, check what happened if it's more how to make the projection into 2 dimensions
         classes = self.labels
-        fig, ax = plt.subplots()
+        if d3:
+            fig = plt.figure()
+            ax = fig.add_subplot(111, projection='3d')
+        else:
+            fig, ax = plt.subplots()
         identifiers = {}
         used = []
+        x_graph = self.X
+        if len(self.X) > 2:
+            pca_analyzer = PCA(n_components=2)
+            if d3:
+                pca_analyzer = PCA(n_components=3)
+            x_graph = pca_analyzer.fit_transform(self.X)
+
         colors = ['b', 'g', 'r', 'c', 'm', 'y', 'k']
         markers = ['o', 'x', 'v', '^', 's', 'p', 'P', '*', 'h', '1', '2', '3', '4']
         for c in classes:
@@ -74,7 +87,10 @@ class Dataset(object):
                     assigned = True
             index = np.where(self.y == c)
             identifiers[c] = {'color': colors[c_index], 'marker': markers[m_index], "legend": "y=" + str(c)}
-            ax.scatter(self.X[index, 0], self.X[index, 1], marker=markers[m_index], c=colors[c_index])
+            if d3:
+                ax.scatter(x_graph[index, 0], x_graph[index, 1], x_graph[index, 2], marker=markers[m_index], c=colors[c_index])
+            else:
+                ax.scatter(x_graph[index, 0], x_graph[index, 1], marker=markers[m_index], c=colors[c_index])
         ax.set(xlabel=self.xlabel, ylabel=self.ylabel, title=self.title)
         ax.legend(self.legend)
 

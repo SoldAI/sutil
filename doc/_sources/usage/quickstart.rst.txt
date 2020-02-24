@@ -2,6 +2,7 @@ Quick Start
 ============
 Sutil let's you load your models and format it to numbers using the Dataset class.
 First build a class:
-You can install via pip
 
-pip install sutil
+You can install via pip:
+
+pip install soldai-utilities

@@ -42,7 +42,575 @@
             
   <div class="section" id="models-package">
 <h1>Models package<a class="headerlink" href="#models-package" title="Permalink to this headline">¶</a></h1>
-<p>Models pacvkage contain aset of models that you can use to fit your data</p>
+<p>Models package contain a set of models classes and utilities that you can use to fit your data. You can subclass the Model class and also you can embed dklearn models using the Sklearn model class.</p>
+</div>
+<div class="section" id="classes">
+<h1>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="Model">
+<em class="property">class </em><code class="descname">Model</code><a class="headerlink" href="#Model" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <em>Model</em> is a abstract class let’s you define a trainable model using the Dataset provbded by sutil. The trainModel and predict methods should be implemented by child classes</p>
+<dl class="attribute">
+<dt id="Model.name">
+<code class="descname">name</code><a class="headerlink" href="#Model.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>String used to identify the Model</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Model.accuracy">
+<code class="descname">accuracy</code><a class="headerlink" href="#Model.accuracy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Float representing the accuracy of the model</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Model.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name = 'Model'</em><span class="sig-paren">)</span><a class="headerlink" href="#Model.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instantiates a Model object setting it’s name to the given parameter</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Model.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X = None</em>, <em>y = None</em><span class="sig-paren">)</span><a class="headerlink" href="#Model.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method performs the training of the model using the provided data. This method is provided to preserve compatibility with sklearn style models. Invokes internally to the trainModel method of the class (must be implemented for child classes) to perform the training using a Dataset object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Model.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="headerlink" href="#Model.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method performs a prediction on a set of examples given by X. Return an array with the mdoel predictions</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Model.score">
+<code class="descname">score</code><span class="sig-paren">(</span><em>X</em>, <em>y</em>, <em>bias = True</em><span class="sig-paren">)</span><a class="headerlink" href="#Model.score" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method make the predictions of the examples passed in the X array and compares it against results in y array- If the bias paramter is set to True add a bias term to the examples given in X. It computes and stores accuracy, recall, precission, f1 and roc curve parameters</p>
+</dd></dl>
+
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sutil.base.Coin</span> <span class="kn">import</span> <span class="n">Coin</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">Coin</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">positives</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">toss</span><span class="p">():</span>
+        <span class="n">positives</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="k">print</span><span class="p">(</span><span class="n">positives</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This example should print a number close to 30</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="RegularizedLinearRegression">
+<em class="property">class </em><code class="descname">RegularizedLinearRegression</code><a class="headerlink" href="#RegularizedLinearRegression" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <em>RegularizedLinearRegression</em> is a Model class which implements a RegularizedLinearRegression implemented scypy and numpy. This class is an exampole of how can you add your own models to sutil package.</p>
+<dl class="attribute">
+<dt id="RegularizedLinearRegression.theta">
+<code class="descname">theta</code><a class="headerlink" href="#RegularizedLinearRegression.theta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parameter matrix of the Regression</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="RegularizedLinearRegression.alpha">
+<code class="descname">alpha</code><a class="headerlink" href="#RegularizedLinearRegression.alpha" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gain parameter of the regression</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="RegularizedLinearRegression.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>theta</em>, <em>alpha</em>, <em>l</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instantiates a new RegularizedLinearRegression object setting it’s parameter matrix, gain and regularization parameters</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="RegularizedLinearRegression.fromDataset">
+<code class="descname">fromDataset</code><span class="sig-paren">(</span><em>data</em>, <em>alpha=0.1</em>, <em>l=0.1</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.fromDataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class method which return a new RegularizedLinearRegression initialized using the provided Dataset</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="RegularizedLinearRegression.fromDataFile">
+<code class="descname">fromDataFile</code><span class="sig-paren">(</span><em>datafile</em>, <em>delimeter</em>, <em>alpha=0.1</em>, <em>l=0.1</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.fromDataFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class method which return a new RegularizedLinearRegression initialized loading the data provided in the file which path is provided. The delimeter parameter specifies thedelimeter string to split the datafile</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="RegularizedLinearRegression.getCostAndGradient">
+<code class="descname">getCostAndGradient</code><span class="sig-paren">(</span><em>data</em>, <em>theta</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.getCostAndGradient" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method computes the cost and gradient of the function given the theta parameters and the Dataset</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="RegularizedLinearRegression.getCost">
+<code class="descname">getCost</code><span class="sig-paren">(</span><em>theta</em>, <em>x</em>, <em>y</em>, <em>l=0</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.getCost" title="Permalink to this definition">¶</a></dt>
+<dd><p>This static function evaluate the cost of the model (loss function value) of the prediction of the given examples parametrized by theta in relation to the difference against y outputs provided. It also applies the reguarization term to the data. This method is static to be able to be used by numpy optimizers.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="RegularizedLinearRegression.getGradient">
+<code class="descname">getGradient</code><span class="sig-paren">(</span><em>theta</em>, <em>x</em>, <em>y</em>, <em>l=0</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.getGradient" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method calculates the gradient of the cost function and returns it’s values. Is astatic method which can be optimized by numpy</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="RegularizedLinearRegression.gradienDescent">
+<code class="descname">gradienDescent</code><span class="sig-paren">(</span><em>data</em>, <em>iterations</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.gradienDescent" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method execute the gradient Descent algorithm using the data and iterations provided</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="RegularizedLinearRegression.normalEquation">
+<code class="descname">normalEquation</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.normalEquation" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method tries to solve the optimization problem using the normal equation form, calculating the theta parameters using the pseudo inverse matrix of X * X’ where X’ is the transpose of X multiplied by y column</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="RegularizedLinearRegression.evaluateHypothesis">
+<code class="descname">evaluateHypothesis</code><span class="sig-paren">(</span><em>xi</em>, <em>theta</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.evaluateHypothesis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs the matrix multiplication of xi and theta returning the predicted value</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="RegularizedLinearRegression.makePrediction">
+<code class="descname">makePrediction</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.makePrediction" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns the prediction of the exampple x parametrized by the theta obtained after the optimization and gradientDescent execution</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="RegularizedLinearRegression.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns the prediction of the exampple x parametrized by the theta obtained after the optimization and gradientDescent execution, synonym of makePrediction</p>
+</dd></dl>
+
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">cm</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span> <span class="c1"># &lt;--- This is important for 3d plotting</span>
+<span class="kn">from</span> <span class="nn">sutil.base.Dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
+<span class="kn">from</span> <span class="nn">sutil.models.RegularizedLinearRegression</span> <span class="kn">import</span> <span class="n">RegularizedLinearRegression</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">pyplot</span>
+
+<span class="c1">#Load the model</span>
+<span class="n">datafile</span> <span class="o">=</span> <span class="s1">&#39;./sutil/datasets/ex1data1.txt&#39;</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">fromDataFile</span><span class="p">(</span><span class="n">datafile</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">)</span>
+<span class="n">d</span><span class="o">.</span><span class="n">plotDataRegression</span><span class="p">(</span><span class="s1">&#39;example&#39;</span><span class="p">)</span>
+
+<span class="c1">#Some gradient descent settings</span>
+<span class="n">iterations</span> <span class="o">=</span> <span class="mi">1500</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">l</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Testing the cost function ...&#39;</span><span class="p">)</span>
+<span class="n">rlf</span> <span class="o">=</span> <span class="n">RegularizedLinearRegression</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+
+<span class="c1">#compute and display initial cost</span>
+<span class="n">J</span><span class="p">,</span> <span class="n">gradient</span> <span class="o">=</span> <span class="n">rlf</span><span class="o">.</span><span class="n">getCostAndGradient</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;With theta = [0 ; 0]</span><span class="se">\n</span><span class="s1">Cost computed = &#39;</span><span class="p">,</span> <span class="n">J</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Expected cost value (approx) 32.07</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1">#further testing of the cost function</span>
+<span class="n">J</span><span class="p">,</span> <span class="n">gradient</span> <span class="o">=</span> <span class="n">rlf</span><span class="o">.</span><span class="n">getCostAndGradient</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">With theta = [-1 ; 2]</span><span class="se">\n</span><span class="s1">Cost computed = &#39;</span><span class="p">,</span> <span class="n">J</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Expected cost value (approx) 54.24</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Program paused. Press enter to continue.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Press enter to continue...&quot;</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Running Gradient Descent ...</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">theta</span><span class="p">,</span> <span class="n">cost</span><span class="p">,</span> <span class="n">gradient</span> <span class="o">=</span> <span class="n">rlf</span><span class="o">.</span><span class="n">gradienDescent</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">iterations</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Theta found by gradient descent:</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Expected theta values (approx)</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39; -3.6303</span><span class="se">\n</span><span class="s1">  1.1664</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">rlf</span><span class="o">.</span><span class="n">optimizedGradientDescent</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Theta found by optimization descent:</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Expected theta values (approx)</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39; -3.6303</span><span class="se">\n</span><span class="s1">  1.1664</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Press enter to continue...&quot;</span><span class="p">)</span>
+
+<span class="c1">#Plot the linear fit</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">getPlotRegression</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">getBiasedX</span><span class="p">(),</span> <span class="n">theta</span><span class="p">),</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span>
+<span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1">#Predict values for population sizes of 35,000 and 70,000</span>
+<span class="n">predict1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">],</span> <span class="n">theta</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;For population = 35,000, we predict a profit of &#39;</span><span class="p">,</span> <span class="n">predict1</span><span class="o">*</span><span class="mi">10000</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">predict2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span> <span class="n">theta</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;For population = 70,000, we predict a profit of &#39;</span><span class="p">,</span><span class="n">predict2</span><span class="o">*</span><span class="mi">10000</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Program paused. Press enter to continue.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Press enter to continue...&quot;</span><span class="p">)</span>
+
+<span class="c1">#============= Part 4: Visualizing J(theta_0, theta_1) =============</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Visualizing J(theta_0, theta_1) ...</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1">#Grid over which we will calculate J</span>
+<span class="n">theta0_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">theta1_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">theta0_vals</span><span class="p">,</span> <span class="n">theta1_vals</span><span class="p">)</span>
+
+<span class="c1">#initialize J_vals to a matrix of 0&#39;s</span>
+<span class="n">J_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">theta0_vals</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">theta1_vals</span><span class="p">)))</span>
+
+<span class="c1">#Fill out J_vals</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">theta0_vals</span><span class="p">)):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">theta1_vals</span><span class="p">)):</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">theta0_vals</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">theta1_vals</span><span class="p">[</span><span class="n">j</span><span class="p">]])</span><span class="o">.</span><span class="n">T</span>
+            <span class="n">J_vals</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">gradient</span> <span class="o">=</span> <span class="n">rlf</span><span class="o">.</span><span class="n">getCostAndGradient</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">theta0_vals</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">theta1_vals</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">J_vals</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">J_vals</span><span class="p">)</span>
+
+<span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Press enter to continue...&quot;</span><span class="p">)</span>
+<span class="c1">#% Because of the way meshgrids work in the surf command, we need to</span>
+<span class="c1">#% transpose J_vals before calling surf, or else the axes will be flipped</span>
+<span class="n">J_vals</span> <span class="o">=</span> <span class="n">J_vals</span><span class="o">.</span><span class="n">T</span>
+
+<span class="c1">#% Surface plot</span>
+<span class="n">fig2</span> <span class="o">=</span> <span class="n">pyplot</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig2</span><span class="o">.</span><span class="n">gca</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">surf</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">J_vals</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cm</span><span class="o">.</span><span class="n">winter</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">antialiased</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1">#% Contour plot</span>
+<span class="n">pyplot</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="c1"># Plot J_vals as 15 contours spaced logarithmically between 0.01 and 100</span>
+<span class="n">pyplot</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">theta0_vals</span><span class="p">,</span> <span class="n">theta1_vals</span><span class="p">,</span> <span class="n">J_vals</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+<span class="n">pyplot</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;theta_0&#39;</span><span class="p">)</span>
+<span class="n">pyplot</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;theta_1&#39;</span><span class="p">)</span>
+<span class="n">pyplot</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">theta</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">theta</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This example shows the use of the different methods of the class</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="RegularizedLogisticRegression">
+<em class="property">class </em><code class="descname">RegularizedLogisticRegression</code><a class="headerlink" href="#RegularizedLogisticRegression" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <em>RegularizedLogisticRegression</em> is a Model class which implements a RegularizedLogisticRegression using scypy and numpy. This class is an exampole of how can you add your own models to sutil package.</p>
+<dl class="attribute">
+<dt id="RegularizedLogisticRegression.theta">
+<code class="descname">theta</code><a class="headerlink" href="#RegularizedLogisticRegression.theta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parameter matrix of the Regression</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="RegularizedLogisticRegression.alpha">
+<code class="descname">alpha</code><a class="headerlink" href="#RegularizedLogisticRegression.alpha" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gain parameter of the regression</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="RegularizedLogisticRegression.name">
+<code class="descname">name</code><a class="headerlink" href="#RegularizedLogisticRegression.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of the model</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="RegularizedLogisticRegression.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>theta</em>, <em>alpha</em>, <em>l</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instantiates a new RegularizedLinearRegression object setting it’s parameter matrix, gain and regularization parameters</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="RegularizedLogisticRegression.fromDataset">
+<code class="descname">fromDataset</code><span class="sig-paren">(</span><em>data</em>, <em>alpha=0.1</em>, <em>l=0.1</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.fromDataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class method which return a new RegularizedLogisticRegression initialized using the provided Dataset</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="RegularizedLogisticRegression.fromDataFile">
+<code class="descname">fromDataFile</code><span class="sig-paren">(</span><em>datafile</em>, <em>delimeter</em>, <em>alpha=0.1</em>, <em>l=0.1</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.fromDataFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class method which return a new RegularizedLogisticRegression initialized loading the data provided in the file which path is provided. The delimeter parameter specifies thedelimeter string to split the datafile</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="RegularizedLogisticRegression.getCostAndGradient">
+<code class="descname">getCostAndGradient</code><span class="sig-paren">(</span><em>data</em>, <em>theta</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.getCostAndGradient" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method computes the cost and gradient of the function given the theta parameters and the Dataset</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="RegularizedLogisticRegression.getCost">
+<code class="descname">getCost</code><span class="sig-paren">(</span><em>theta</em>, <em>x</em>, <em>y</em>, <em>l=0</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.getCost" title="Permalink to this definition">¶</a></dt>
+<dd><p>This static function evaluate the cost of the model (loss function value) of the prediction of the given examples parametrized by theta in relation to the difference against y outputs provided. It also applies the reguarization term to the data. This method is static to be able to be used by numpy optimizers.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="RegularizedLogisticRegression.getGradient">
+<code class="descname">getGradient</code><span class="sig-paren">(</span><em>theta</em>, <em>x</em>, <em>y</em>, <em>l=0</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.getGradient" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method calculates the gradient of the cost function and returns it’s values. Is astatic method which can be optimized by numpy</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="RegularizedLogisticRegression.gradienDescent">
+<code class="descname">gradienDescent</code><span class="sig-paren">(</span><em>data</em>, <em>iterations</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.gradienDescent" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method execute the gradient Descent algorithm using the data and iterations provided</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="RegularizedLogisticRegression.sigmoid">
+<code class="descname">sigmoid</code><span class="sig-paren">(</span><em>z</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.sigmoid" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method calculates the sigmoidal function to the z parameter</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="RegularizedLogisticRegression.optimizedGradientDescent">
+<code class="descname">optimizedGradientDescent</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.optimizedGradientDescent" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method executes the gradient descent using the static metods of getGradient and getCost as parameters of the numpy optimizers minimize function</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="RegularizedLogisticRegression.computePredictions">
+<code class="descname">computePredictions</code><span class="sig-paren">(</span><em>data</em>, <em>theta</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.computePredictions" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method compute the prediction of the given data parametrized by theta executing the sigmoid function to the matrix multipplication of the biased data by the theta parameters. Is used to compute the predictions over a Dataset</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="RegularizedLogisticRegression.evaluateHypothesis">
+<code class="descname">evaluateHypothesis</code><span class="sig-paren">(</span><em>xi</em>, <em>theta</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.evaluateHypothesis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs the sigmoid function evaluation over the matrix multiplication of xi and theta returning the predicted value, is used to compute a set of examples instead of a Dataset</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="RegularizedLogisticRegression.makePrediction">
+<code class="descname">makePrediction</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.makePrediction" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns the prediction of the exampple x parametrized by the theta obtained after the optimization and gradientDescent execution</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="RegularizedLogisticRegression.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns the prediction of the exampple x parametrized by the theta obtained after the optimization and gradientDescent execution, synonym of makePrediction</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="RegularizedLogisticRegression.trainModel">
+<code class="descname">trainModel</code><span class="sig-paren">(</span><em>data</em>, <em>epochs = 100</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.trainModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method trains the model using the data provided and optimizing using gradientDescent algorithm</p>
+</dd></dl>
+
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sutil.base.Dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
+<span class="kn">from</span> <span class="nn">sutil.models.RegularizedLogisticRegression</span> <span class="kn">import</span> <span class="n">RegularizedLogisticRegression</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">pyplot</span>
+
+<span class="k">def</span> <span class="nf">plotBoundary</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Y&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Title&quot;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;y = 1&#39;</span><span class="p">,</span> <span class="s1">&#39;y = 0&#39;</span><span class="p">,</span> <span class="s1">&#39;Decision boundary&#39;</span><span class="p">]):</span>
+    <span class="c1">#Plot Boundary</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">u</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)))</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">u</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)):</span>
+            <span class="n">mf</span> <span class="o">=</span> <span class="n">map_feature</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">j</span><span class="p">]))</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">mf</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">mf</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            <span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">mf</span><span class="p">)</span>
+
+    <span class="n">z</span> <span class="o">=</span> <span class="n">z</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">pyplot</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+    <span class="n">pyplot</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">pyplot</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">xlabel</span><span class="p">)</span>
+    <span class="n">pyplot</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">ylabel</span><span class="p">)</span>
+    <span class="n">pyplot</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">legend</span><span class="p">)</span>
+    <span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">map_feature</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">):</span>
+    <span class="n">x1</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">x1</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">x2</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">x2</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">degree</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">x1</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+    <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">shape</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">degree</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="p">(</span><span class="n">x1</span> <span class="o">**</span> <span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">j</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="n">x2</span> <span class="o">**</span> <span class="n">j</span><span class="p">)</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out</span>
+
+<span class="c1">#Load the model</span>
+<span class="n">datafile</span> <span class="o">=</span> <span class="s1">&#39;./sutil/datasets/ex2data1.txt&#39;</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">fromDataFile</span><span class="p">(</span><span class="n">datafile</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">)</span>
+<span class="n">d</span><span class="o">.</span><span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;Exam 1 score&#39;</span>
+<span class="n">d</span><span class="o">.</span><span class="n">ylabel</span> <span class="o">=</span> <span class="s1">&#39;Exam 2 score&#39;</span>
+<span class="n">d</span><span class="o">.</span><span class="n">legend</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Admitted&#39;</span><span class="p">,</span> <span class="s1">&#39;Not admitted&#39;</span><span class="p">]</span>
+<span class="c1">#Some gradient descent settings</span>
+<span class="n">iterations</span> <span class="o">=</span> <span class="mi">400</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">d</span><span class="o">.</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="c1">#alpha = 0.1</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.03</span>
+<span class="n">l</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Plotting data with + indicating (y = 1) examples and o indicating (y = 0) examples.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">d</span><span class="o">.</span><span class="n">plotData</span><span class="p">()</span>
+<span class="nb">input</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Program paused. Press enter to continue.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="c1">#initialize theta</span>
+<span class="n">rlr</span> <span class="o">=</span> <span class="n">RegularizedLogisticRegression</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1">#Compute and display initial cost and gradient</span>
+<span class="n">cost</span><span class="p">,</span> <span class="n">grad</span> <span class="o">=</span> <span class="n">rlr</span><span class="o">.</span><span class="n">getCostAndGradient</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">theta</span><span class="p">);</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Cost at initial theta (zeros): </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">cost</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Expected cost (approx): 0.693</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Gradient at initial theta (zeros): </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">grad</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Expected gradients (approx):</span><span class="se">\n</span><span class="s1"> -0.1000</span><span class="se">\n</span><span class="s1"> -12.0092</span><span class="se">\n</span><span class="s1"> -11.2628</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="c1">#Compute and display cost and gradient with non-zero theta</span>
+<span class="n">test_theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">24</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">])</span>
+<span class="n">cost</span><span class="p">,</span> <span class="n">grad</span> <span class="o">=</span> <span class="n">rlr</span><span class="o">.</span><span class="n">getCostAndGradient</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">test_theta</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Cost at test theta: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">cost</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Expected cost (approx): 0.218</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Gradient at test theta: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">grad</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Expected gradients (approx):</span><span class="se">\n</span><span class="s1"> 0.043</span><span class="se">\n</span><span class="s1"> 2.566</span><span class="se">\n</span><span class="s1"> 2.647</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">input</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Program paused. Press enter to continue.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">theta</span><span class="p">,</span> <span class="n">cost</span><span class="p">,</span> <span class="n">gradient</span> <span class="o">=</span> <span class="n">rlr</span><span class="o">.</span><span class="n">gradienDescent</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">pyplot</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cost</span><span class="p">)),</span> <span class="n">cost</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Iteration&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Cost&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Cost function&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Cost found by gradient descent...&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">cost</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Wait...&quot;</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">rlr</span><span class="o">.</span><span class="n">optimizedGradientDescent</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="n">cost</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">fun</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">x</span>
+<span class="c1">#Print theta to screen</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Cost at theta found by fminunc: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">cost</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Expected cost (approx): 0.203</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;theta: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Expected theta (approx):</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39; -25.161</span><span class="se">\n</span><span class="s1"> 0.206</span><span class="se">\n</span><span class="s1"> 0.201</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1">#Plot Boundary</span>
+<span class="nb">input</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Program paused. Press enter to continue.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">prob</span> <span class="o">=</span> <span class="n">rlr</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">85</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;For a student with scores 45 and 85, we predict an admission probability of </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">prob</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Expected value: 0.775mean +/- 0.002</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">);</span>
+<span class="n">rlr</span><span class="o">.</span><span class="n">theta</span> <span class="o">=</span> <span class="n">theta</span>
+<span class="c1">#Compute accuracy on our training set</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">rlr</span><span class="o">.</span><span class="n">makePrediction</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">getBiasedX</span><span class="p">())</span>
+
+<span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)):</span>
+      <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">d</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+              <span class="nb">sum</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Train Accuracy: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="nb">sum</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="c1">#===========================</span>
+<span class="c1"># Test model from zero</span>
+<span class="c1">#===========================</span>
+<span class="n">datafile</span> <span class="o">=</span> <span class="s1">&#39;./sutil/datasets/ex2data1.txt&#39;</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">fromDataFile</span><span class="p">(</span><span class="n">datafile</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">)</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="n">RegularizedLogisticRegression</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">lr</span><span class="o">.</span><span class="n">trainModel</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="n">lr</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+<span class="n">lr</span><span class="o">.</span><span class="n">roc</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">lr</span><span class="o">.</span><span class="n">roc</span><span class="o">.</span><span class="n">zoom</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">),(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>This example shows the use of the different methods of the class</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="SklearnModel">
+<em class="property">class </em><code class="descname">SklearnModel</code><a class="headerlink" href="#SklearnModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <em>SklearnModel</em> is a class that let’s you define a wrapper for Sklearn models in order to work with a Dataset model</p>
+<dl class="attribute">
+<dt id="SklearnModel.name">
+<code class="descname">name</code><a class="headerlink" href="#SklearnModel.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>String used to identify the Model</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="SklearnModel.external">
+<code class="descname">external</code><a class="headerlink" href="#SklearnModel.external" title="Permalink to this definition">¶</a></dt>
+<dd><p>Object representing the sklearn model</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="SklearnModel.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>ecternal</em><span class="sig-paren">)</span><a class="headerlink" href="#SklearnModel.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instantiates a SklearnModel object setting it’s name to the given parameter and the external to the provided sklearn model.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="SklearnModel.trainModel">
+<code class="descname">trainModel</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#SklearnModel.trainModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method invokes the fit method of the sklearn model using the X and y attributes of the given Dataset object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="SklearnModel.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="headerlink" href="#SklearnModel.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method performs a prediction on a set of examples given by X. Return an array with the model predictions. Invokes directly to the external object predict method</p>
+</dd></dl>
+
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sutil.base.Dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
+<span class="kn">from</span> <span class="nn">sutil.models.SklearnModel</span> <span class="kn">import</span> <span class="n">SklearnModel</span>
+<span class="kn">from</span> <span class="nn">sutil.models.RegularizedLogisticRegression</span> <span class="kn">import</span> <span class="n">RegularizedLogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+
+<span class="n">datafile</span> <span class="o">=</span> <span class="s1">&#39;./sutil/datasets/ex2data1.txt&#39;</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">fromDataFile</span><span class="p">(</span><span class="n">datafile</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">)</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">d</span><span class="o">.</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.03</span>
+<span class="n">l</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="n">RegularizedLogisticRegression</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+<span class="n">lr</span><span class="o">.</span><span class="n">trainModel</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="n">lr</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+<span class="n">lr</span><span class="o">.</span><span class="n">roc</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">lr</span><span class="o">.</span><span class="n">roc</span><span class="o">.</span><span class="n">zoom</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">),(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+<span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Press enter to continue...&quot;</span><span class="p">)</span>
+
+<span class="n">ms</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">SklearnModel</span><span class="p">(</span><span class="s1">&#39;Sklearn Logistic&#39;</span><span class="p">,</span> <span class="n">ms</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">trainModel</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">roc</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">m</span><span class="o">.</span><span class="n">roc</span><span class="o">.</span><span class="n">zoom</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">),(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">simple</span><span class="p">():</span>
+    <span class="n">datafile</span> <span class="o">=</span> <span class="s1">&#39;./sutil/datasets/ex2data1.txt&#39;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">fromDataFile</span><span class="p">(</span><span class="n">datafile</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">)</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">d</span><span class="o">.</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">lr</span> <span class="o">=</span> <span class="n">RegularizedLogisticRegression</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">lr</span><span class="o">.</span><span class="n">trainModel</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="n">lr</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">sk</span><span class="p">():</span>
+    <span class="n">datafile</span> <span class="o">=</span> <span class="s1">&#39;./sutil/datasets/ex2data1.txt&#39;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">fromDataFile</span><span class="p">(</span><span class="n">datafile</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">)</span>
+    <span class="n">ms</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">SklearnModel</span><span class="p">(</span><span class="s1">&#39;Sklearn Logistic&#39;</span><span class="p">,</span> <span class="n">ms</span><span class="p">)</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">trainModel</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">timeit</span>
+<span class="k">print</span><span class="p">(</span><span class="n">timeit</span><span class="o">.</span><span class="n">timeit</span><span class="p">(</span><span class="n">simple</span><span class="p">,</span> <span class="n">number</span><span class="o">=</span><span class="mi">100</span><span class="p">))</span>
+<span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Press enter to continue...&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">timeit</span><span class="o">.</span><span class="n">timeit</span><span class="p">(</span><span class="n">sk</span><span class="p">,</span> <span class="n">number</span><span class="o">=</span><span class="mi">100</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>This example show how to use the Sklearn class</p>
+</dd></dl>
+
 </div>
 
 
@@ -51,6 +619,12 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Models package</a></li>
+<li><a class="reference internal" href="#classes">Classes</a></li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="../base/base.html"
                         title="previous chapter">Base package</a></p>
