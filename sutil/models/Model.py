@@ -4,6 +4,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.metrics import recall_score
 from sklearn.metrics import f1_score
 from sklearn.metrics import precision_score
+from sklearn.metrics import classification_report
 from sutil.metrics.ModelROC import ModelROC
 import numpy as np
 
@@ -23,8 +24,12 @@ class Model(object):
         if bias:
             X = np.hstack((np.ones((len(X), 1)), X))
         predictions = self.predict(X)
-        self.accuracy = accuracy_score(y, predictions, normalize=False)
-        self.recall = recall_score(y, predictions)
-        self.precission = precision_score(y, predictions)
-        self.f1 = f1_score(y, predictions)
-        self.roc = ModelROC(self, X, y, self.name)
+        try:
+            print(classification_report(y, predictions))
+            self.accuracy = accuracy_score(y, predictions, normalize=False)
+            self.recall = recall_score(y, predictions)
+            self.precission = precision_score(y, predictions)
+            self.f1 = f1_score(y, predictions)
+            self.roc = ModelROC(self, X, y, self.name)
+        except:
+            print("An exception occurred")

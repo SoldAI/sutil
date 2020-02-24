@@ -89,12 +89,6 @@ class RegularizedLogisticRegression(Model):
         for j in range(1, len(theta)):
             gradient[j] = np.sum(differences * x[:, j].reshape(m, 1))/m - l/m * theta[j]
         return gradient
-
-    def computePredictions(self, data, theta):
-        return self.sigmoid(np.matmul(data.getBiasedX(), theta))
-
-    def evaluateHypotesis(self, xi, theta):
-        return self.sigmoid(np.matmul(xi, theta))
                    
     def sigmoid(self, z):
         return scipy.special.expit(z)
@@ -121,6 +115,12 @@ class RegularizedLogisticRegression(Model):
                              method = 'TNC',
                              jac = RegularizedLogisticRegression.getGradient)
         return result
+
+    def computePredictions(self, data, theta):
+        return self.sigmoid(np.matmul(data.getBiasedX(), theta))
+
+    def evaluateHypotesis(self, xi, theta):
+        return self.sigmoid(np.matmul(xi, theta))
 
     def makePrediction(self, x):
         evaluation = self.evaluateHypotesis(x, self.theta)

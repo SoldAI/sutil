@@ -5,11 +5,12 @@ Created on Friday Jan 17 18:28:06 2020
 pre processor class to clean text
 @author: mcampos
 """
-from nltk.stem import WordNetLemmatizer
-from nltk.stem import PorterStemmer
-from sutil.text.StringJanitor import StringJanitor
-from nltk.corpus import stopwords
 import re
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer
+from nltk.stem import WordNetLemmatizer
+from sutil.text.Num2Words import Num2Words
+from sutil.text.StringJanitor import StringJanitor
 
 class PreProcessor:
 
@@ -21,26 +22,26 @@ class PreProcessor:
 
     def __init__(self, configurations):
         self.actions = []
-        m2m = {"case": "caseNormalization", 
-                       "denoise": "removeNoise", 
-                       "stopwords": "stopWordsRemoval",
-                       "stem": "stem",
-                       "lemmatize": "lemmatize",
-                       "normalize":"normalize"}
+        m2m = {"case": "caseNormalization",
+               "denoise": "removeNoise",
+               "stopwords": "stopWordsRemoval",
+               "stem": "stem",
+               "lemmatize": "lemmatize",
+               "normalize": "normalize",
+               "num2words": "convertNum2Words",
+               "callable":"callable"}
         for entry in configurations:
         	self.actions.append((m2m[entry[0]], entry[1]))
         self.lemmatizer = WordNetLemmatizer()
         self.janitor = StringJanitor.spanish()
-        #self.janitor.space_char = " "
         self.stemmer = PorterStemmer()
+        self.num2words = Num2Words()
 
     def preProcess(self, string):
         result = string
         for a in self.actions:
-            print("Performing " + a[0])
             method = getattr(self, a[0])
             result = method(a[1], result)
-            print(result)
         return result
 
     def stopWordsRemoval(self, idiom, string):
@@ -66,6 +67,19 @@ class PreProcessor:
         words = string.split(" ")
         lemmatized_words = [self.lemmatizer.lemmatize(word=word, pos='v') for word in words]
         return " ".join(lemmatized_words)
+
+    def convertNum2Words(self, idiom, string):
+        new_string = self.num2words.replace(string)
+        return new_string
+
+    def callable(self, function, string):
+        return function(string)
+
+    def batchPreProcess(self, texts):
+        cleaned = []
+        for t in texts:
+            cleaned.append(self.preProcess(t))
+        return cleaned
 
     #Simple text normalization using regular expressions
     def normalize(self, patterns, string):

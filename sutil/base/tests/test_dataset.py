@@ -14,7 +14,7 @@ class TestDataset(unittest.TestCase):
         """
         datafile = './sutil/datasets/ex1data1.txt'
         d = Dataset.fromDataFile(datafile, ',')
-        d.plotDataRegression('example')
+        d.plotDataRegression('example', False)
         print(d.shape)
         for i in range(len(d.X)):
             print(str(d.X[i]) + ' -->' + str(d.y[i]))
@@ -60,7 +60,7 @@ class TestDataset(unittest.TestCase):
         print("Testing split")
         datafile = './sutil/datasets/ex1data1.txt'
         d = Dataset.fromDataFile(datafile, ',')
-        d.plotDataRegression('example')
+        d.plotDataRegression('example', True)
         print(d.shape)
         train, validation, test = d.split(0.8, 0.2)
         print(train.shape, validation.shape, test.shape)

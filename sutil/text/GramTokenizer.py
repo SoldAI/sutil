@@ -1,18 +1,18 @@
-import sutil.text.PhraseTokenizer as pt
+from sutil.text.PhraseTokenizer import PhraseTokenizer
 
-class GramTokenizer(pt.PhraseTokenizer):
-     
-    def __init__(self, gram_length=3, space_char='_', additional_chars='ñ'):
+class GramTokenizer(PhraseTokenizer):
+
+    def __init__(self, gram_length=3, space_char='_'):
         self.gram_length = gram_length
-        super(GramTokenizer, self).__init__(space_char, additional_chars)
-        
+        self.space_char = space_char
+
     def getTokens(self, text, delimiter = " "):
         """
         This method extract the grams of the string
         """
         #copy = super(GramTokenizer, self).clean_string(text)
-        copy = self.cleanString(text)
-        
+        copy = text.replace(" ", self.space_char)
+
         if len(copy) <= self.gram_length:
             grams = [copy.ljust(self.gram_length, self.space_char)]
         else:

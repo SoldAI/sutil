@@ -1,3 +1,525 @@
 Models package
 ==============
-Models pacvkage contain aset of models that you can use to fit your data
+Models package contain a set of models classes and utilities that you can use to fit your data. You can subclass the Model class and also you can embed dklearn models using the Sklearn model class.
+
+Classes
+===============
+.. py:class:: Model
+
+        The *Model* is a abstract class let's you define a trainable model using the Dataset provbded by sutil. The trainModel and predict methods should be implemented by child classes
+        
+        .. py:attribute:: name
+
+        	String used to identify the Model
+
+        .. py:attribute:: accuracy
+
+        	Float representing the accuracy of the model
+
+        .. py::attribute:: recall
+
+        	Float representing the recall of the model
+
+        .. py:attribute::precission
+
+        	Float representing the precission of the model
+
+        .. py:attribute::f1
+
+        	Float representign the f1 score of the model
+
+        .. py:attribute::roc
+
+        	ModelROC object representing the roc curve of the mdodel
+        
+        .. py:method:: __init__(name = 'Model')
+
+        	Instantiates a Model object setting it's name to the given parameter
+        
+        .. py:method:: fit(X = None, y = None)
+
+        	This method performs the training of the model using the provided data. This method is provided to preserve compatibility with sklearn style models. Invokes internally to the trainModel method of the class (must be implemented for child classes) to perform the training using a Dataset object
+
+        .. py:method:: predict(X)
+
+        	This method performs a prediction on a set of examples given by X. Return an array with the mdoel predictions
+
+        .. py:method:: score(X, y, bias = True)
+
+        	This method make the predictions of the examples passed in the X array and compares it against results in y array- If the bias paramter is set to True add a bias term to the examples given in X. It computes and stores accuracy, recall, precission, f1 and roc curve parameters
+        
+        Example:
+        
+        .. code-block:: python
+        
+            from sutil.base.Coin import Coin
+            c = Coin(0.3)
+            positives = 0
+            for i in range(100):
+                if c.toss():
+                    positives += 1
+            print(positives)
+            
+        This example should print a number close to 30
+
+.. py:class:: RegularizedLinearRegression
+
+        The *RegularizedLinearRegression* is a Model class which implements a RegularizedLinearRegression implemented scypy and numpy. This class is an exampole of how can you add your own models to sutil package.
+        
+        .. py:attribute:: theta
+
+        	Parameter matrix of the Regression
+
+        .. py:attribute:: alpha 
+
+        	Gain parameter of the regression
+
+        .. py::attribute:: l
+
+        	Regularization term of the regression
+
+        .. py:method:: __init__(theta, alpha, l)
+
+        	Instantiates a new RegularizedLinearRegression object setting it's parameter matrix, gain and regularization parameters
+        
+        .. py:method:: fromDataset(data, alpha=0.1, l=0.1)
+
+        	Class method which return a new RegularizedLinearRegression initialized using the provided Dataset
+
+        .. py:method:: fromDataFile(datafile, delimeter, alpha=0.1, l=0.1)
+
+        	Class method which return a new RegularizedLinearRegression initialized loading the data provided in the file which path is provided. The delimeter parameter specifies thedelimeter string to split the datafile
+
+        .. py:method:: getCostAndGradient(data, theta)
+
+        	This method computes the cost and gradient of the function given the theta parameters and the Dataset
+
+        .. py:method:: getCost(theta, x, y, l=0)
+
+        	This static function evaluate the cost of the model (loss function value) of the prediction of the given examples parametrized by theta in relation to the difference against y outputs provided. It also applies the reguarization term to the data. This method is static to be able to be used by numpy optimizers.
+
+        .. py:method:: getGradient(theta, x, y, l=0)
+
+        	This method calculates the gradient of the cost function and returns it's values. Is astatic method which can be optimized by numpy
+
+        .. py:method:: gradienDescent(data, iterations)
+
+        	This method execute the gradient Descent algorithm using the data and iterations provided
+
+        .. py:method:: normalEquation(data)
+
+        	This method tries to solve the optimization problem using the normal equation form, calculating the theta parameters using the pseudo inverse matrix of X * X' where X' is the transpose of X multiplied by y column
+
+        .. py:method::optimizedGradientDescent(data)
+
+        	This method executes the gradient descent using the static metods of getGradient and getCost as parameters of the numpy optimizers minimize function
+
+        .. py:method:: evaluateHypothesis(xi, theta)
+
+        	Performs the matrix multiplication of xi and theta returning the predicted value
+
+        .. py:method:: makePrediction(x)
+
+        	This method returns the prediction of the exampple x parametrized by the theta obtained after the optimization and gradientDescent execution
+
+        .. py:method:: predict(x)
+
+        	This method returns the prediction of the exampple x parametrized by the theta obtained after the optimization and gradientDescent execution, synonym of makePrediction
+
+        .. py:method::trainModel(data, iterations = 100)
+
+        	This method trains the model using the data provided and optimizing using gradientDescent algorithm
+        
+        Example:
+        
+        .. code-block:: python
+        
+            import numpy as np
+            from matplotlib import cm
+            from mpl_toolkits.mplot3d import Axes3D # <--- This is important for 3d plotting 
+            from sutil.base.Dataset import Dataset
+            from sutil.models.RegularizedLinearRegression import RegularizedLinearRegression
+            import matplotlib.pyplot as pyplot
+
+            #Load the model
+            datafile = './sutil/datasets/ex1data1.txt'
+            d = Dataset.fromDataFile(datafile, ',')
+            d.plotDataRegression('example')
+
+            #Some gradient descent settings
+            iterations = 1500
+            theta = np.zeros((2, 1))
+            alpha = 0.01
+            l = 0
+
+            print('Testing the cost function ...')
+            rlf = RegularizedLinearRegression(theta, alpha, l)
+
+            #compute and display initial cost
+            J, gradient = rlf.getCostAndGradient(d, theta)
+            print('With theta = [0 ; 0]\nCost computed = ', J, '\n')
+            print('Expected cost value (approx) 32.07\n')
+
+            #further testing of the cost function
+            J, gradient = rlf.getCostAndGradient(d, np.array([-1, 2]).T)
+            print('\nWith theta = [-1 ; 2]\nCost computed = ', J, '\n')
+            print('Expected cost value (approx) 54.24\n')
+
+            print('Program paused. Press enter to continue.\n')
+            input("Press enter to continue...")
+
+            print('\nRunning Gradient Descent ...\n')
+            theta, cost, gradient = rlf.gradienDescent(d, iterations)
+
+            print('Theta found by gradient descent:\n')
+            print(theta)
+            print('Expected theta values (approx)\n')
+            print(' -3.6303\n  1.1664\n\n')
+
+
+            result = rlf.optimizedGradientDescent(d)
+            print('Theta found by optimization descent:\n')
+            print(result.x)
+            print('Expected theta values (approx)\n')
+            print(' -3.6303\n  1.1664\n\n')
+
+            input("Press enter to continue...")
+
+            #Plot the linear fit
+            fig, ax = d.getPlotRegression()
+            ax.plot(d.X, np.matmul(d.getBiasedX(), theta), '-')
+            pyplot.show()
+
+            #Predict values for population sizes of 35,000 and 70,000
+            predict1 = np.matmul([1, 3.5], theta)
+            print('For population = 35,000, we predict a profit of ', predict1*10000, '\n')
+            predict2 = np.matmul([1, 7], theta)
+            print('For population = 70,000, we predict a profit of ',predict2*10000, '\n')
+
+            print('Program paused. Press enter to continue.\n')
+            input("Press enter to continue...")
+
+            #============= Part 4: Visualizing J(theta_0, theta_1) =============
+            print('Visualizing J(theta_0, theta_1) ...\n')
+
+            #Grid over which we will calculate J
+            theta0_vals = np.linspace(-10, 10, 100)
+            theta1_vals = np.linspace(-1, 4, 100)
+            X, Y = np.meshgrid(theta0_vals, theta1_vals)
+
+            #initialize J_vals to a matrix of 0's
+            J_vals = np.zeros((len(theta0_vals), len(theta1_vals)))
+
+            #Fill out J_vals
+            for i in range(len(theta0_vals)):
+            	for j in range(len(theta1_vals)):
+            		t = np.array([theta0_vals[i], theta1_vals[j]]).T
+            		J_vals[i][j], gradient = rlf.getCostAndGradient(d, t)
+
+            print(theta0_vals.shape)
+            print(theta1_vals.shape)
+            print(J_vals.shape)
+            print(J_vals)
+
+            input("Press enter to continue...")
+            #% Because of the way meshgrids work in the surf command, we need to
+            #% transpose J_vals before calling surf, or else the axes will be flipped
+            J_vals = J_vals.T
+
+            #% Surface plot
+            fig2 = pyplot.figure()
+            ax = fig2.gca(projection='3d')
+            surf = ax.plot_surface(X, Y, J_vals, cmap=cm.winter, linewidth=1, antialiased=True)
+
+            #% Contour plot
+            pyplot.figure()
+            # Plot J_vals as 15 contours spaced logarithmically between 0.01 and 100
+            pyplot.contour(theta0_vals, theta1_vals, J_vals, np.logspace(-2, 3, 20))
+            pyplot.xlabel('theta_0')
+            pyplot.ylabel('theta_1')
+            pyplot.plot(theta[0], theta[1], color='red', marker='x', linestyle='dashed', linewidth=2, markersize=12)
+            pyplot.show()
+
+            
+        This example shows the use of the different methods of the class
+
+.. py:class:: RegularizedLogisticRegression
+
+        The *RegularizedLogisticRegression* is a Model class which implements a RegularizedLogisticRegression using scypy and numpy. This class is an exampole of how can you add your own models to sutil package.
+        
+        .. py:attribute:: theta
+
+        	Parameter matrix of the Regression
+
+        .. py:attribute:: alpha 
+
+        	Gain parameter of the regression
+
+        .. py::attribute:: l
+
+        	Regularization term of the regression
+
+        .. py:attribute:: name
+
+        	Name of the model
+
+        .. py:method:: __init__(theta, alpha, l)
+
+        	Instantiates a new RegularizedLinearRegression object setting it's parameter matrix, gain and regularization parameters
+        
+        .. py:method:: fromDataset(data, alpha=0.1, l=0.1)
+
+        	Class method which return a new RegularizedLogisticRegression initialized using the provided Dataset
+
+        .. py:method:: fromDataFile(datafile, delimeter, alpha=0.1, l=0.1)
+
+        	Class method which return a new RegularizedLogisticRegression initialized loading the data provided in the file which path is provided. The delimeter parameter specifies thedelimeter string to split the datafile
+
+        .. py:method:: getCostAndGradient(data, theta)
+
+        	This method computes the cost and gradient of the function given the theta parameters and the Dataset
+
+        .. py:method:: getCost(theta, x, y, l=0)
+
+        	This static function evaluate the cost of the model (loss function value) of the prediction of the given examples parametrized by theta in relation to the difference against y outputs provided. It also applies the reguarization term to the data. This method is static to be able to be used by numpy optimizers.
+
+        .. py:method:: getGradient(theta, x, y, l=0)
+
+        	This method calculates the gradient of the cost function and returns it's values. Is astatic method which can be optimized by numpy
+
+        .. py:method:: gradienDescent(data, iterations)
+
+        	This method execute the gradient Descent algorithm using the data and iterations provided
+
+        .. py:method:: sigmoid(z)
+
+        	This method calculates the sigmoidal function to the z parameter
+
+        .. py:method:: optimizedGradientDescent(data)
+
+        	This method executes the gradient descent using the static metods of getGradient and getCost as parameters of the numpy optimizers minimize function
+
+        .. py:method:: computePredictions(data, theta)
+
+        	This method compute the prediction of the given data parametrized by theta executing the sigmoid function to the matrix multipplication of the biased data by the theta parameters. Is used to compute the predictions over a Dataset
+
+        .. py:method:: evaluateHypothesis(xi, theta)
+
+        	Performs the sigmoid function evaluation over the matrix multiplication of xi and theta returning the predicted value, is used to compute a set of examples instead of a Dataset
+
+        .. py:method:: makePrediction(x)
+
+        	This method returns the prediction of the exampple x parametrized by the theta obtained after the optimization and gradientDescent execution
+
+        .. py:method:: predict(x)
+
+        	This method returns the prediction of the exampple x parametrized by the theta obtained after the optimization and gradientDescent execution, synonym of makePrediction
+
+        .. py:method:: trainModel(data, epochs = 100)
+
+        	This method trains the model using the data provided and optimizing using gradientDescent algorithm
+        
+        Example:
+        
+        .. code-block:: python
+        
+          # -*- coding: utf-8 -*-
+          import numpy as np
+          from sutil.base.Dataset import Dataset
+          from sutil.models.RegularizedLogisticRegression import RegularizedLogisticRegression
+          import matplotlib.pyplot as pyplot
+
+          def plotBoundary(theta, xlabel="X", ylabel="Y", title="Title", legend=['y = 1', 'y = 0', 'Decision boundary']):
+              #Plot Boundary
+              u = np.linspace(-1, 1.5, 50)
+              v = np.linspace(-1, 1.5, 50)
+              z = np.zeros(shape=(len(u), len(v)))
+
+              for i in range(len(u)):
+            	  for j in range(len(v)):
+            	      mf = map_feature(np.array(u[i]), np.array(v[j]))
+            	      print(mf)
+            	      print(mf.shape)
+            	      z[i, j] = np.matmul(theta, mf)
+
+              z = z.T
+              pyplot.contour(u, v, z)
+              pyplot.title(title)
+              pyplot.xlabel(xlabel)
+              pyplot.ylabel(ylabel)
+              pyplot.legend(legend)
+              pyplot.show()
+
+          def map_feature(x1, x2):
+              x1.shape = (x1.size, 1)
+              x2.shape = (x2.size, 1)
+              degree = 6
+              out = np.ones(shape=(x1[:, 0].size, 1))
+
+              m, n = out.shape
+
+              for i in range(1, degree + 1):
+                  for j in range(i + 1):
+                      r = (x1 ** (i - j)) * (x2 ** j)
+                      out = np.append(out, r, axis=1)
+              return out
+
+          #Load the model
+          datafile = './sutil/datasets/ex2data1.txt'
+          d = Dataset.fromDataFile(datafile, ',')
+          d.xlabel = 'Exam 1 score'
+          d.ylabel = 'Exam 2 score'
+          d.legend = ['Admitted', 'Not admitted']
+          #Some gradient descent settings
+          iterations = 400
+          theta = np.zeros((d.n + 1, 1))
+          #alpha = 0.1
+          alpha = 0.03
+          l = 0
+          print('Plotting data with + indicating (y = 1) examples and o indicating (y = 0) examples.\n')
+          d.plotData()
+          input('\nProgram paused. Press enter to continue.\n')
+          #initialize theta
+          rlr = RegularizedLogisticRegression(theta, alpha, l, train=1)
+          #Compute and display initial cost and gradient
+          cost, grad = rlr.getCostAndGradient(d, theta);
+          print('Cost at initial theta (zeros): \n', cost)
+          print('Expected cost (approx): 0.693\n')
+          print('Gradient at initial theta (zeros): \n')
+          print(grad)
+          print('Expected gradients (approx):\n -0.1000\n -12.0092\n -11.2628\n')
+          #Compute and display cost and gradient with non-zero theta
+          test_theta = np.array([-24, 0.2, 0.2])
+          cost, grad = rlr.getCostAndGradient(d, test_theta.T)
+          print('\nCost at test theta: \n', cost)
+          print('Expected cost (approx): 0.218\n')
+          print('Gradient at test theta: \n')
+          print(grad)
+          print('Expected gradients (approx):\n 0.043\n 2.566\n 2.647\n')
+          input('\nProgram paused. Press enter to continue.\n')
+          theta, cost, gradient = rlr.gradienDescent(d, 100)
+          print(theta)
+          fig, ax = pyplot.subplots()
+          ax.scatter(range(len(cost)), cost, marker='x', c='r')
+          ax.set(xlabel='Iteration', ylabel='Cost', title='Cost function')
+          ax.grid()
+          pyplot.show()
+          print("Cost found by gradient descent...")
+          print(cost[-1])
+          input("Wait...")
+          result = rlr.optimizedGradientDescent(d)
+          cost = result.fun
+          theta = result.x
+          #Print theta to screen
+          print('Cost at theta found by fminunc: \n', cost)
+          print('Expected cost (approx): 0.203\n')
+          print('theta: \n')
+          print(theta)
+          print('Expected theta (approx):\n')
+          print(' -25.161\n 0.206\n 0.201\n')
+
+          #Plot Boundary
+          input('\nProgram paused. Press enter to continue.\n')
+          prob = rlr.sigmoid(np.matmul(theta, [1, 45, 85]))
+          print('For a student with scores 45 and 85, we predict an admission probability of \n', prob)
+          print('Expected value: 0.775mean +/- 0.002\n\n');
+          rlr.theta = theta
+          #Compute accuracy on our training set
+          p = rlr.makePrediction(d.getBiasedX())
+
+          sum = 0
+          for i in range(len(p)):
+          	if p[i] == d.y[i]:
+          		sum += 1
+
+          print('Train Accuracy: \n', sum/len(p) * 100)
+
+          #===========================
+          # Test model from zero
+          #===========================
+          datafile = './sutil/datasets/ex2data1.txt'
+          d = Dataset.fromDataFile(datafile, ',')
+          lr = RegularizedLogisticRegression(theta, alpha, l, train=1)
+          lr.trainModel(d)
+          lr.score(d.X, d.y)
+          lr.roc.plot()
+          lr.roc.zoom((0, 0.4),(0.5, 1.0))
+
+        This example shows the use of the different methods of the class
+
+.. py:class:: SklearnModel
+
+        The *SklearnModel* is a class that let's you define a wrapper for Sklearn models in order to work with a Dataset model
+        
+        .. py:attribute:: name
+
+        	String used to identify the Model
+
+        .. py:attribute:: external
+
+        	Object representing the sklearn model
+
+        .. py:method:: __init__(name, ecternal)
+
+        	Instantiates a SklearnModel object setting it's name to the given parameter and the external to the provided sklearn model.
+        
+        .. py:method:: trainModel(data)
+
+        	This method invokes the fit method of the sklearn model using the X and y attributes of the given Dataset object
+
+        .. py:method:: predict(X)
+
+        	This method performs a prediction on a set of examples given by X. Return an array with the model predictions. Invokes directly to the external object predict method
+        
+        Example:
+        
+        .. code-block:: python
+        
+            # -*- coding: utf-8 -*-
+            import numpy as np
+            from sutil.base.Dataset import Dataset
+            from sutil.models.SklearnModel import SklearnModel
+            from sutil.models.RegularizedLogisticRegression import RegularizedLogisticRegression
+            from sklearn.linear_model import LogisticRegression
+
+            datafile = './sutil/datasets/ex2data1.txt'
+            d = Dataset.fromDataFile(datafile, ',')
+            theta = np.zeros((d.n + 1, 1))
+            alpha = 0.03
+            l = 0
+            lr = RegularizedLogisticRegression(theta, alpha, l)
+            lr.trainModel(d)
+            lr.score(d.X, d.y)
+            lr.roc.plot()
+            lr.roc.zoom((0, 0.4),(0.5, 1.0))
+            input("Press enter to continue...")
+
+            ms = LogisticRegression()
+            m = SklearnModel('Sklearn Logistic', ms)
+            m.trainModel(d)
+            m.score(d.X, d.y)
+            m.roc.plot()
+            m.roc.zoom((0, 0.4),(0.5, 1.0))
+
+            def simple():
+                datafile = './sutil/datasets/ex2data1.txt'
+                d = Dataset.fromDataFile(datafile, ',')
+                theta = np.zeros((d.n + 1, 1))
+                lr = RegularizedLogisticRegression(theta, 0.03, 0)
+                lr.trainModel(d)
+                lr.score(d.X, d.y)
+
+            def sk():
+                datafile = './sutil/datasets/ex2data1.txt'
+                d = Dataset.fromDataFile(datafile, ',')
+                ms = LogisticRegression()
+                m = SklearnModel('Sklearn Logistic', ms)
+                m.trainModel(d)
+                m.score(d.X, d.y)
+
+            import timeit
+            print(timeit.timeit(simple, number=100))
+            input("Press enter to continue...")
+            print(timeit.timeit(sk, number=100))
+
+        This example show how to use the Sklearn class
