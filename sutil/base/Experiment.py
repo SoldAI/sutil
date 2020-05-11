@@ -35,13 +35,14 @@ class Experiment:
                 return self.models[name]
         return None
 
-    def run(self, plot = False):
+    def run(self, plot = False, train = False):
         for model_name, model in self.models.items():
             print("Training model " + model_name)
             model.trainModel(self.train)
-            print("*" * 30)
-            print("Training score")
-            model.score(self.train.X, self.train.y)
+            if train:
+                print("*" * 30)
+                print("Training score")
+                model.score(self.train.X, self.train.y)
             if self.validation is not None:
                 print("*" * 30)
                 print("Validation score")

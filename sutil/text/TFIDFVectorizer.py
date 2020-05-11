@@ -18,30 +18,25 @@ class TFIDFVectorizer(TextVectorizer):
         self.vectorizer.analyzer = tokenizer.tokenize
 
     def initialize(self, texts):
+        self.index = {}
+        self.dictionary = self.colapseTFIDF(texts)
+        i = 0
+        for fn in self.vectorizer.get_feature_names():
+                self.index[fn] = i
+                i += 1
+        self.entries = len(self.dictionary)
+
+    def colapseTFIDF(self, texts):
         vectors = self.vectorizer.fit_transform(texts)
-        feature_names = self.vectorizer.get_feature_names()
         dense = vectors.todense()
-        denselist = dense.tolist()
-        self.dictionary = pd.DataFrame(denselist, columns=feature_names)
-        self.entries = len(self.dictionary.columns)
-
-    def encodePhrase(self, phrase):
-         tokens = self.tokenizer.tokenize(phrase)
-         vec = np.zeros(self.dictionary.shape[1])
-         for t in tokens:
-             #print("including token " + t)
-             if t in self.dictionary.columns:
-                 index = self.dictionary.columns.get_loc(t)
-                 #print(index, self.dictionary[t][0])
-                 vec[index] = self.dictionary[t][0]
-         return vec
-
-    def decodeVector(self, vector):
-        out = ""
-        for i in range(len(vector)):
-            if vector[i] != 0:
-                out += self.dictionary.columns[i]
-        return out
+        denselist = np.array(dense.tolist())
+        feature_names = self.vectorizer.get_feature_names()
+        averaged = np.zeros(len(denselist[0]))
+        for i in range(len(denselist[0])):
+            averaged[i] = np.average(denselist[:, i])
+        #self.dictionary = pd.DataFrame(denselist, columns=feature_names)
+        dictionary = {k: v for k, v in zip(feature_names, averaged)}
+        return dictionary
 
     def getValues(self):
         return self.dictionary.values

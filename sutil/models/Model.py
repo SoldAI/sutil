@@ -25,11 +25,12 @@ class Model(object):
             X = np.hstack((np.ones((len(X), 1)), X))
         predictions = self.predict(X)
         try:
-            print(classification_report(y, predictions))
+            self.classification_report = classification_report(y, predictions)
+            print(self.classification_report)
             self.accuracy = accuracy_score(y, predictions, normalize=False)
             self.recall = recall_score(y, predictions)
             self.precission = precision_score(y, predictions)
             self.f1 = f1_score(y, predictions)
-            self.roc = ModelROC(self, X, y, self.name)
+            #self.roc = ModelROC(self, X, y, self.name)
         except:
             print("An exception occurred")

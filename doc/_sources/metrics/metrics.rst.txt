@@ -1,3 +1,73 @@
 Metrics Package
 =================================
-SoldAI utils (sutil) metrics package includes metrics
+SoldAI utils (sutil) metrics package includes metrics to evaluate the classification results.
+
+Classes
+===============
+.. py:class:: ModelROC
+
+        The *ModelROC* class let's you define a evaluation metric for classification using the ROC curve to evaluate a classification model. The class calculates the predictions and plot the area under the curve.
+        
+        .. py:attribute:: model
+
+            It's a model object previously trained that will be used to compute the predictions.
+
+        .. py:attribute:: fpr
+
+            False positives rate.
+
+        .. py:attribute:: tpr
+
+            True positives rate.
+
+        .. py:attribute:: auc
+
+            Area under the curve score
+
+        .. py:attribute:: legend
+
+            Legend for the graph
+        
+        .. py:method:: __init__(model, X_test, y_test, legend = 'model')
+
+            Instantiates a new ModelROC class to be evaluated using the prediction of the given X and comparing it against the y_test values. The predictipns are made invoking to the getPredictions method. Then the roc_curve method of sklearn is invoked to find the auc score
+        
+        .. py:method:: getPredictions(X_test)
+
+            Return the predictions made by the self.model.predict method
+
+        .. py:method:: plotData()
+
+        	Sets the ROC curve plot data of the evaluated model using the paramters defined in the class. This class don't show the plot, only sets the values to plot
+
+        .. py:method:: plot()
+
+        	This method shows the ROCCurve of the plot obtained invoking to the pltData method
+
+        .. py:method:: zoom(zoom_x, zoom_y)
+
+        	This method recieves two tuples being the zoom ranges for the x and y axis. This method let's you zoom some part of the ROC curve plot and shows the result.
+        
+        Example:
+        
+        .. code-block:: python
+        
+            # -*- coding: utf-8 -*-
+            import numpy as np
+            from sutil.base.Dataset import Dataset
+            from sutil.models.RegularizedLogisticRegression import RegularizedLogisticRegression
+            from sutil.metrics.ModelROC import ModelROC
+
+            datafile = './sutil/datasets/ex2data1.txt'
+            d = Dataset.fromDataFile(datafile, ',')
+            theta = np.zeros((d.n + 1, 1))
+            alpha = 0.03
+            l = 0
+            lr = RegularizedLogisticRegression(theta, alpha, l)
+            lr.trainModel(d)
+
+            m = ModelROC(lr, d.getBiasedX(), d.y, legend = 'Example of Model ROC usage')
+            m.plot()
+            m.zoom((0, 0.4),(0.5, 1.0))
+            
+        This example ilustrates how to use the ModelROC class

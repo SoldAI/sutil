@@ -55,7 +55,7 @@ class Dataset(object):
         self.y = data[:, -1]
         self.initialize(self.X, self.y)
 
-    def plotData(self, file=None, d3=False):
+    def plotData(self, file=None, d3=False, show_legend = True):
         #The plotted data is assuming 2 dimenssions, check what happened if it's more how to make the projection into 2 dimensions
         classes = self.labels
         if d3:
@@ -92,7 +92,8 @@ class Dataset(object):
             else:
                 ax.scatter(x_graph[index, 0], x_graph[index, 1], marker=markers[m_index], c=colors[c_index])
         ax.set(xlabel=self.xlabel, ylabel=self.ylabel, title=self.title)
-        ax.legend(self.legend)
+        if show_legend:
+            ax.legend(self.legend)
 
         if file:
             plt.savefig(file + '.png')
@@ -150,9 +151,9 @@ class Dataset(object):
         x_norm = example
         for i in range(len(x_norm)):
             if self.sigma[i] == 0:
-                x_norm[:, i] = (self.x_norm[:, i] - self.mu[i]) 
+                x_norm[i] = (x_norm[i] - self.mu[i]) 
             else:
-                x_norm[:, i] = (self.x_norm[:, i] - self.mu[i]) / self.sigma[i]
+                x_norm[i] = (x_norm[i] - self.mu[i]) / self.sigma[i]
         return x_norm
 
     #Returns the test, validation and test datasets

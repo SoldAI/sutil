@@ -1,3 +1,84 @@
 Neuralnet
 =========
 Neuralnet is a package that include classes to manage very simple neural netowrks
+
+Classes
+===============
+.. py:class:: NeuralNetworkClassifier
+
+        The *NeuralNetworkClassifier* class let's you define a Neural NetworkC lasifier, this network is built over the sklearn MLPClassifier class and let's you define the network architecture and parameters using a grid search or a direct hard definition.
+        
+        .. py:attribute:: layers
+
+            Tuple of integers defining the size of each layer in the neural network.
+
+        .. py:attribute:: clf
+
+        	MLPClassifer which performs the training and calssification
+        
+        .. py:method:: __init__(layers)
+
+            This method indtantiates the NeuralNetwork using the parameters given the number of layers, setting the name of the model, the solver (adam by default) the alpha regularization parameter (0.001) by default. The activation function is defined asa relu by default but can be manually set. The class instantiate the attribute clf as a new MLPClassifier using the given parameters
+        
+        .. py:method:: trainModel(data)
+
+            Trains the model using the examples in the given dataSet. Invokes to the fit method of the MLPClassifier class
+
+        .. py:method:: predict(X)
+
+        	This method perform the predictions of the given examples. This method is a wrapper of the MLPClassifier predict method
+
+        .. py:method:: searchParameters(data, param_grid = None, layers_range = (1, 10))
+
+        	This method perfrom a grid search over the paramters given, to find the best training configuration. This method can be used in combination with the sample method of the Datset class because it's computationally expensive. It uses the GridSearchCV parameter of sklearn
+        
+        Example:
+        
+        .. code-block:: python
+        
+            import numpy as np
+            from sutil.base.Dataset import Dataset
+            from sutil.models.SklearnModel import SklearnModel
+            from sutil.models.RegularizedLogisticRegression import RegularizedLogisticRegression
+            from sklearn.linear_model import LogisticRegression
+            from sutil.neuralnet.NeuralNetworkClassifier import NeuralNetworkClassifier
+
+            datafile = './sutil/datasets/ex2data1.txt'
+            d = Dataset.fromDataFile(datafile, ',')
+            theta = np.zeros((d.n + 1, 1))
+            alpha = 0.03
+            l = 0
+            lr = RegularizedLogisticRegression(theta, alpha, l)
+            lr.trainModel(d)
+            lr.score(d.X, d.y)
+            lr.roc.plot()
+            lr.roc.zoom((0, 0.4),(0.5, 1.0))
+
+            input("Press enter to continue...")
+
+            ms = LogisticRegression()
+            m = SklearnModel('Sklearn Logistic', ms)
+            m.trainModel(d)
+            m.score(d.X, d.y)
+            m.roc.plot()
+            m.roc.zoom((0, 0.4),(0.5, 1.0))
+
+            input("Press enter to continue...")
+            d.normalizeFeatures()
+            print(d.size)
+            input("Size of the dataset... ")
+            sample = d.sample(0.3)
+            print(sample.size)
+            input("Size of the sample... ")
+            sample2 = d.sample(examples = 30)
+            print(sample2.size)
+            input("Size of the sample 2... ")
+            nn = NeuralNetworkClassifier((d.n, len(d.labels)))
+            nn.searchParameters(sample2)
+            nn.trainModel(d)
+            nn.score(d.X, d.y)
+            nn.roc.plot()
+            nn.roc.zoom((0, 0.4),(0.5, 1.0))
+
+            
+        This example shows how to use the different methods of the NeuralNetworkClassifier

@@ -15,16 +15,17 @@ class TextDataset(Dataset):
         df = pd.read_csv(filename)
         X = df[df.columns[0]]
         y = df[df.columns[-1]].values
-        return cls(X, y, vectorizer, preprocessor)
+        return cls(X, y, vectorizer, preprocessor, False)
 
     @classmethod
-    def setvectorizer(cls, filename, vectorizer = None, preprocessor = None, **kwargs):
+    def setvectorizer(cls, filename, vectorizer = None, preprocessor = None, normalize_features = False, **kwargs):
         df = pd.read_csv(filename)
         X = df[df.columns[0]]
         y = df[df.columns[-1]].values
         return cls(X, y, vectorizer, preprocessor)
 
-    def __init__(self, X, y, vectorizer = None, preprocessor = None, **kwargs):
+    def __init__(self, X, y, vectorizer = None, preprocessor = None, normalize_features = False, **kwargs):
+        self.normalize_features = normalize_features
         if vectorizer:
             self.vectorizer = vectorizer 
         else: 
@@ -33,21 +34,25 @@ class TextDataset(Dataset):
             self.preprocessor = preprocessor 
         else: 
             self.preprocessor = PreProcessor.standard()
-        print(X)
+        #print(X)
         self.initialize(X, y)
 
     def initialize(self, texts, y, **kwargs):
         self.texts = texts
         processed = self.preprocessor.batchPreProcess(texts)
         self.vectorizer.initialize(processed)
-        X = self.vectorizer.textToMatrix(texts)
-        print(X)
-        print(y)
+        X = self.vectorizer.textToMatrix(processed)
+        #print(X)
+        #print(y)
         self.setData(X, y)
-        self.X, self.mu, self.sigma = self.normalizeFeatures()
+        if self.normalize_features:
+            self.X, self.mu, self.sigma = self.normalizeFeatures()
 
     def encodePhrase(self, phrase):
         phrase = self.preprocessor.preProcess(phrase)
+        #return self.normalizeExample(self.vectorizer.encodePhrase(phrase))
+        if self.normalize_features:
+            return self.normalizeExample(self.vectorizer.encodePhrase(phrase))
         return self.vectorizer.encodePhrase(phrase)
 
     def decodeVector(self, vector):
