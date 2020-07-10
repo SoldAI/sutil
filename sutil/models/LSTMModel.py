@@ -1,9 +1,10 @@
 from sutil.models.Model import Model
-import matplotlib.pyplot as plt
 from tensorflow.keras.layers import Dense, Input, LSTM, Embedding, Dropout
 from tensorflow.keras.layers import GlobalMaxPool1D
 from tensorflow.keras.models import Model as KerasModel
 from sklearn import preprocessing
+import matplotlib.pyplot as plt
+import numpy as np
 
 class LSTMModel(Model):
 
@@ -20,10 +21,8 @@ class LSTMModel(Model):
         self.model.summary()
 
     def defineModel(self, maxlen, max_features = 20000, embed_size = 128, number_of_classes = 1):
-        train, test = t_onehot.split(0.8, 0)
-        maxlen = t_onehot.n + 1
         #Input layer
-        inp = Input(shape=(maxlen, )) #maxlen=200 as defined earlier
+        inp = Input(shape=(maxlen, )) 
         x = Embedding(max_features, embed_size)(inp)
         #LSTM layer
         x = LSTM(60, return_sequences=True,name='lstm_layer')(x)
@@ -78,3 +77,4 @@ class LSTMModel(Model):
         plt.plot(epochs, loss)
         plt.plot(epochs, val_loss)
         plt.title('Training and validation loss')
+        plt.show()

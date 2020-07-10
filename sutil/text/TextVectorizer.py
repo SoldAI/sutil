@@ -50,4 +50,6 @@ class TextVectorizer():
         for t in texts:
             matrix[i:] = self.encodePhrase(t)
             i += 1
+            if i % 500 == 0:
+                print(i)
         return matrix
