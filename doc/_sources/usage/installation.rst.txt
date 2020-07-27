@@ -1,4 +1,4 @@
 Installation
 ============
-You can install sutil via pip, it requires sklearn, matplotlib::
+You can install sutil via pip, it requires Sklearn, Matplotlib::
 	pip install soldai-utils

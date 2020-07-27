@@ -1,7 +1,7 @@
 Quick Start
 ============
-Sutil let's you load your models and format it to numbers using the Dataset class.
-First build a class:
+Sutil lets you load your models and format them to numbers using the Dataset class.
+First, build a class:
 
 You can install via pip:
 

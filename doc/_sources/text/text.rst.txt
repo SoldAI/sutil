@@ -1,34 +1,35 @@
 Text Package
 ==============
-Sutil text package contains a comprehensive set of utilites to perpform Natural Language Processing tasks. It define classes for preprocessing and semantic analysis
+Sutil text package contains a comprehensive set of utilities to perform Natural Language Processing tasks. It defines classes for preprocessing and semantic analysis.
 
-Pre processing
+Preprocessing
 ===============
-Pre processing is the task of Natural Language Processing is the task which transform the text in order to make it predictable and analyzable for NLP systems to work with. Sutil pakage include classes that allows you to perform basic and custom pre processing to text and tokenization:
+Preprocessing is the task of Natural Language Processing is the task which transforms the text to make it predictable and analyzable for NLP systems to work with. Sutil package includes classes that allow you to perform basic and custom pre-processing to text and tokenization:
 
 Classes
 ===============
 .. py:class:: PreProcessor
 
-        The *PreProcessor* class let's you perform a set of standard text pre processing tasks including:
+        The *PreProcessor* class lets you perform a set of standard text pre-processing tasks including:
         * Case normalization
         * Denoising
         * Stop words removal
         * Basic text normalization
         * Lemmatization
         * Stemming
+        * Num2Words
         
         .. py:attribute:: actions
 
-        It's a list value which holds the order of the pre processing functions tasks to be performed by the PreProcessor.
+        	It's a list value that holds the order of the pre-processing functions tasks to be performed by the PreProcessor.
         
         .. py:method:: __init__(configuration)
 
-        Instantiates a PreProcessor object with a specific configuration
+        	Instantiates a PreProcessor object with a specific configuration.
         
         .. py:method:: preProcess(string)
 
-        Return a string value after execute all the pre processing configured tasks.
+        	Return a string value after executing all the pre-processing configured tasks.
         
         Example:
         
@@ -42,4 +43,4 @@ Classes
                     positives += 1
             print(positives)
             
-        This example should print a number close to 30
+        This example should print a number close to 30.

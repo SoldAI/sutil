@@ -1,11 +1,16 @@
 Neuralnet
 =========
+<<<<<<< Updated upstream
 Neuralnet is a package that include classes to manage very simple neural netowrks
+=======
+Neuralnet is a package that includes classes to manage elementary neural networks.
+>>>>>>> Stashed changes
 
 Classes
 ===============
 .. py:class:: NeuralNetworkClassifier
 
+<<<<<<< Updated upstream
         The *NeuralNetworkClassifier* class let's you define a Neural NetworkC lasifier, this network is built over the sklearn MLPClassifier class and let's you define the network architecture and parameters using a grid search or a direct hard definition.
         
         .. py:attribute:: layers
@@ -31,6 +36,33 @@ Classes
         .. py:method:: searchParameters(data, param_grid = None, layers_range = (1, 10))
 
         	This method perfrom a grid search over the paramters given, to find the best training configuration. This method can be used in combination with the sample method of the Datset class because it's computationally expensive. It uses the GridSearchCV parameter of sklearn
+=======
+        The *NeuralNetworkClassifier* class lets you define a Neural Network Clasifier, this network is built over the sklearn MLPClassifier class and lets you set the network architecture and parameters using a grid search or a direct hard definition.
+        
+        .. py:attribute:: layers
+
+            A tuple of integers defining the size of each layer in the neural network.
+
+        .. py:attribute:: clf
+
+        	MLPClassifer which performs the training and classification.
+        
+        .. py:method:: __init__(layers)
+
+            This method instantiates the NeuralNetwork using the parameters given the number of layers, setting the name of the model, the solver (adam by default) the alpha regularization parameter (0.001) by default. The activation function is defined as a relu by default but can be manually set. The class instantiate the attribute clf as a new MLPClassifier using the given parameters.
+        
+        .. py:method:: trainModel(data)
+
+            Trains the model using the examples in the given dataSet. Invokes the fit method of the MLPClassifier class.
+
+        .. py:method:: predict(X)
+
+        	This method performs the predictions of the given examples. This method is a wrapper of the MLPClassifier predict method.
+
+        .. py:method:: searchParameters(data, param_grid = None, layers_range = (1, 10))
+
+        	This method perfrom a grid search over the paramters given, to find the best training configuration. This method can be used in combination with the sampling method of the Dataset class because it's computationally expensive. It uses the GridSearchCV parameter of sklearn.
+>>>>>>> Stashed changes
         
         Example:
         
@@ -81,4 +113,9 @@ Classes
             nn.roc.zoom((0, 0.4),(0.5, 1.0))
 
             
+<<<<<<< Updated upstream
         This example shows how to use the different methods of the NeuralNetworkClassifier
+=======
+        This example shows how to use the different methods of the NeuralNetworkClassifier.
+
+>>>>>>> Stashed changes

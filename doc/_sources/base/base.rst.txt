@@ -1,26 +1,26 @@
 Base package
 ===============
 
-Base package includes classes that help you make different basic tasks related to ML models and analytics
+Base package includes classes that help you make different basic tasks related to ML models and analytics.
 
 
 Classes
 ===============
 .. py:class:: Coin
 
-        The *Coin* class let's you define a charged coin with some probability value bwtween 0 and 1. It's useful to model stochastic binary processes using biased probabilities.
+        The *Coin* class lets you define a charged coin with some probability value between 0 and 1. It’s useful to model stochastic binary processes using biased probabilities.
         
         .. py:attribute:: probability
 
-            It's a float value between 0 and 1 which indicates the probability of the positive event. For ecample a Coin with probability 0.3 will return positive aproximately 30 times fif we run the toss metods 100 tosses.
+            It’s a float value between 0 and 1, which indicates the probability of a positive event. For example, a Coin with probability 0.3 will return positive approximately 30 times if we run the toss methods 100 tosses.
         
         .. py:method:: __init__(probability)
 
-            Instantiates a Coin object with a given probability
+            Instantiates a Coin object with a given probability.
         
         .. py:method:: toss()
 
-            Return True or False, true if the event were evaluated positively, False otherwise
+            Return True or False, True if the event were evaluated positively, False otherwise.
         
         Example:
         
@@ -34,35 +34,35 @@ Classes
                     positives += 1
             print(positives)
             
-        This example should print a number close to 30
+        This example should print a number close to 30.
         
 .. py:class:: Dataset
 
-    The *Dataset* class is a simple abstraction of a dataset multidimensional, wich can be fed to a model, it includes method to normalize the data, add bias plot, and split the data in train, test and validation datasets. Includes functionality to normalize the feature add Bias term to the data and sample a number of examples. It comes handy to load dataset that are expressed as a csv of separeted features and have the class as the last one. It's modeled as a couple of matrixes, a train matrix of dimensions ``m x n`` this means the Datset has m examples, each one having n features.
+    The *Dataset* class is a simple abstraction of a multidimensional dataset, which can be fed to a model. It includes a method to normalize the data, add a bias plot, and split the data in train, test, and validation datasets. Provides functionality to normalize the feature add Bias term to the data, and sample a number of examples. It comes handy to load datasets that are expressed as a csv of separated features and have the class as the last one. It’s modeled as a couple of matrixes, a training matrix of dimensions ``m x n “this means the dataset has m examples, each one having n features.
     
     .. py:attribute:: X
 
-        It's a float numpy array that represent the fearures in the dataset
+        It’s a float NumPy array that represents the features in the dataset.
         
     .. py:attribute:: y
 
-        It's a float numpy array that represents the labels of the examples
+        It’s a float NumPy array that represents the labels of the examples.
     
     .. py:attribute:: n
 
-        Number of features on each example of the dataset
+        The number of features on each example of the dataset.
     
     .. py:attribute:: m
 
-        Number of examples in the dataset. Is synonym of size attribute
+        The number of examples in the dataset. Is the synonym of the ‘size’ attribute.
 
     .. py:attribute:: size
 
-        Number of examples in the dataset. Is a synonym of the m attribute
+        The number of examples in the dataset. Is a synonym of the ‘m’ attribute.
     
     .. py:attribute:: shape
 
-        Tuple indicating the shape of the dataset
+        Tuple indicating the shape of the dataset.
 
     .. py:attribute:: labels
 
@@ -70,43 +70,43 @@ Classes
 
     .. py:attribute:: xsize
 
-        Integer number of feature of each example in the dataset. Synonym of the n attribute
+        An integer number of features of each example in the dataset. Is a synonym of the ‘n’ attribute.
 
     .. py:attribute:: ysize
 
-        Integer number of features in the label output. Useful for multi labeling classification
+        An integer number of features in the label output. Useful for multi labeling classification.
 
     .. py:attribute:: title
 
-        String represeting the title of the graph of the dataset when the plotData method is invoked
+        A string representing the title of the graph of the dataset when the plotData method is invoked.
 
     .. py:attribute:: legend
 
-        String representing the legend of the graph of the data when plotData method is invoked
+        A string representing the legend of the graph of the data when plotData method is invoked.
 
     .. py:attribute:: xlabel
 
-        String label for the x axis when the data graph is generated
+        String label for the x-axis when the data graph is generated.
 
     .. py:attribute:: ylabel
 
-        String label for the y axis when the data graph is generated
+        String label for the y-axis when the data graph is generated.
 
     .. py:method:: loadData(datafile, delimeter)
 
-        This method loads the data from a csv file using the passed delimiter. The label is the last column of the csv, all the previous columns are considered as features. Process your csv file to this form before invoking the laodData method
+        This method loads the data from a csv file using the passed delimiter. The label is the last column of the csv, all the previous columns are considered as features. Process your csv file to this form before invoking the loadData method.
 
     .. py:method:: setData(X, y, xlabel='x', ylabel="y", legend=["y=1", "y=0"], title="Graph")
 
-        This method set the properties using the X and y values given to the method. The rest of the properties are claculated. Also can recieve named arguments to use when the data is ploted
+        This method sets the properties using the X and y values given to the method. The rest of the properties are calculated. Also can receive named arguments to use when the data is plotted.
 
     .. py:method:: initialize(X, y, xlabel='x', ylabel="y", legend=["y=1", "y=0"], title="Graph")
 
-        This method is called to initialize the Dataset using the data, this method is the one to be overwirtten in case you need to subclass the DataSet
+        This method is called to initialize the dataset using the data, this method is the one to be overwritten in case you need to subclass the DataSet.
 
     .. py:method:: plotData(file=None)
 
-        This metod plots the different classes in the DataSet using a bidimensional feature array and the classes defined in the labels. It only takes account of the 2 first features of the examples and the class. 3d plotting is not yet available but it would be a really cool feature to add =). If a name of file is passed it saves the graph to a png image. The markers style of the class are randomly selected, for a color and marker fixed array.
+        This method plots the different classes in the DataSet using a bidimensional feature array and the classes defined in the labels. It only takes account of the 2 first features of the examples and the class. 3d plotting is not yet available, but it would be a really cool feature to add =). If the name of the file is passed, it saves the graph to a png image. The markers style of the class is randomly selected for a color and marker fixed array.
 
     .. py:method:: getRandomIdentifier(colors, markers)
 
@@ -114,51 +114,51 @@ Classes
 
     .. py:method:: plotDataRegression(file=None)
 
-        This method shows the regression plot for the data. If the file parameters is passed it saves a png image with the result.
+        This method shows the regression plot for the data. If the file parameters are passed, it saves a png image with the result.
 
     .. py:method:: getPlotRegression(randomize_marker = False)
 
-        This method creates the graph and axes objects of the pyplot.subplots() method. It uses the first feature of the example as X value and the y feature of the example as y value, so it plots a regression style data. If the randomize_marker parameter is True then a random marker is used to plot the data if not red crosses are used by default.
+        This method creates the graph and axes objects of the pyplot.subplots() method. It uses the first feature of the example as X value and the y feature of the example as y value, so it plots a regression style data. If the randomize_marker parameter is True, then a random marker is used to plot the data if not red crosses are used by default.
 
-    .. py:method::normalizeFeatures
+    .. py:method:: normalizeFeatures
 
-        This method perform a simple normalization of the features by columns, using a normalization formula of the form: (x - mu) / sigma, where x is the value, mu is the mean value of the column and sidma is the standard deviation of the column data. It sets the X values to it's normalized form, and returns a copy of the normalized values, and and 2 arrays mu and sigma, of size n including the means and standard deviations of the columns. Also sets the mu and sigma values of the class to the obtained values
+        This method performs a simple normalization of the features by columns, using a normalization formula of the form: (x - mu) / sigma, where x is the value, mu is the mean value of the column, and sigma is the standard deviation of the column data. It sets the X values to it’s normalized form. It returns a copy of the normalized values, and 2 arrays mu and sigma, of size n including the means and standard deviations of the columns. Also sets the mu and sigma values of the class to the obtained values.
 
-    .. py:method::normalizeExample(example)
+    .. py:method:: normalizeExample(example)
 
-        This method perform a (x - mu) / sigma normalization using the menas and standard deviations data obtained by the normalize features method. If the data have been not normalized return the example as it was recieved.
+        This method performs an (x - mu) / sigma normalization using the means and standard deviations data obtained by the normalized features method. If the data have been not normalized, return the example as it was received.
 
-    .. py:method::isNormalized
+    .. py:method:: isNormalized
 
-        This method verifies if  the Dataset have been normalized. The method does this cehcking if the mu and sigma arrays are not None. This means you can performa a "manual normalization", setting the values of the mu and sigma values manually. Be careful to set it to correct dimmension values otherwise you will obtain an error when you try to normalize the example using the normalizeExample method.
+        This method verifies if the dataset has been normalized. The method does this checking if the mu and sigma arrays are not None. This means you can perform a “manual normalization,” setting the values of the mu and sigma values manually. Be careful to set it to correct dimension values; otherwise, you will obtain an error when you try to normalize the example using the normalizeExample method.
 
     .. py:method:: split(train=0.8, validation=0.2)
 
-        Return three datasets including the train, validation and test using the defined percentages. The train dataset size is set to the value passed as parameter, the test dataset is set to 1 - the size of train dataset and the validation set is set to the validation * train percentage of the dataset. If the validation is set to 0 it return only the train and validation datasets
+        Return three datasets, including the train, validation, and test using the defined percentages. The train dataset size is set to the value passed as a parameter, the test dataset is set to 1 - the size of the train dataset and the validation set is set to the validation * train percentage of the dataset. If the validation is set to 0, it returns only the train and validation datasets.
 
     .. py:method:: save(filename=None)
 
-        Saves a pickle file with the currend Dataset object. If the file name is passed as parameter the file is saved with that name if not it uses the model_currenttime as file to save it
+        Saves a pickle file with the current Dataset object. If the file name is passed as a parameter, the file is saved with that name if not it uses the model_currenttime as a file to save it.
         
     .. py:method:: sample(percentage)
 
-        Return a Dataset using the percentage of the original dataset passed as parameter randomly chosen. It includes the y labels and classes
+        Return a Dataset using the percentage of the original dataset passed as parameter randomly chosen. It includes the y labels and classes.
 
     .. py:method:: getShape()
 
-        Returns the shape of the Dataset in a tuple of the form X.shape, y.shape
+        Returns the shape of the dataset in a tuple of form X.shape, y.shape.
 
     .. py:method:: getBiasedX()
 
-        Returns the X parameters adding a 1 column as the first column. It comes handy when using neural networks to classify the data
+        Returns the X parameters adding a 1 column as the first column. It comes handy when using neural networks to classify the data.
 
     .. py:method:: clone(X,y)
 
-        Return a new Dataset object with the same plot parameters as the current one but using the X and y data passed as parameters
+        Return a new Dataset object with the same plot parameters as the current one but using the X and y data passed as parameters.
         
     Examples:
         
-    This example depicts how to loaf the dataset, make the split in train, validation and test datasets, and sample a 30 percent of the data to create a minor dataset:
+    This example depicts how to loaf the dataset, do the split in train, validation and test datasets, and sample a 30 percent of the data to create a minor dataset:
 
     .. code-block:: python
         
@@ -176,73 +176,72 @@ Classes
             print(validation.size)
             print(test.size)
             
-    This example show how to normalize the feature and plot the Data using a random generated marker:
+    This example shows how to normalize the feature and plot the data using a randomly generated marker:
 
     .. code-block:: python
         
             from sutil.base.Dataset import Dataset
             
-             datafile = './sutil/datasets/ex1data1.txt'
-             d = Dataset.fromDataFile(datafile, ',')
-             print(d.shape)
-             print(d.X[0])
-             print(d.normalizeFeatures())
-             print(d.getBiasedX())
-             d.plotDataRegression('example', True)
+            datafile = './sutil/datasets/ex1data1.txt'
+            d = Dataset.fromDataFile(datafile, ',')
+            print(d.shape)
+            print(d.X[0])
+            print(d.normalizeFeatures())
+            print(d.getBiasedX())
+            d.plotDataRegression('example')
     
-    This example show how to normalize the feature and plot the Data using a random generated marker
 
 .. py:class:: Experiment
 
-        The *Experiment* class let's you define experiments using a single dataset and test how different models fit and evaluate using the same datset
+        The *Experiment* class lets you define experiments using a single dataset and test how different models fit and evaluate using the same dataset.
         
         .. py:attribute:: models
 
-            Dictionary of the models included in the Experiment, the key is the name of the model and the value the model itself.
+            Dictionary of the models included in the Experiment, the key is the name of the model and the value of the model itself.
 
         .. py:attribute:: models_index
 
-            Dictionary of the index of each model by it's name is used to translate the model names to positions.
+            Dictionary of the index of each model by its name is used to translate the model names to positions.
 
         .. py:attribute:: train_p
 
-            Value of the percentage og the train partition of the dataset
+            Value of the percentage oF the train partition of the dataset.
 
         .. py:attribute:: validation_p
 
-            Value of the percentage of the validation data of the dataset
+            Value of the percentage of the validation data of the dataset.
 
         .. py:attribute:: train
 
-            Dataset of the train data
-
+            Dataset of the train data.
+			
         .. py:attribute:: validation
 
-            Dataset of the validation data
+            Dataset of the validation data.
 
         .. py:attribute:: test
 
-            Dataset of the test data
+            Dataset of the test data.
         
         .. py:method:: __init__(data, models = None, train = 0.8, validation=0.2)
 
-            Instantiates a Experiment object using the passed data, if no Models are passed creates a new dictionary. It performs the data split in order to apply the experiment
+            Instantiates an Experiment object using the passed data. If no Models are passed, creates a new dictionary. It performs the data split to apply the experiment.
         
         .. py:method:: splitData(data)
 
-            This method split the data passed as parameter and sets the train, validation and test attributes of the experiment. Acts as a wrapper of the split method of the Dataset
+            This method split the data passed as a parameter and sets the train, validation, and test attributes of the experiment. Acts as a wrapper of the split method of the dataset.
 
         .. py:method:: addModel(model, modelClass, name)
 
-            This method adds a model to the model list yo be evaluated
+            This method adds a model to the model list yo be evaluated.
 
         .. py:method:: run(plot=False)
 
-            This method runs the experiment training the models. If the plot attribute is set to True it shows the ModelRoc of the models.
+            This method runs the experiment training the models. If the plot attribute is set to True, it shows the ModelRoc of the models.
         
         Example:
         
-        This example perform aexperiment comparing sutil RegularizedLogisticRegression, Sklearn LogisticRegression and sutil NeuralNetworkClassifer. The code load the dataset, setups the experiment, pre train the neural network model and run the experiment showint the Roc curves for the included models
+        This example performs an experiment comparing sutil RegularizedLogisticRegression, Sklearn LogisticRegression, and sutil NeuralNetworkClassifer. The code loads the dataset, setups the experiment, pre-train the neural network model, and run the experiment showing the Roc curves for the included models.
 
         .. code-block:: python
         
@@ -274,7 +273,7 @@ Classes
             nn = NeuralNetworkClassifier((d.n, len(d.labels)))
             nn.searchParameters(sample)
 
-            input("Press enter to continue...")
+            input(“Press enter to continue...”)
 
             # Create the experiment
             experiment = Experiment(d, None, 0.8, 0.2)
@@ -284,4 +283,6 @@ Classes
 
             # Run the experiment
             experiment.run(plot = True)
+
+
 
