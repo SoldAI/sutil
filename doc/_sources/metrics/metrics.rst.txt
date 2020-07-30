@@ -6,11 +6,7 @@ Classes
 ===============
 .. py:class:: ModelROC
 
-<<<<<<< Updated upstream
-        The *ModelROC* class let's you define a evaluation metric for classification using the ROC curve to evaluate a classification model. The class calculates the predictions and plot the area under the curve.
-=======
         The *ModelROC* class lets you define an evaluation metric for classification using the ROC curve to evaluate a classification model. The class calculates the predictions and plot the area under the curve.
->>>>>>> Stashed changes
         
         .. py:attribute:: model
 
@@ -26,11 +22,7 @@ Classes
 
         .. py:attribute:: auc
 
-<<<<<<< Updated upstream
-            Area under the curve score
-=======
             The area under the curve score.
->>>>>>> Stashed changes
 
         .. py:attribute:: legend
 
@@ -38,11 +30,7 @@ Classes
         
         .. py:method:: __init__(model, X_test, y_test, legend = 'model')
 
-<<<<<<< Updated upstream
-            Instantiates a new ModelROC class to be evaluated using the prediction of the given X and comparing it against the y_test values. The predictipns are made invoking to the getPredictions method. Then the roc_curve method of sklearn is invoked to find the auc score
-=======
             Instantiates a new ModelROC class to be evaluated using the prediction of the given X and comparing it against the y_test values. The predictions are made invoking to the getPredictions method. Then the roc_curve method of Sklearn is invoked to find the AUC score.
->>>>>>> Stashed changes
         
         .. py:method:: getPredictions(X_test)
 
@@ -50,17 +38,6 @@ Classes
 
         .. py:method:: plotData()
 
-<<<<<<< Updated upstream
-        	Sets the ROC curve plot data of the evaluated model using the paramters defined in the class. This class don't show the plot, only sets the values to plot
-
-        .. py:method:: plot()
-
-        	This method shows the ROCCurve of the plot obtained invoking to the pltData method
-
-        .. py:method:: zoom(zoom_x, zoom_y)
-
-        	This method recieves two tuples being the zoom ranges for the x and y axis. This method let's you zoom some part of the ROC curve plot and shows the result.
-=======
         	Sets the ROC curve plot data of the evaluated model using the parameters defined in the class. This class doesn't show the plot, it only sets the values to plot.
 
         .. py:method:: plot()
@@ -70,7 +47,6 @@ Classes
         .. py:method:: zoom(zoom_x, zoom_y)
 
         	This method receives two tuples being the zoom ranges for the x and y-axis. This method lets you zoom some part of the ROC curve plot and shows the result.
->>>>>>> Stashed changes
         
         Example:
         
@@ -94,8 +70,4 @@ Classes
             m.plot()
             m.zoom((0, 0.4),(0.5, 1.0))
             
-<<<<<<< Updated upstream
-        This example ilustrates how to use the ModelROC class
-=======
         This example illustrates how to use the ModelROC class.
->>>>>>> Stashed changes

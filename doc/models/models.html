@@ -175,6 +175,12 @@ This example shows the use of the Model class.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="RegularizedLinearRegression.optimizedGradientDescent">
+<code class="sig-name descname">optimizedGradientDescent</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.optimizedGradientDescent" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method executes the gradient descent using the static methods of getGradient, and getCost as parameters of the NumPy optimizers minimize function.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="RegularizedLinearRegression.evaluateHypothesis">
 <code class="sig-name descname">evaluateHypothesis</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xi</span></em>, <em class="sig-param"><span class="n">theta</span></em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.evaluateHypothesis" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs the matrix multiplication of xi and theta returning the predicted value.</p>
@@ -190,6 +196,12 @@ This example shows the use of the Model class.</p>
 <dt id="RegularizedLinearRegression.predict">
 <code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the prediction of the example x parametrized by the theta obtained after the optimization and gradientDescent execution, synonym of makePrediction.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="RegularizedLinearRegression.trainModel">
+<code class="sig-name descname">trainModel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">iterations</span><span class="o">=</span><span class="default_value">100</span></em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.trainModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method trains the model using the data provided and optimizing using gradientDescent algorithm</p>
 </dd></dl>
 
 <p>Example:</p>

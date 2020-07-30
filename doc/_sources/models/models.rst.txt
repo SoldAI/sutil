@@ -120,7 +120,7 @@ Classes
 
         	This method tries to solve the optimization problem using the normal equation form, calculating the theta parameters using the pseudo-inverse matrix of X * X' where X' is the transpose of X multiplied by y column.
 
-        .. py:method::optimizedGradientDescent(data)
+        .. py:method:: optimizedGradientDescent(data)
 
         	This method executes the gradient descent using the static methods of getGradient, and getCost as parameters of the NumPy optimizers minimize function.
 
@@ -136,7 +136,7 @@ Classes
 
         	This method returns the prediction of the example x parametrized by the theta obtained after the optimization and gradientDescent execution, synonym of makePrediction.
 
-        .. py:method::trainModel(data, iterations = 100)
+        .. py:method:: trainModel(data, iterations = 100)
 
         	This method trains the model using the data provided and optimizing using gradientDescent algorithm
         

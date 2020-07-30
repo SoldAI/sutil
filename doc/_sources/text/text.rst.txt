@@ -21,7 +21,7 @@ Classes
         
         .. py:attribute:: actions
 
-        	It's a list value that holds the order of the pre-processing functions tasks to be performed by the PreProcessor.
+        	It's a list value that holds the order of the tasks of the pre-processing function to be performed by the PreProcessor.
         
         .. py:method:: __init__(configuration)
 
