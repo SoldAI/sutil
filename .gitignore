@@ -110,3 +110,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# special_datasets
+sutil/datasets/pr*.csv

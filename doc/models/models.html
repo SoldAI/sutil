@@ -1,18 +1,19 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Models package &#8212; sutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -31,7 +32,8 @@
         <li class="right" >
           <a href="../base/base.html" title="Base package"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">sutil 0.0.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">sutil 0.0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Models package</a></li> 
       </ul>
     </div>  
 
@@ -42,143 +44,164 @@
             
   <div class="section" id="models-package">
 <h1>Models package<a class="headerlink" href="#models-package" title="Permalink to this headline">¶</a></h1>
-<p>Models package contain a set of models classes and utilities that you can use to fit your data. You can subclass the Model class and also you can embed dklearn models using the Sklearn model class.</p>
+<p>Models package contains a set of models classes and utilities that you can use to fit your data. You can subclass the Model class, and also you can embed sklearn models using the Sklearn model class.</p>
 </div>
 <div class="section" id="classes">
 <h1>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
+<dl class="py class">
 <dt id="Model">
-<em class="property">class </em><code class="descname">Model</code><a class="headerlink" href="#Model" title="Permalink to this definition">¶</a></dt>
-<dd><p>The <em>Model</em> is a abstract class let’s you define a trainable model using the Dataset provbded by sutil. The trainModel and predict methods should be implemented by child classes</p>
-<dl class="attribute">
+<em class="property">class </em><code class="sig-name descname">Model</code><a class="headerlink" href="#Model" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <em>Model</em> is an abstract class that lets you define a trainable model using the Dataset provided by sutil. The trainModel and predict methods should be implemented by child classes.</p>
+<dl class="py attribute">
 <dt id="Model.name">
-<code class="descname">name</code><a class="headerlink" href="#Model.name" title="Permalink to this definition">¶</a></dt>
-<dd><p>String used to identify the Model</p>
+<code class="sig-name descname">name</code><a class="headerlink" href="#Model.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>String used to identify the model.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="Model.accuracy">
-<code class="descname">accuracy</code><a class="headerlink" href="#Model.accuracy" title="Permalink to this definition">¶</a></dt>
-<dd><p>Float representing the accuracy of the model</p>
+<code class="sig-name descname">accuracy</code><a class="headerlink" href="#Model.accuracy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Float representing the accuracy of the model.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="Model.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>name = 'Model'</em><span class="sig-paren">)</span><a class="headerlink" href="#Model.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Instantiates a Model object setting it’s name to the given parameter</p>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">'Model'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Model.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instantiates a Model object setting its name to the given parameter.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="Model.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>X = None</em>, <em>y = None</em><span class="sig-paren">)</span><a class="headerlink" href="#Model.fit" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method performs the training of the model using the provided data. This method is provided to preserve compatibility with sklearn style models. Invokes internally to the trainModel method of the class (must be implemented for child classes) to perform the training using a Dataset object</p>
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Model.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method performs the training of the model using the provided data. This method is provided to preserve compatibility with sklearn style models. Invokes internally to the trainModel method of the class (must be implemented for child classes) to perform the training using a Dataset object.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="Model.predict">
-<code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="headerlink" href="#Model.predict" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method performs a prediction on a set of examples given by X. Return an array with the mdoel predictions</p>
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Model.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method performs a prediction on a set of examples given by X. Return an array with the model predictions.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="Model.score">
-<code class="descname">score</code><span class="sig-paren">(</span><em>X</em>, <em>y</em>, <em>bias = True</em><span class="sig-paren">)</span><a class="headerlink" href="#Model.score" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method make the predictions of the examples passed in the X array and compares it against results in y array- If the bias paramter is set to True add a bias term to the examples given in X. It computes and stores accuracy, recall, precission, f1 and roc curve parameters</p>
+<code class="sig-name descname">score</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">bias</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Model.score" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method makes the predictions of the examples passed in the X array and compares it against results in y array- If the bias parameter is set to True, add a bias term to the examples given in X. It computes and stores accuracy, recall, precision, f1 and roc curve parameters</p>
 </dd></dl>
 
-<p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sutil.base.Coin</span> <span class="kn">import</span> <span class="n">Coin</span>
-<span class="n">c</span> <span class="o">=</span> <span class="n">Coin</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
-<span class="n">positives</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">toss</span><span class="p">():</span>
-        <span class="n">positives</span> <span class="o">+=</span> <span class="mi">1</span>
-<span class="k">print</span><span class="p">(</span><span class="n">positives</span><span class="p">)</span>
+<p>Example:
+This example shows the use of the Model class.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sutil.base.Dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
+<span class="kn">from</span> <span class="nn">sutil.models.RegularizedLogisticRegression</span> <span class="kn">import</span> <span class="n">RegularizedLogisticRegression</span>
+
+<span class="n">datafile</span> <span class="o">=</span> <span class="s1">&#39;./sutil/datasets/ex2data1.txt&#39;</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">fromDataFile</span><span class="p">(</span><span class="n">datafile</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">)</span>
+
+<span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">d</span><span class="o">.</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.03</span>
+<span class="n">l</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="n">RegularizedLogisticRegression</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">lr</span><span class="o">.</span><span class="n">trainModel</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="n">lr</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+<span class="n">lr</span><span class="o">.</span><span class="n">roc</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">lr</span><span class="o">.</span><span class="n">roc</span><span class="o">.</span><span class="n">zoom</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">),(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>This example should print a number close to 30</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="RegularizedLinearRegression">
-<em class="property">class </em><code class="descname">RegularizedLinearRegression</code><a class="headerlink" href="#RegularizedLinearRegression" title="Permalink to this definition">¶</a></dt>
-<dd><p>The <em>RegularizedLinearRegression</em> is a Model class which implements a RegularizedLinearRegression implemented scypy and numpy. This class is an exampole of how can you add your own models to sutil package.</p>
-<dl class="attribute">
+<em class="property">class </em><code class="sig-name descname">RegularizedLinearRegression</code><a class="headerlink" href="#RegularizedLinearRegression" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <em>RegularizedLinearRegression</em> is a Model class that implements a RegularizedLinearRegression implemented SciPy and NumPy. This class is an example of how you can add your own models to sutil package.</p>
+<dl class="py attribute">
 <dt id="RegularizedLinearRegression.theta">
-<code class="descname">theta</code><a class="headerlink" href="#RegularizedLinearRegression.theta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parameter matrix of the Regression</p>
+<code class="sig-name descname">theta</code><a class="headerlink" href="#RegularizedLinearRegression.theta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parameter matrix of the regression.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="RegularizedLinearRegression.alpha">
-<code class="descname">alpha</code><a class="headerlink" href="#RegularizedLinearRegression.alpha" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gain parameter of the regression</p>
+<code class="sig-name descname">alpha</code><a class="headerlink" href="#RegularizedLinearRegression.alpha" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gain parameter of the regression.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="RegularizedLinearRegression.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>theta</em>, <em>alpha</em>, <em>l</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Instantiates a new RegularizedLinearRegression object setting it’s parameter matrix, gain and regularization parameters</p>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">theta</span></em>, <em class="sig-param"><span class="n">alpha</span></em>, <em class="sig-param"><span class="n">l</span></em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instantiates a new RegularizedLinearRegression object setting its parameter matrix, gain and regularization parameters.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="RegularizedLinearRegression.fromDataset">
-<code class="descname">fromDataset</code><span class="sig-paren">(</span><em>data</em>, <em>alpha=0.1</em>, <em>l=0.1</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.fromDataset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Class method which return a new RegularizedLinearRegression initialized using the provided Dataset</p>
+<code class="sig-name descname">fromDataset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">alpha</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">l</span><span class="o">=</span><span class="default_value">0.1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.fromDataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class method which returns a new RegularizedLinearRegression initialized using the provided Dataset.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="RegularizedLinearRegression.fromDataFile">
-<code class="descname">fromDataFile</code><span class="sig-paren">(</span><em>datafile</em>, <em>delimeter</em>, <em>alpha=0.1</em>, <em>l=0.1</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.fromDataFile" title="Permalink to this definition">¶</a></dt>
-<dd><p>Class method which return a new RegularizedLinearRegression initialized loading the data provided in the file which path is provided. The delimeter parameter specifies thedelimeter string to split the datafile</p>
+<code class="sig-name descname">fromDataFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">datafile</span></em>, <em class="sig-param"><span class="n">delimeter</span></em>, <em class="sig-param"><span class="n">alpha</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">l</span><span class="o">=</span><span class="default_value">0.1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.fromDataFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class method that returns a new RegularizedLinearRegression initialized loading the data provided in the file which path is provided. The delimiter parameter specifies the delimiter string to split the data file.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="RegularizedLinearRegression.getCostAndGradient">
-<code class="descname">getCostAndGradient</code><span class="sig-paren">(</span><em>data</em>, <em>theta</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.getCostAndGradient" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method computes the cost and gradient of the function given the theta parameters and the Dataset</p>
+<code class="sig-name descname">getCostAndGradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">theta</span></em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.getCostAndGradient" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method computes the cost and gradient of the function, given the theta parameters and the Dataset.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="RegularizedLinearRegression.getCost">
-<code class="descname">getCost</code><span class="sig-paren">(</span><em>theta</em>, <em>x</em>, <em>y</em>, <em>l=0</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.getCost" title="Permalink to this definition">¶</a></dt>
-<dd><p>This static function evaluate the cost of the model (loss function value) of the prediction of the given examples parametrized by theta in relation to the difference against y outputs provided. It also applies the reguarization term to the data. This method is static to be able to be used by numpy optimizers.</p>
+<code class="sig-name descname">getCost</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">theta</span></em>, <em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">l</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.getCost" title="Permalink to this definition">¶</a></dt>
+<dd><p>This static function evaluates the cost of the model (loss function value) of the prediction of the given examples parametrized by theta in relation to the difference against y outputs provided. It also applies the regularization term to the data. This method is static to be able to be used by NumPy optimizers.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="RegularizedLinearRegression.getGradient">
-<code class="descname">getGradient</code><span class="sig-paren">(</span><em>theta</em>, <em>x</em>, <em>y</em>, <em>l=0</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.getGradient" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method calculates the gradient of the cost function and returns it’s values. Is astatic method which can be optimized by numpy</p>
+<code class="sig-name descname">getGradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">theta</span></em>, <em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">l</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.getGradient" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method calculates the gradient of the cost function and returns its values. Is a static method that can be optimized by NumPy.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="RegularizedLinearRegression.gradienDescent">
-<code class="descname">gradienDescent</code><span class="sig-paren">(</span><em>data</em>, <em>iterations</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.gradienDescent" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method execute the gradient Descent algorithm using the data and iterations provided</p>
+<code class="sig-name descname">gradienDescent</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">iterations</span></em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.gradienDescent" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method executes the gradient Descent algorithm using the data and iterations provided.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="RegularizedLinearRegression.normalEquation">
-<code class="descname">normalEquation</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.normalEquation" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method tries to solve the optimization problem using the normal equation form, calculating the theta parameters using the pseudo inverse matrix of X * X’ where X’ is the transpose of X multiplied by y column</p>
+<code class="sig-name descname">normalEquation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.normalEquation" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method tries to solve the optimization problem using the normal equation form, calculating the theta parameters using the pseudo-inverse matrix of X * X’ where X’ is the transpose of X multiplied by y column.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
+<dt id="RegularizedLinearRegression.optimizedGradientDescent">
+<code class="sig-name descname">optimizedGradientDescent</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.optimizedGradientDescent" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method executes the gradient descent using the static methods of getGradient, and getCost as parameters of the NumPy optimizers minimize function.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="RegularizedLinearRegression.evaluateHypothesis">
-<code class="descname">evaluateHypothesis</code><span class="sig-paren">(</span><em>xi</em>, <em>theta</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.evaluateHypothesis" title="Permalink to this definition">¶</a></dt>
-<dd><p>Performs the matrix multiplication of xi and theta returning the predicted value</p>
+<code class="sig-name descname">evaluateHypothesis</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xi</span></em>, <em class="sig-param"><span class="n">theta</span></em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.evaluateHypothesis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs the matrix multiplication of xi and theta returning the predicted value.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="RegularizedLinearRegression.makePrediction">
-<code class="descname">makePrediction</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.makePrediction" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method returns the prediction of the exampple x parametrized by the theta obtained after the optimization and gradientDescent execution</p>
+<code class="sig-name descname">makePrediction</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.makePrediction" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns the prediction of the example x parametrized by the theta obtained after the optimization and gradientDescent execution.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="RegularizedLinearRegression.predict">
-<code class="descname">predict</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.predict" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method returns the prediction of the exampple x parametrized by the theta obtained after the optimization and gradientDescent execution, synonym of makePrediction</p>
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns the prediction of the example x parametrized by the theta obtained after the optimization and gradientDescent execution, synonym of makePrediction.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="RegularizedLinearRegression.trainModel">
+<code class="sig-name descname">trainModel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">iterations</span><span class="o">=</span><span class="default_value">100</span></em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLinearRegression.trainModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method trains the model using the data provided and optimizing using gradientDescent algorithm</p>
 </dd></dl>
 
 <p>Example:</p>
@@ -292,110 +315,110 @@
 <p>This example shows the use of the different methods of the class</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="RegularizedLogisticRegression">
-<em class="property">class </em><code class="descname">RegularizedLogisticRegression</code><a class="headerlink" href="#RegularizedLogisticRegression" title="Permalink to this definition">¶</a></dt>
-<dd><p>The <em>RegularizedLogisticRegression</em> is a Model class which implements a RegularizedLogisticRegression using scypy and numpy. This class is an exampole of how can you add your own models to sutil package.</p>
-<dl class="attribute">
+<em class="property">class </em><code class="sig-name descname">RegularizedLogisticRegression</code><a class="headerlink" href="#RegularizedLogisticRegression" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <em>RegularizedLogisticRegression</em> is a Model class that implements a RegularizedLogisticRegression using SciPy and NumPy. This class is an example of how you can add your own models to sutil package.</p>
+<dl class="py attribute">
 <dt id="RegularizedLogisticRegression.theta">
-<code class="descname">theta</code><a class="headerlink" href="#RegularizedLogisticRegression.theta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parameter matrix of the Regression</p>
+<code class="sig-name descname">theta</code><a class="headerlink" href="#RegularizedLogisticRegression.theta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parameter matrix of the regression.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="RegularizedLogisticRegression.alpha">
-<code class="descname">alpha</code><a class="headerlink" href="#RegularizedLogisticRegression.alpha" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gain parameter of the regression</p>
+<code class="sig-name descname">alpha</code><a class="headerlink" href="#RegularizedLogisticRegression.alpha" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gain parameter of the regression.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="RegularizedLogisticRegression.name">
-<code class="descname">name</code><a class="headerlink" href="#RegularizedLogisticRegression.name" title="Permalink to this definition">¶</a></dt>
-<dd><p>Name of the model</p>
+<code class="sig-name descname">name</code><a class="headerlink" href="#RegularizedLogisticRegression.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of the Model.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="RegularizedLogisticRegression.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>theta</em>, <em>alpha</em>, <em>l</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Instantiates a new RegularizedLinearRegression object setting it’s parameter matrix, gain and regularization parameters</p>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">theta</span></em>, <em class="sig-param"><span class="n">alpha</span></em>, <em class="sig-param"><span class="n">l</span></em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instantiates a new RegularizedLinearRegression object setting its parameter matrix, gain, and regularization parameters.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="RegularizedLogisticRegression.fromDataset">
-<code class="descname">fromDataset</code><span class="sig-paren">(</span><em>data</em>, <em>alpha=0.1</em>, <em>l=0.1</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.fromDataset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Class method which return a new RegularizedLogisticRegression initialized using the provided Dataset</p>
+<code class="sig-name descname">fromDataset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">alpha</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">l</span><span class="o">=</span><span class="default_value">0.1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.fromDataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class method that returns a new RegularizedLogisticRegression initialized using the provided Dataset.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="RegularizedLogisticRegression.fromDataFile">
-<code class="descname">fromDataFile</code><span class="sig-paren">(</span><em>datafile</em>, <em>delimeter</em>, <em>alpha=0.1</em>, <em>l=0.1</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.fromDataFile" title="Permalink to this definition">¶</a></dt>
-<dd><p>Class method which return a new RegularizedLogisticRegression initialized loading the data provided in the file which path is provided. The delimeter parameter specifies thedelimeter string to split the datafile</p>
+<code class="sig-name descname">fromDataFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">datafile</span></em>, <em class="sig-param"><span class="n">delimeter</span></em>, <em class="sig-param"><span class="n">alpha</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">l</span><span class="o">=</span><span class="default_value">0.1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.fromDataFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class method that returns a new RegularizedLogisticRegression initialized loading the data provided in the file which path is provided. The delimiter parameter specifies the delimiter string to split the data file.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="RegularizedLogisticRegression.getCostAndGradient">
-<code class="descname">getCostAndGradient</code><span class="sig-paren">(</span><em>data</em>, <em>theta</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.getCostAndGradient" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method computes the cost and gradient of the function given the theta parameters and the Dataset</p>
+<code class="sig-name descname">getCostAndGradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">theta</span></em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.getCostAndGradient" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method computes the cost and gradient of the function, given the theta parameters and the Dataset.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="RegularizedLogisticRegression.getCost">
-<code class="descname">getCost</code><span class="sig-paren">(</span><em>theta</em>, <em>x</em>, <em>y</em>, <em>l=0</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.getCost" title="Permalink to this definition">¶</a></dt>
-<dd><p>This static function evaluate the cost of the model (loss function value) of the prediction of the given examples parametrized by theta in relation to the difference against y outputs provided. It also applies the reguarization term to the data. This method is static to be able to be used by numpy optimizers.</p>
+<code class="sig-name descname">getCost</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">theta</span></em>, <em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">l</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.getCost" title="Permalink to this definition">¶</a></dt>
+<dd><p>This static function evaluates the cost of the model (loss function value) of the prediction of the given examples parametrized by theta in relation to the difference against y outputs provided. It also applies the regularization term to the data. This method is static to be able to be used by NumPy optimizers.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="RegularizedLogisticRegression.getGradient">
-<code class="descname">getGradient</code><span class="sig-paren">(</span><em>theta</em>, <em>x</em>, <em>y</em>, <em>l=0</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.getGradient" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method calculates the gradient of the cost function and returns it’s values. Is astatic method which can be optimized by numpy</p>
+<code class="sig-name descname">getGradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">theta</span></em>, <em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">l</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.getGradient" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method calculates the gradient of the cost function and returns its values. Is a static method which can be optimized by NumPy.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="RegularizedLogisticRegression.gradienDescent">
-<code class="descname">gradienDescent</code><span class="sig-paren">(</span><em>data</em>, <em>iterations</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.gradienDescent" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method execute the gradient Descent algorithm using the data and iterations provided</p>
+<code class="sig-name descname">gradienDescent</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">iterations</span></em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.gradienDescent" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method executes the gradient Descent algorithm using the data and iterations provided.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="RegularizedLogisticRegression.sigmoid">
-<code class="descname">sigmoid</code><span class="sig-paren">(</span><em>z</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.sigmoid" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method calculates the sigmoidal function to the z parameter</p>
+<code class="sig-name descname">sigmoid</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">z</span></em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.sigmoid" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method calculates the sigmoidal function to the z parameter.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="RegularizedLogisticRegression.optimizedGradientDescent">
-<code class="descname">optimizedGradientDescent</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.optimizedGradientDescent" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method executes the gradient descent using the static metods of getGradient and getCost as parameters of the numpy optimizers minimize function</p>
+<code class="sig-name descname">optimizedGradientDescent</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.optimizedGradientDescent" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method executes the gradient descent using the static methods of getGradient, and getCost as parameters of the NumPy optimizers minimize function</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="RegularizedLogisticRegression.computePredictions">
-<code class="descname">computePredictions</code><span class="sig-paren">(</span><em>data</em>, <em>theta</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.computePredictions" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method compute the prediction of the given data parametrized by theta executing the sigmoid function to the matrix multipplication of the biased data by the theta parameters. Is used to compute the predictions over a Dataset</p>
+<code class="sig-name descname">computePredictions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">theta</span></em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.computePredictions" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method computes the prediction of the given data parameterized by theta executing the sigmoid function to the matrix multiplication of the biased data by the theta parameters. It is used to compute the predictions over a Dataset.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="RegularizedLogisticRegression.evaluateHypothesis">
-<code class="descname">evaluateHypothesis</code><span class="sig-paren">(</span><em>xi</em>, <em>theta</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.evaluateHypothesis" title="Permalink to this definition">¶</a></dt>
-<dd><p>Performs the sigmoid function evaluation over the matrix multiplication of xi and theta returning the predicted value, is used to compute a set of examples instead of a Dataset</p>
+<code class="sig-name descname">evaluateHypothesis</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xi</span></em>, <em class="sig-param"><span class="n">theta</span></em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.evaluateHypothesis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs the sigmoid function evaluation over the matrix multiplication of xi, and theta returning the predicted value is used to compute a set of examples instead of a Dataset.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="RegularizedLogisticRegression.makePrediction">
-<code class="descname">makePrediction</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.makePrediction" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method returns the prediction of the exampple x parametrized by the theta obtained after the optimization and gradientDescent execution</p>
+<code class="sig-name descname">makePrediction</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.makePrediction" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns the prediction of the example x parametrized by the theta obtained after the optimization and gradientDescent execution.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="RegularizedLogisticRegression.predict">
-<code class="descname">predict</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.predict" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method returns the prediction of the exampple x parametrized by the theta obtained after the optimization and gradientDescent execution, synonym of makePrediction</p>
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns the prediction of the example x parametrized by the theta obtained after the optimization and gradientDescent execution, a synonym of makePrediction.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="RegularizedLogisticRegression.trainModel">
-<code class="descname">trainModel</code><span class="sig-paren">(</span><em>data</em>, <em>epochs = 100</em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.trainModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method trains the model using the data provided and optimizing using gradientDescent algorithm</p>
+<code class="sig-name descname">trainModel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">epochs</span><span class="o">=</span><span class="default_value">100</span></em><span class="sig-paren">)</span><a class="headerlink" href="#RegularizedLogisticRegression.trainModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method trains the model using the data provided and optimizing using radientDescent algorithm.</p>
 </dd></dl>
 
 <p>Example:</p>
@@ -525,38 +548,38 @@
 <p>This example shows the use of the different methods of the class</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="SklearnModel">
-<em class="property">class </em><code class="descname">SklearnModel</code><a class="headerlink" href="#SklearnModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>The <em>SklearnModel</em> is a class that let’s you define a wrapper for Sklearn models in order to work with a Dataset model</p>
-<dl class="attribute">
+<em class="property">class </em><code class="sig-name descname">SklearnModel</code><a class="headerlink" href="#SklearnModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <em>SklearnModel</em> is a class that lets you define a wrapper for Sklearn models in order to work with a Dataset model</p>
+<dl class="py attribute">
 <dt id="SklearnModel.name">
-<code class="descname">name</code><a class="headerlink" href="#SklearnModel.name" title="Permalink to this definition">¶</a></dt>
-<dd><p>String used to identify the Model</p>
+<code class="sig-name descname">name</code><a class="headerlink" href="#SklearnModel.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>String used to identify the model.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="SklearnModel.external">
-<code class="descname">external</code><a class="headerlink" href="#SklearnModel.external" title="Permalink to this definition">¶</a></dt>
-<dd><p>Object representing the sklearn model</p>
+<code class="sig-name descname">external</code><a class="headerlink" href="#SklearnModel.external" title="Permalink to this definition">¶</a></dt>
+<dd><p>An object representing the sklearn model.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="SklearnModel.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>ecternal</em><span class="sig-paren">)</span><a class="headerlink" href="#SklearnModel.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Instantiates a SklearnModel object setting it’s name to the given parameter and the external to the provided sklearn model.</p>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">ecternal</span></em><span class="sig-paren">)</span><a class="headerlink" href="#SklearnModel.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instantiates a SklearnModel object setting its name to the given parameter and the external to the provided sklearn model.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="SklearnModel.trainModel">
-<code class="descname">trainModel</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#SklearnModel.trainModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method invokes the fit method of the sklearn model using the X and y attributes of the given Dataset object</p>
+<code class="sig-name descname">trainModel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#SklearnModel.trainModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method invokes the fit method of the sklearn model using the X and y attributes of the given Dataset object.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="SklearnModel.predict">
-<code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="headerlink" href="#SklearnModel.predict" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method performs a prediction on a set of examples given by X. Return an array with the model predictions. Invokes directly to the external object predict method</p>
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em><span class="sig-paren">)</span><a class="headerlink" href="#SklearnModel.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method performs a prediction on a set of examples given by X. Return an array with the model predictions. Invokes directly to the external object predict method.</p>
 </dd></dl>
 
 <p>Example:</p>
@@ -608,12 +631,13 @@
 <span class="k">print</span><span class="p">(</span><span class="n">timeit</span><span class="o">.</span><span class="n">timeit</span><span class="p">(</span><span class="n">sk</span><span class="p">,</span> <span class="n">number</span><span class="o">=</span><span class="mi">100</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>This example show how to use the Sklearn class</p>
+<p>This example shows how to use the Sklearn class.</p>
 </dd></dl>
 
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -639,15 +663,15 @@
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -664,12 +688,13 @@
         <li class="right" >
           <a href="../base/base.html" title="Base package"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">sutil 0.0.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">sutil 0.0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Models package</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, SoldAI.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
     </div>
   </body>
 </html>

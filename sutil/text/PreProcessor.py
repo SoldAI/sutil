@@ -38,7 +38,7 @@ class PreProcessor:
         self.num2words = Num2Words()
 
     def preProcess(self, string):
-        result = string
+        result = str(string)
         for a in self.actions:
             method = getattr(self, a[0])
             result = method(a[1], result)

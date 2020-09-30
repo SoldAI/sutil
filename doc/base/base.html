@@ -1,18 +1,19 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Base package &#8212; sutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -31,7 +32,8 @@
         <li class="right" >
           <a href="../usage/quickstart.html" title="Quick Start"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">sutil 0.0.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">sutil 0.0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Base package</a></li> 
       </ul>
     </div>  
 
@@ -42,30 +44,30 @@
             
   <div class="section" id="base-package">
 <h1>Base package<a class="headerlink" href="#base-package" title="Permalink to this headline">¶</a></h1>
-<p>Base package includes classes that help you make different basic tasks related to ML models and analytics</p>
+<p>Base package includes classes that help you make different basic tasks related to ML models and analytics.</p>
 </div>
 <div class="section" id="classes">
 <h1>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
+<dl class="py class">
 <dt id="Coin">
-<em class="property">class </em><code class="descname">Coin</code><a class="headerlink" href="#Coin" title="Permalink to this definition">¶</a></dt>
-<dd><p>The <em>Coin</em> class let’s you define a charged coin with some probability value bwtween 0 and 1. It’s useful to model stochastic binary processes using biased probabilities.</p>
-<dl class="attribute">
+<em class="property">class </em><code class="sig-name descname">Coin</code><a class="headerlink" href="#Coin" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <em>Coin</em> class lets you define a charged coin with some probability value between 0 and 1. It’s useful to model stochastic binary processes using biased probabilities.</p>
+<dl class="py attribute">
 <dt id="Coin.probability">
-<code class="descname">probability</code><a class="headerlink" href="#Coin.probability" title="Permalink to this definition">¶</a></dt>
-<dd><p>It’s a float value between 0 and 1 which indicates the probability of the positive event. For ecample a Coin with probability 0.3 will return positive aproximately 30 times fif we run the toss metods 100 tosses.</p>
+<code class="sig-name descname">probability</code><a class="headerlink" href="#Coin.probability" title="Permalink to this definition">¶</a></dt>
+<dd><p>It’s a float value between 0 and 1, which indicates the probability of a positive event. For example, a Coin with probability 0.3 will return positive approximately 30 times if we run the toss methods 100 tosses.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="Coin.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>probability</em><span class="sig-paren">)</span><a class="headerlink" href="#Coin.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Instantiates a Coin object with a given probability</p>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">probability</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Coin.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instantiates a Coin object with a given probability.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="Coin.toss">
-<code class="descname">toss</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Coin.toss" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return True or False, true if the event were evaluated positively, False otherwise</p>
+<code class="sig-name descname">toss</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Coin.toss" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True or False, True if the event were evaluated positively, False otherwise.</p>
 </dd></dl>
 
 <p>Example:</p>
@@ -78,171 +80,189 @@
 <span class="k">print</span><span class="p">(</span><span class="n">positives</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This example should print a number close to 30</p>
+<p>This example should print a number close to 30.</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="Dataset">
-<em class="property">class </em><code class="descname">Dataset</code><a class="headerlink" href="#Dataset" title="Permalink to this definition">¶</a></dt>
-<dd><p>The <em>Dataset</em> class is a simple abstraction of a dataset multidimensional, wich can be fed to a model, it includes method to normalize the data, add bias plot, and split the data in train, test and validation datasets. Includes functionality to normalize the feature add Bias term to the data and sample a number of examples. It comes handy to load dataset that are expressed as a csv of separeted features and have the class as the last one. It’s modeled as a couple of matrixes, a train matrix of dimensions <code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">x</span> <span class="pre">n</span></code> this means the Datset has m examples, each one having n features.</p>
-<dl class="attribute">
+<em class="property">class </em><code class="sig-name descname">Dataset</code><a class="headerlink" href="#Dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <em>Dataset</em> class is a simple abstraction of a multidimensional dataset, which can be fed to a model. It includes a method to normalize the data, add a bias plot, and split the data in train, test, and validation datasets. Provides functionality to normalize the feature add Bias term to the data, and sample a number of examples. It comes handy to load datasets that are expressed as a csv of separated features and have the class as the last one. It’s modeled as a couple of matrixes, a training matrix of dimensions <a href="#id1"><span class="problematic" id="id2">``</span></a>m x n “this means the dataset has m examples, each one having n features.</p>
+<dl class="py attribute">
 <dt id="Dataset.X">
-<code class="descname">X</code><a class="headerlink" href="#Dataset.X" title="Permalink to this definition">¶</a></dt>
-<dd><p>It’s a float numpy array that represent the fearures in the dataset</p>
+<code class="sig-name descname">X</code><a class="headerlink" href="#Dataset.X" title="Permalink to this definition">¶</a></dt>
+<dd><p>It’s a float NumPy array that represents the features in the dataset.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="Dataset.y">
-<code class="descname">y</code><a class="headerlink" href="#Dataset.y" title="Permalink to this definition">¶</a></dt>
-<dd><p>It’s a float numpy array that represents the labels of the examples</p>
+<code class="sig-name descname">y</code><a class="headerlink" href="#Dataset.y" title="Permalink to this definition">¶</a></dt>
+<dd><p>It’s a float NumPy array that represents the labels of the examples.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="Dataset.n">
-<code class="descname">n</code><a class="headerlink" href="#Dataset.n" title="Permalink to this definition">¶</a></dt>
-<dd><p>Number of features on each example of the dataset</p>
+<code class="sig-name descname">n</code><a class="headerlink" href="#Dataset.n" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of features on each example of the dataset.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="Dataset.m">
-<code class="descname">m</code><a class="headerlink" href="#Dataset.m" title="Permalink to this definition">¶</a></dt>
-<dd><p>Number of examples in the dataset. Is synonym of size attribute</p>
+<code class="sig-name descname">m</code><a class="headerlink" href="#Dataset.m" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of examples in the dataset. Is the synonym of the ‘size’ attribute.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="Dataset.size">
-<code class="descname">size</code><a class="headerlink" href="#Dataset.size" title="Permalink to this definition">¶</a></dt>
-<dd><p>Number of examples in the dataset. Is a synonym of the m attribute</p>
+<code class="sig-name descname">size</code><a class="headerlink" href="#Dataset.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of examples in the dataset. Is a synonym of the ‘m’ attribute.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="Dataset.shape">
-<code class="descname">shape</code><a class="headerlink" href="#Dataset.shape" title="Permalink to this definition">¶</a></dt>
-<dd><p>Tuple indicating the shape of the dataset</p>
+<code class="sig-name descname">shape</code><a class="headerlink" href="#Dataset.shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tuple indicating the shape of the dataset.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="Dataset.labels">
-<code class="descname">labels</code><a class="headerlink" href="#Dataset.labels" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">labels</code><a class="headerlink" href="#Dataset.labels" title="Permalink to this definition">¶</a></dt>
 <dd><p>List of the existing labels in the dataset</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="Dataset.xsize">
-<code class="descname">xsize</code><a class="headerlink" href="#Dataset.xsize" title="Permalink to this definition">¶</a></dt>
-<dd><p>Integer number of feature of each example in the dataset. Synonym of the n attribute</p>
+<code class="sig-name descname">xsize</code><a class="headerlink" href="#Dataset.xsize" title="Permalink to this definition">¶</a></dt>
+<dd><p>An integer number of features of each example in the dataset. Is a synonym of the ‘n’ attribute.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="Dataset.ysize">
-<code class="descname">ysize</code><a class="headerlink" href="#Dataset.ysize" title="Permalink to this definition">¶</a></dt>
-<dd><p>Integer number of features in the label output. Useful for multi labeling classification</p>
+<code class="sig-name descname">ysize</code><a class="headerlink" href="#Dataset.ysize" title="Permalink to this definition">¶</a></dt>
+<dd><p>An integer number of features in the label output. Useful for multi labeling classification.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="Dataset.title">
-<code class="descname">title</code><a class="headerlink" href="#Dataset.title" title="Permalink to this definition">¶</a></dt>
-<dd><p>String represeting the title of the graph of the dataset when the plotData method is invoked</p>
+<code class="sig-name descname">title</code><a class="headerlink" href="#Dataset.title" title="Permalink to this definition">¶</a></dt>
+<dd><p>A string representing the title of the graph of the dataset when the plotData method is invoked.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="Dataset.legend">
-<code class="descname">legend</code><a class="headerlink" href="#Dataset.legend" title="Permalink to this definition">¶</a></dt>
-<dd><p>String representing the legend of the graph of the data when plotData method is invoked</p>
+<code class="sig-name descname">legend</code><a class="headerlink" href="#Dataset.legend" title="Permalink to this definition">¶</a></dt>
+<dd><p>A string representing the legend of the graph of the data when plotData method is invoked.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="Dataset.xlabel">
-<code class="descname">xlabel</code><a class="headerlink" href="#Dataset.xlabel" title="Permalink to this definition">¶</a></dt>
-<dd><p>String label for the x axis when the data graph is generated</p>
+<code class="sig-name descname">xlabel</code><a class="headerlink" href="#Dataset.xlabel" title="Permalink to this definition">¶</a></dt>
+<dd><p>String label for the x-axis when the data graph is generated.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="Dataset.ylabel">
-<code class="descname">ylabel</code><a class="headerlink" href="#Dataset.ylabel" title="Permalink to this definition">¶</a></dt>
-<dd><p>String label for the y axis when the data graph is generated</p>
+<code class="sig-name descname">ylabel</code><a class="headerlink" href="#Dataset.ylabel" title="Permalink to this definition">¶</a></dt>
+<dd><p>String label for the y-axis when the data graph is generated.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="Dataset.loadData">
-<code class="descname">loadData</code><span class="sig-paren">(</span><em>datafile</em>, <em>delimeter</em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.loadData" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method loads the data from a csv file using the passed delimiter. The label is the last column of the csv, all the previous columns are considered as features. Process your csv file to this form before invoking the laodData method</p>
+<code class="sig-name descname">loadData</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">datafile</span></em>, <em class="sig-param"><span class="n">delimeter</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.loadData" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method loads the data from a csv file using the passed delimiter. The label is the last column of the csv, all the previous columns are considered as features. Process your csv file to this form before invoking the loadData method.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="Dataset.setData">
-<code class="descname">setData</code><span class="sig-paren">(</span><em>X, y, xlabel='x', ylabel=&quot;y&quot;, legend=[&quot;y=1&quot;, &quot;y=0&quot;], title=&quot;Graph&quot;</em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.setData" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method set the properties using the X and y values given to the method. The rest of the properties are claculated. Also can recieve named arguments to use when the data is ploted</p>
+<code class="sig-name descname">setData</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">xlabel</span><span class="o">=</span><span class="default_value">'x'</span></em>, <em class="sig-param"><span class="n">ylabel</span><span class="o">=</span><span class="default_value">'y'</span></em>, <em class="sig-param"><span class="n">legend</span><span class="o">=</span><span class="default_value">['y=1', 'y=0']</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">'Graph'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.setData" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method sets the properties using the X and y values given to the method. The rest of the properties are calculated. Also can receive named arguments to use when the data is plotted.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="Dataset.initialize">
-<code class="descname">initialize</code><span class="sig-paren">(</span><em>X, y, xlabel='x', ylabel=&quot;y&quot;, legend=[&quot;y=1&quot;, &quot;y=0&quot;], title=&quot;Graph&quot;</em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.initialize" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method is called to initialize the Dataset using the data, this method is the one to be overwirtten in case you need to subclass the DataSet</p>
+<code class="sig-name descname">initialize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">xlabel</span><span class="o">=</span><span class="default_value">'x'</span></em>, <em class="sig-param"><span class="n">ylabel</span><span class="o">=</span><span class="default_value">'y'</span></em>, <em class="sig-param"><span class="n">legend</span><span class="o">=</span><span class="default_value">['y=1', 'y=0']</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">'Graph'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.initialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called to initialize the dataset using the data, this method is the one to be overwritten in case you need to subclass the DataSet.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="Dataset.plotData">
-<code class="descname">plotData</code><span class="sig-paren">(</span><em>file=None</em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.plotData" title="Permalink to this definition">¶</a></dt>
-<dd><p>This metod plots the different classes in the DataSet using a bidimensional feature array and the classes defined in the labels. It only takes account of the 2 first features of the examples and the class. 3d plotting is not yet available but it would be a really cool feature to add =). If a name of file is passed it saves the graph to a png image. The markers style of the class are randomly selected, for a color and marker fixed array.</p>
+<code class="sig-name descname">plotData</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.plotData" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method plots the different classes in the DataSet using a bidimensional feature array and the classes defined in the labels. It only takes account of the 2 first features of the examples and the class. 3d plotting is not yet available, but it would be a really cool feature to add =). If the name of the file is passed, it saves the graph to a png image. The markers style of the class is randomly selected for a color and marker fixed array.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="Dataset.getRandomIdentifier">
-<code class="descname">getRandomIdentifier</code><span class="sig-paren">(</span><em>colors</em>, <em>markers</em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.getRandomIdentifier" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">getRandomIdentifier</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">colors</span></em>, <em class="sig-param"><span class="n">markers</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.getRandomIdentifier" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method picks randomly two elements of the color and marker lists passed as parameters and return a tuple with the color and marker</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="Dataset.plotDataRegression">
-<code class="descname">plotDataRegression</code><span class="sig-paren">(</span><em>file=None</em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.plotDataRegression" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method shows the regression plot for the data. If the file parameters is passed it saves a png image with the result.</p>
+<code class="sig-name descname">plotDataRegression</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.plotDataRegression" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method shows the regression plot for the data. If the file parameters are passed, it saves a png image with the result.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="Dataset.getPlotRegression">
-<code class="descname">getPlotRegression</code><span class="sig-paren">(</span><em>randomize_marker = False</em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.getPlotRegression" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method creates the graph and axes objects of the pyplot.subplots() method. It uses the first feature of the example as X value and the y feature of the example as y value, so it plots a regression style data. If the randomize_marker parameter is True then a random marker is used to plot the data if not red crosses are used by default.</p>
+<code class="sig-name descname">getPlotRegression</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">randomize_marker</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.getPlotRegression" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method creates the graph and axes objects of the pyplot.subplots() method. It uses the first feature of the example as X value and the y feature of the example as y value, so it plots a regression style data. If the randomize_marker parameter is True, then a random marker is used to plot the data if not red crosses are used by default.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
+<dt id="Dataset.normalizeFeatures">
+<code class="sig-name descname">normalizeFeatures</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.normalizeFeatures" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method performs a simple normalization of the features by columns, using a normalization formula of the form: (x - mu) / sigma, where x is the value, mu is the mean value of the column, and sigma is the standard deviation of the column data. It sets the X values to it’s normalized form. It returns a copy of the normalized values, and 2 arrays mu and sigma, of size n including the means and standard deviations of the columns. Also sets the mu and sigma values of the class to the obtained values.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="Dataset.normalizeExample">
+<code class="sig-name descname">normalizeExample</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">example</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.normalizeExample" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method performs an (x - mu) / sigma normalization using the means and standard deviations data obtained by the normalized features method. If the data have been not normalized, return the example as it was received.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="Dataset.isNormalized">
+<code class="sig-name descname">isNormalized</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.isNormalized" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method verifies if the dataset has been normalized. The method does this checking if the mu and sigma arrays are not None. This means you can perform a “manual normalization,” setting the values of the mu and sigma values manually. Be careful to set it to correct dimension values; otherwise, you will obtain an error when you try to normalize the example using the normalizeExample method.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="Dataset.split">
-<code class="descname">split</code><span class="sig-paren">(</span><em>train=0.8</em>, <em>validation=0.2</em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.split" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return three datasets including the train, validation and test using the defined percentages. The train dataset size is set to the value passed as parameter, the test dataset is set to 1 - the size of train dataset and the validation set is set to the validation * train percentage of the dataset. If the validation is set to 0 it return only the train and validation datasets</p>
+<code class="sig-name descname">split</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">train</span><span class="o">=</span><span class="default_value">0.8</span></em>, <em class="sig-param"><span class="n">validation</span><span class="o">=</span><span class="default_value">0.2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.split" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return three datasets, including the train, validation, and test using the defined percentages. The train dataset size is set to the value passed as a parameter, the test dataset is set to 1 - the size of the train dataset and the validation set is set to the validation * train percentage of the dataset. If the validation is set to 0, it returns only the train and validation datasets.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="Dataset.save">
-<code class="descname">save</code><span class="sig-paren">(</span><em>filename=None</em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.save" title="Permalink to this definition">¶</a></dt>
-<dd><p>Saves a pickle file with the currend Dataset object. If the file name is passed as parameter the file is saved with that name if not it uses the model_currenttime as file to save it</p>
+<code class="sig-name descname">save</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves a pickle file with the current Dataset object. If the file name is passed as a parameter, the file is saved with that name if not it uses the model_currenttime as a file to save it.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="Dataset.sample">
-<code class="descname">sample</code><span class="sig-paren">(</span><em>percentage</em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.sample" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a Dataset using the percentage of the original dataset passed as parameter randomly chosen. It includes the y labels and classes</p>
+<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">percentage</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a Dataset using the percentage of the original dataset passed as parameter randomly chosen. It includes the y labels and classes.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="Dataset.getShape">
-<code class="descname">getShape</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.getShape" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the shape of the Dataset in a tuple of the form X.shape, y.shape</p>
+<code class="sig-name descname">getShape</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.getShape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the shape of the dataset in a tuple of form X.shape, y.shape.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="Dataset.getBiasedX">
-<code class="descname">getBiasedX</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.getBiasedX" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the X parameters adding a 1 column as the first column. It comes handy when using neural networks to classify the data</p>
+<code class="sig-name descname">getBiasedX</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.getBiasedX" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the X parameters adding a 1 column as the first column. It comes handy when using neural networks to classify the data.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="Dataset.clone">
-<code class="descname">clone</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.clone" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a new Dataset object with the same plot parameters as the current one but using the X and y data passed as parameters</p>
+<code class="sig-name descname">clone</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">y</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Dataset.clone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new Dataset object with the same plot parameters as the current one but using the X and y data passed as parameters.</p>
 </dd></dl>
 
 <p>Examples:</p>
-<p>This example depicts how to loaf the dataset, make the split in train, validation and test datasets, and sample a 30 percent of the data to create a minor dataset:</p>
+<p>This example depicts how to loaf the dataset, do the split in train, validation and test datasets, and sample a 30 percent of the data to create a minor dataset:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sutil.base.Dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
 
 <span class="n">datafile</span> <span class="o">=</span> <span class="s1">&#39;./sutil/datasets/ex2data1.txt&#39;</span>
@@ -258,131 +278,130 @@
 <span class="k">print</span><span class="p">(</span><span class="n">test</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This example show how to normalize the feature and plot the Data using a random generated marker:</p>
+<p>This example shows how to normalize the feature and plot the data using a randomly generated marker:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sutil.base.Dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
 
- <span class="n">datafile</span> <span class="o">=</span> <span class="s1">&#39;./sutil/datasets/ex1data1.txt&#39;</span>
- <span class="n">d</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">fromDataFile</span><span class="p">(</span><span class="n">datafile</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">)</span>
- <span class="k">print</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
- <span class="k">print</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
- <span class="k">print</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">normalizeFeatures</span><span class="p">())</span>
- <span class="k">print</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">getBiasedX</span><span class="p">())</span>
- <span class="n">d</span><span class="o">.</span><span class="n">plotDataRegression</span><span class="p">(</span><span class="s1">&#39;example&#39;</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+<span class="n">datafile</span> <span class="o">=</span> <span class="s1">&#39;./sutil/datasets/ex1data1.txt&#39;</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">fromDataFile</span><span class="p">(</span><span class="n">datafile</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">normalizeFeatures</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">getBiasedX</span><span class="p">())</span>
+<span class="n">d</span><span class="o">.</span><span class="n">plotDataRegression</span><span class="p">(</span><span class="s1">&#39;example&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This example show how to normalize the feature and plot the Data using a random generated marker</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="Experiment">
-<em class="property">class </em><code class="descname">Experiment</code><a class="headerlink" href="#Experiment" title="Permalink to this definition">¶</a></dt>
-<dd><p>The <em>Experiment</em> class let’s you define experiments using a single dataset and test how different models fit and evaluate using the same datset</p>
-<dl class="attribute">
+<em class="property">class </em><code class="sig-name descname">Experiment</code><a class="headerlink" href="#Experiment" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <em>Experiment</em> class lets you define experiments using a single dataset and test how different models fit and evaluate using the same dataset.</p>
+<dl class="py attribute">
 <dt id="Experiment.models">
-<code class="descname">models</code><a class="headerlink" href="#Experiment.models" title="Permalink to this definition">¶</a></dt>
-<dd><p>Dictionary of the models included in the Experiment, the key is the name of the model and the value the model itself.</p>
+<code class="sig-name descname">models</code><a class="headerlink" href="#Experiment.models" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dictionary of the models included in the Experiment, the key is the name of the model and the value of the model itself.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="Experiment.models_index">
-<code class="descname">models_index</code><a class="headerlink" href="#Experiment.models_index" title="Permalink to this definition">¶</a></dt>
-<dd><p>Dictionary of the index of each model by it’s name is used to translate the model names to positions.</p>
+<code class="sig-name descname">models_index</code><a class="headerlink" href="#Experiment.models_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dictionary of the index of each model by its name is used to translate the model names to positions.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="Experiment.train_p">
-<code class="descname">train_p</code><a class="headerlink" href="#Experiment.train_p" title="Permalink to this definition">¶</a></dt>
-<dd><p>Value of the percentage og the train partition of the dataset</p>
+<code class="sig-name descname">train_p</code><a class="headerlink" href="#Experiment.train_p" title="Permalink to this definition">¶</a></dt>
+<dd><p>Value of the percentage oF the train partition of the dataset.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="Experiment.validation_p">
-<code class="descname">validation_p</code><a class="headerlink" href="#Experiment.validation_p" title="Permalink to this definition">¶</a></dt>
-<dd><p>Value of the percentage of the validation data of the dataset</p>
+<code class="sig-name descname">validation_p</code><a class="headerlink" href="#Experiment.validation_p" title="Permalink to this definition">¶</a></dt>
+<dd><p>Value of the percentage of the validation data of the dataset.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="Experiment.train">
-<code class="descname">train</code><a class="headerlink" href="#Experiment.train" title="Permalink to this definition">¶</a></dt>
-<dd><p>Dataset of the train data</p>
+<code class="sig-name descname">train</code><a class="headerlink" href="#Experiment.train" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dataset of the train data.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="Experiment.validation">
-<code class="descname">validation</code><a class="headerlink" href="#Experiment.validation" title="Permalink to this definition">¶</a></dt>
-<dd><p>Dataset of the validation data</p>
+<code class="sig-name descname">validation</code><a class="headerlink" href="#Experiment.validation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dataset of the validation data.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="Experiment.test">
-<code class="descname">test</code><a class="headerlink" href="#Experiment.test" title="Permalink to this definition">¶</a></dt>
-<dd><p>Dataset of the test data</p>
+<code class="sig-name descname">test</code><a class="headerlink" href="#Experiment.test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dataset of the test data.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="Experiment.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>data</em>, <em>models = None</em>, <em>train = 0.8</em>, <em>validation=0.2</em><span class="sig-paren">)</span><a class="headerlink" href="#Experiment.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Instantiates a Experiment object using the passed data, if no Models are passed creates a new dictionary. It performs the data split in order to apply the experiment</p>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">models</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">train</span><span class="o">=</span><span class="default_value">0.8</span></em>, <em class="sig-param"><span class="n">validation</span><span class="o">=</span><span class="default_value">0.2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Experiment.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instantiates an Experiment object using the passed data. If no Models are passed, creates a new dictionary. It performs the data split to apply the experiment.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="Experiment.splitData">
-<code class="descname">splitData</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#Experiment.splitData" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method split the data passed as parameter and sets the train, validation and test attributes of the experiment. Acts as a wrapper of the split method of the Dataset</p>
+<code class="sig-name descname">splitData</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Experiment.splitData" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method split the data passed as a parameter and sets the train, validation, and test attributes of the experiment. Acts as a wrapper of the split method of the dataset.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="Experiment.addModel">
-<code class="descname">addModel</code><span class="sig-paren">(</span><em>model</em>, <em>modelClass</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#Experiment.addModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method adds a model to the model list yo be evaluated</p>
+<code class="sig-name descname">addModel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">modelClass</span></em>, <em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Experiment.addModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method adds a model to the model list yo be evaluated.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="Experiment.run">
-<code class="descname">run</code><span class="sig-paren">(</span><em>plot=False</em><span class="sig-paren">)</span><a class="headerlink" href="#Experiment.run" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method runs the experiment training the models. If the plot attribute is set to True it shows the ModelRoc of the models.</p>
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">plot</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Experiment.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method runs the experiment training the models. If the plot attribute is set to True, it shows the ModelRoc of the models.</p>
 </dd></dl>
 
 <p>Example:</p>
-<p>This example perform aexperiment comparing sutil RegularizedLogisticRegression, Sklearn LogisticRegression and sutil NeuralNetworkClassifer. The code load the dataset, setups the experiment, pre train the neural network model and run the experiment showint the Roc curves for the included models</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">sutil.base.Dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
-<span class="kn">from</span> <span class="nn">sutil.base.Experiment</span> <span class="kn">import</span> <span class="n">Experiment</span>
-<span class="kn">from</span> <span class="nn">sutil.models.SklearnModel</span> <span class="kn">import</span> <span class="n">SklearnModel</span>
-<span class="kn">from</span> <span class="nn">sutil.models.RegularizedLogisticRegression</span> <span class="kn">import</span> <span class="n">RegularizedLogisticRegression</span>
-<span class="kn">from</span> <span class="nn">sutil.neuralnet.NeuralNetworkClassifier</span> <span class="kn">import</span> <span class="n">NeuralNetworkClassifier</span>
+<p>This example performs an experiment comparing sutil RegularizedLogisticRegression, Sklearn LogisticRegression, and sutil NeuralNetworkClassifer. The code loads the dataset, setups the experiment, pre-train the neural network model, and run the experiment showing the Roc curves for the included models.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span># -*- coding: utf-8 -*-
+import numpy as np
+from sutil.base.Dataset import Dataset
+from sklearn.linear_model import LogisticRegression
+from sutil.base.Experiment import Experiment
+from sutil.models.SklearnModel import SklearnModel
+from sutil.models.RegularizedLogisticRegression import RegularizedLogisticRegression
+from sutil.neuralnet.NeuralNetworkClassifier import NeuralNetworkClassifier
 
-<span class="c1"># Load the data</span>
-<span class="n">datafile</span> <span class="o">=</span> <span class="s1">&#39;./sutil/datasets/ex2data1.txt&#39;</span>
-<span class="n">d</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">fromDataFile</span><span class="p">(</span><span class="n">datafile</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">)</span>
-<span class="n">d</span><span class="o">.</span><span class="n">normalizeFeatures</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Size of the dataset... &quot;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
-<span class="n">sample</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Size of the sample... &quot;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">sample</span><span class="p">)</span>
+# Load the data
+datafile = &#39;./sutil/datasets/ex2data1.txt&#39;
+d = Dataset.fromDataFile(datafile, &#39;,&#39;)
+d.normalizeFeatures()
+print(&quot;Size of the dataset... &quot;)
+print(d.size)
+sample = d.sample(0.3)
+print(&quot;Size of the sample... &quot;)
+print(d.sample)
 
 
-<span class="c1"># Create the models</span>
-<span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">d</span><span class="o">.</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-<span class="n">lr</span> <span class="o">=</span> <span class="n">RegularizedLogisticRegression</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="n">m</span> <span class="o">=</span> <span class="n">SklearnModel</span><span class="p">(</span><span class="s1">&#39;Sklearn Logistic&#39;</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">())</span>
-<span class="c1"># Look for the best parameters using a sample</span>
-<span class="n">nn</span> <span class="o">=</span> <span class="n">NeuralNetworkClassifier</span><span class="p">((</span><span class="n">d</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">labels</span><span class="p">)))</span>
-<span class="n">nn</span><span class="o">.</span><span class="n">searchParameters</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+# Create the models
+theta = np.zeros((d.n + 1, 1))
+lr = RegularizedLogisticRegression(theta, 0.03, 0)
+m = SklearnModel(&#39;Sklearn Logistic&#39;, LogisticRegression())
+# Look for the best parameters using a sample
+nn = NeuralNetworkClassifier((d.n, len(d.labels)))
+nn.searchParameters(sample)
 
-<span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Press enter to continue...&quot;</span><span class="p">)</span>
+input(“Press enter to continue...”)
 
-<span class="c1"># Create the experiment</span>
-<span class="n">experiment</span> <span class="o">=</span> <span class="n">Experiment</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
-<span class="n">experiment</span><span class="o">.</span><span class="n">addModel</span><span class="p">(</span><span class="n">lr</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Sutil Logistic Regression&#39;</span><span class="p">)</span>
-<span class="n">experiment</span><span class="o">.</span><span class="n">addModel</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Sklearn Logistic Regression&#39;</span><span class="p">)</span>
-<span class="n">experiment</span><span class="o">.</span><span class="n">addModel</span><span class="p">(</span><span class="n">nn</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Sutil Neural Network&#39;</span><span class="p">)</span>
+# Create the experiment
+experiment = Experiment(d, None, 0.8, 0.2)
+experiment.addModel(lr, name = &#39;Sutil Logistic Regression&#39;)
+experiment.addModel(m, name = &#39;Sklearn Logistic Regression&#39;)
+experiment.addModel(nn, name = &#39;Sutil Neural Network&#39;)
 
-<span class="c1"># Run the experiment</span>
-<span class="n">experiment</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plot</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+# Run the experiment
+experiment.run(plot = True)
 </pre></div>
 </div>
 </dd></dl>
@@ -390,6 +409,7 @@
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -415,15 +435,15 @@
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -440,12 +460,13 @@
         <li class="right" >
           <a href="../usage/quickstart.html" title="Quick Start"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">sutil 0.0.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">sutil 0.0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Base package</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, SoldAI.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
     </div>
   </body>
 </html>

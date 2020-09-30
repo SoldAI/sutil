@@ -1,132 +1,142 @@
 Models package
 ==============
-Models package contain a set of models classes and utilities that you can use to fit your data. You can subclass the Model class and also you can embed dklearn models using the Sklearn model class.
+Models package contains a set of models classes and utilities that you can use to fit your data. You can subclass the Model class, and also you can embed sklearn models using the Sklearn model class.
 
 Classes
 ===============
 .. py:class:: Model
 
-        The *Model* is a abstract class let's you define a trainable model using the Dataset provbded by sutil. The trainModel and predict methods should be implemented by child classes
+        The *Model* is an abstract class that lets you define a trainable model using the Dataset provided by sutil. The trainModel and predict methods should be implemented by child classes.
         
         .. py:attribute:: name
 
-        	String used to identify the Model
+        	String used to identify the model.
 
         .. py:attribute:: accuracy
 
-        	Float representing the accuracy of the model
+        	Float representing the accuracy of the model.
 
         .. py::attribute:: recall
 
-        	Float representing the recall of the model
+        	Float representing the recall of the model.
 
         .. py:attribute::precission
 
-        	Float representing the precission of the model
+        	Float representing the precision of the model.
 
         .. py:attribute::f1
 
-        	Float representign the f1 score of the model
+        	Float representing the f1 score of the model.
 
         .. py:attribute::roc
 
-        	ModelROC object representing the roc curve of the mdodel
+        	ModelROC object representing the roc curve of the model.
         
         .. py:method:: __init__(name = 'Model')
 
-        	Instantiates a Model object setting it's name to the given parameter
+        	Instantiates a Model object setting its name to the given parameter.
         
         .. py:method:: fit(X = None, y = None)
 
-        	This method performs the training of the model using the provided data. This method is provided to preserve compatibility with sklearn style models. Invokes internally to the trainModel method of the class (must be implemented for child classes) to perform the training using a Dataset object
+        	This method performs the training of the model using the provided data. This method is provided to preserve compatibility with sklearn style models. Invokes internally to the trainModel method of the class (must be implemented for child classes) to perform the training using a Dataset object.
 
         .. py:method:: predict(X)
 
-        	This method performs a prediction on a set of examples given by X. Return an array with the mdoel predictions
+        	This method performs a prediction on a set of examples given by X. Return an array with the model predictions.
 
         .. py:method:: score(X, y, bias = True)
 
-        	This method make the predictions of the examples passed in the X array and compares it against results in y array- If the bias paramter is set to True add a bias term to the examples given in X. It computes and stores accuracy, recall, precission, f1 and roc curve parameters
+        	This method makes the predictions of the examples passed in the X array and compares it against results in y array- If the bias parameter is set to True, add a bias term to the examples given in X. It computes and stores accuracy, recall, precision, f1 and roc curve parameters
         
         Example:
+	This example shows the use of the Model class.
         
         .. code-block:: python
         
-            from sutil.base.Coin import Coin
-            c = Coin(0.3)
-            positives = 0
-            for i in range(100):
-                if c.toss():
-                    positives += 1
-            print(positives)
-            
-        This example should print a number close to 30
+
+            # -*- coding: utf-8 -*-
+	    import numpy as np
+	    from sutil.base.Dataset import Dataset
+	    from sutil.models.RegularizedLogisticRegression import RegularizedLogisticRegression
+
+	    datafile = './sutil/datasets/ex2data1.txt'
+	    d = Dataset.fromDataFile(datafile, ',')
+
+	    theta = np.zeros((d.n + 1, 1))
+	    alpha = 0.03
+	    l = 0
+	    lr = RegularizedLogisticRegression(theta, alpha, l, train=1)
+ 	    lr.trainModel(d)
+	    lr.score(d.X, d.y)
+	    lr.roc.plot()
+	    lr.roc.zoom((0, 0.4),(0.5, 1.0))
+       
 
 .. py:class:: RegularizedLinearRegression
 
-        The *RegularizedLinearRegression* is a Model class which implements a RegularizedLinearRegression implemented scypy and numpy. This class is an exampole of how can you add your own models to sutil package.
+        The *RegularizedLinearRegression* is a Model class that implements a RegularizedLinearRegression implemented SciPy and NumPy. This class is an example of how you can add your own models to sutil package.
         
         .. py:attribute:: theta
 
-        	Parameter matrix of the Regression
+        	Parameter matrix of the regression.
 
         .. py:attribute:: alpha 
 
-        	Gain parameter of the regression
+        	Gain parameter of the regression.
 
         .. py::attribute:: l
 
-        	Regularization term of the regression
+        	Regularization term of the regression.
 
         .. py:method:: __init__(theta, alpha, l)
 
-        	Instantiates a new RegularizedLinearRegression object setting it's parameter matrix, gain and regularization parameters
+        	Instantiates a new RegularizedLinearRegression object setting its parameter matrix, gain and regularization parameters.
         
         .. py:method:: fromDataset(data, alpha=0.1, l=0.1)
 
-        	Class method which return a new RegularizedLinearRegression initialized using the provided Dataset
+        	A class method which returns a new RegularizedLinearRegression initialized using the provided Dataset.
 
         .. py:method:: fromDataFile(datafile, delimeter, alpha=0.1, l=0.1)
 
-        	Class method which return a new RegularizedLinearRegression initialized loading the data provided in the file which path is provided. The delimeter parameter specifies thedelimeter string to split the datafile
+        	A class method that returns a new RegularizedLinearRegression initialized loading the data provided in the file which path is provided. The delimiter parameter specifies the delimiter string to split the data file.
 
         .. py:method:: getCostAndGradient(data, theta)
 
-        	This method computes the cost and gradient of the function given the theta parameters and the Dataset
+        	This method computes the cost and gradient of the function, given the theta parameters and the Dataset.
 
         .. py:method:: getCost(theta, x, y, l=0)
 
-        	This static function evaluate the cost of the model (loss function value) of the prediction of the given examples parametrized by theta in relation to the difference against y outputs provided. It also applies the reguarization term to the data. This method is static to be able to be used by numpy optimizers.
+        	This static function evaluates the cost of the model (loss function value) of the prediction of the given examples parametrized by theta in relation to the difference against y outputs provided. It also applies the regularization term to the data. This method is static to be able to be used by NumPy optimizers.
 
         .. py:method:: getGradient(theta, x, y, l=0)
 
-        	This method calculates the gradient of the cost function and returns it's values. Is astatic method which can be optimized by numpy
+        	This method calculates the gradient of the cost function and returns its values. Is a static method that can be optimized by NumPy.
 
         .. py:method:: gradienDescent(data, iterations)
 
-        	This method execute the gradient Descent algorithm using the data and iterations provided
+        	This method executes the gradient Descent algorithm using the data and iterations provided.
 
         .. py:method:: normalEquation(data)
 
-        	This method tries to solve the optimization problem using the normal equation form, calculating the theta parameters using the pseudo inverse matrix of X * X' where X' is the transpose of X multiplied by y column
+        	This method tries to solve the optimization problem using the normal equation form, calculating the theta parameters using the pseudo-inverse matrix of X * X' where X' is the transpose of X multiplied by y column.
 
-        .. py:method::optimizedGradientDescent(data)
+        .. py:method:: optimizedGradientDescent(data)
 
-        	This method executes the gradient descent using the static metods of getGradient and getCost as parameters of the numpy optimizers minimize function
+        	This method executes the gradient descent using the static methods of getGradient, and getCost as parameters of the NumPy optimizers minimize function.
 
         .. py:method:: evaluateHypothesis(xi, theta)
 
-        	Performs the matrix multiplication of xi and theta returning the predicted value
+        	Performs the matrix multiplication of xi and theta returning the predicted value.
 
         .. py:method:: makePrediction(x)
 
-        	This method returns the prediction of the exampple x parametrized by the theta obtained after the optimization and gradientDescent execution
+        	This method returns the prediction of the example x parametrized by the theta obtained after the optimization and gradientDescent execution.
 
         .. py:method:: predict(x)
 
-        	This method returns the prediction of the exampple x parametrized by the theta obtained after the optimization and gradientDescent execution, synonym of makePrediction
+        	This method returns the prediction of the example x parametrized by the theta obtained after the optimization and gradientDescent execution, synonym of makePrediction.
 
-        .. py:method::trainModel(data, iterations = 100)
+        .. py:method:: trainModel(data, iterations = 100)
 
         	This method trains the model using the data provided and optimizing using gradientDescent algorithm
         
@@ -245,79 +255,79 @@ Classes
 
 .. py:class:: RegularizedLogisticRegression
 
-        The *RegularizedLogisticRegression* is a Model class which implements a RegularizedLogisticRegression using scypy and numpy. This class is an exampole of how can you add your own models to sutil package.
+        The *RegularizedLogisticRegression* is a Model class that implements a RegularizedLogisticRegression using SciPy and NumPy. This class is an example of how you can add your own models to sutil package.
         
         .. py:attribute:: theta
 
-        	Parameter matrix of the Regression
+        	Parameter matrix of the regression.
 
         .. py:attribute:: alpha 
 
-        	Gain parameter of the regression
+        	Gain parameter of the regression.
 
         .. py::attribute:: l
 
-        	Regularization term of the regression
+        	Regularization term of the regression.
 
         .. py:attribute:: name
 
-        	Name of the model
+        	Name of the Model.
 
         .. py:method:: __init__(theta, alpha, l)
 
-        	Instantiates a new RegularizedLinearRegression object setting it's parameter matrix, gain and regularization parameters
+        	Instantiates a new RegularizedLinearRegression object setting its parameter matrix, gain, and regularization parameters.
         
         .. py:method:: fromDataset(data, alpha=0.1, l=0.1)
 
-        	Class method which return a new RegularizedLogisticRegression initialized using the provided Dataset
+        	A class method that returns a new RegularizedLogisticRegression initialized using the provided Dataset.
 
         .. py:method:: fromDataFile(datafile, delimeter, alpha=0.1, l=0.1)
 
-        	Class method which return a new RegularizedLogisticRegression initialized loading the data provided in the file which path is provided. The delimeter parameter specifies thedelimeter string to split the datafile
+        	A class method that returns a new RegularizedLogisticRegression initialized loading the data provided in the file which path is provided. The delimiter parameter specifies the delimiter string to split the data file.
 
         .. py:method:: getCostAndGradient(data, theta)
 
-        	This method computes the cost and gradient of the function given the theta parameters and the Dataset
+        	This method computes the cost and gradient of the function, given the theta parameters and the Dataset.
 
         .. py:method:: getCost(theta, x, y, l=0)
 
-        	This static function evaluate the cost of the model (loss function value) of the prediction of the given examples parametrized by theta in relation to the difference against y outputs provided. It also applies the reguarization term to the data. This method is static to be able to be used by numpy optimizers.
+        	This static function evaluates the cost of the model (loss function value) of the prediction of the given examples parametrized by theta in relation to the difference against y outputs provided. It also applies the regularization term to the data. This method is static to be able to be used by NumPy optimizers.
 
         .. py:method:: getGradient(theta, x, y, l=0)
 
-        	This method calculates the gradient of the cost function and returns it's values. Is astatic method which can be optimized by numpy
+        	This method calculates the gradient of the cost function and returns its values. Is a static method which can be optimized by NumPy.
 
         .. py:method:: gradienDescent(data, iterations)
 
-        	This method execute the gradient Descent algorithm using the data and iterations provided
+        	This method executes the gradient Descent algorithm using the data and iterations provided.
 
         .. py:method:: sigmoid(z)
 
-        	This method calculates the sigmoidal function to the z parameter
+        	This method calculates the sigmoidal function to the z parameter.
 
         .. py:method:: optimizedGradientDescent(data)
 
-        	This method executes the gradient descent using the static metods of getGradient and getCost as parameters of the numpy optimizers minimize function
+        	This method executes the gradient descent using the static methods of getGradient, and getCost as parameters of the NumPy optimizers minimize function
 
         .. py:method:: computePredictions(data, theta)
 
-        	This method compute the prediction of the given data parametrized by theta executing the sigmoid function to the matrix multipplication of the biased data by the theta parameters. Is used to compute the predictions over a Dataset
+        	This method computes the prediction of the given data parameterized by theta executing the sigmoid function to the matrix multiplication of the biased data by the theta parameters. It is used to compute the predictions over a Dataset.
 
         .. py:method:: evaluateHypothesis(xi, theta)
 
-        	Performs the sigmoid function evaluation over the matrix multiplication of xi and theta returning the predicted value, is used to compute a set of examples instead of a Dataset
+        	Performs the sigmoid function evaluation over the matrix multiplication of xi, and theta returning the predicted value is used to compute a set of examples instead of a Dataset.
 
         .. py:method:: makePrediction(x)
 
-        	This method returns the prediction of the exampple x parametrized by the theta obtained after the optimization and gradientDescent execution
+        	This method returns the prediction of the example x parametrized by the theta obtained after the optimization and gradientDescent execution.
 
         .. py:method:: predict(x)
 
-        	This method returns the prediction of the exampple x parametrized by the theta obtained after the optimization and gradientDescent execution, synonym of makePrediction
+        	This method returns the prediction of the example x parametrized by the theta obtained after the optimization and gradientDescent execution, a synonym of makePrediction.
 
         .. py:method:: trainModel(data, epochs = 100)
 
-        	This method trains the model using the data provided and optimizing using gradientDescent algorithm
+        	This method trains the model using the data provided and optimizing using radientDescent algorithm.
         
         Example:
         
@@ -449,27 +459,27 @@ Classes
 
 .. py:class:: SklearnModel
 
-        The *SklearnModel* is a class that let's you define a wrapper for Sklearn models in order to work with a Dataset model
+        The *SklearnModel* is a class that lets you define a wrapper for Sklearn models in order to work with a Dataset model
         
         .. py:attribute:: name
 
-        	String used to identify the Model
+        	String used to identify the model.
 
         .. py:attribute:: external
 
-        	Object representing the sklearn model
+        	An object representing the sklearn model.
 
         .. py:method:: __init__(name, ecternal)
 
-        	Instantiates a SklearnModel object setting it's name to the given parameter and the external to the provided sklearn model.
+        	Instantiates a SklearnModel object setting its name to the given parameter and the external to the provided sklearn model.
         
         .. py:method:: trainModel(data)
 
-        	This method invokes the fit method of the sklearn model using the X and y attributes of the given Dataset object
+        	This method invokes the fit method of the sklearn model using the X and y attributes of the given Dataset object.
 
         .. py:method:: predict(X)
 
-        	This method performs a prediction on a set of examples given by X. Return an array with the model predictions. Invokes directly to the external object predict method
+        	This method performs a prediction on a set of examples given by X. Return an array with the model predictions. Invokes directly to the external object predict method.
         
         Example:
         
@@ -522,4 +532,4 @@ Classes
             input("Press enter to continue...")
             print(timeit.timeit(sk, number=100))
 
-        This example show how to use the Sklearn class
+        This example shows how to use the Sklearn class.

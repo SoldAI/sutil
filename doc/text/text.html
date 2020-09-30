@@ -1,22 +1,23 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Text Package &#8212; sutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="Neuralnet" href="../neuralnet/neuralnet.html" /> 
+    <link rel="prev" title="Metrics Package" href="../metrics/metrics.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -25,9 +26,10 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../neuralnet/neuralnet.html" title="Neuralnet"
+          <a href="../metrics/metrics.html" title="Metrics Package"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">sutil 0.0.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">sutil 0.0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Text Package</a></li> 
       </ul>
     </div>  
 
@@ -38,42 +40,43 @@
             
   <div class="section" id="text-package">
 <h1>Text Package<a class="headerlink" href="#text-package" title="Permalink to this headline">¶</a></h1>
-<p>Sutil text package contains a comprehensive set of utilites to perpform Natural Language Processing tasks. It define classes for preprocessing and semantic analysis</p>
+<p>Sutil text package contains a comprehensive set of utilities to perform Natural Language Processing tasks. It defines classes for preprocessing and semantic analysis.</p>
 </div>
-<div class="section" id="pre-processing">
-<h1>Pre processing<a class="headerlink" href="#pre-processing" title="Permalink to this headline">¶</a></h1>
-<p>Pre processing is the task of Natural Language Processing is the task which transform the text in order to make it predictable and analyzable for NLP systems to work with. Sutil pakage include classes that allows you to perform basic and custom pre processing to text and tokenization:</p>
+<div class="section" id="preprocessing">
+<h1>Preprocessing<a class="headerlink" href="#preprocessing" title="Permalink to this headline">¶</a></h1>
+<p>Preprocessing is the task of Natural Language Processing is the task which transforms the text to make it predictable and analyzable for NLP systems to work with. Sutil package includes classes that allow you to perform basic and custom pre-processing to text and tokenization:</p>
 </div>
 <div class="section" id="classes">
 <h1>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
+<dl class="py class">
 <dt id="PreProcessor">
-<em class="property">class </em><code class="descname">PreProcessor</code><a class="headerlink" href="#PreProcessor" title="Permalink to this definition">¶</a></dt>
-<dd><p>The <em>PreProcessor</em> class let’s you perform a set of standard text pre processing tasks including:
+<em class="property">class </em><code class="sig-name descname">PreProcessor</code><a class="headerlink" href="#PreProcessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <em>PreProcessor</em> class lets you perform a set of standard text pre-processing tasks including:
 * Case normalization
 * Denoising
 * Stop words removal
 * Basic text normalization
 * Lemmatization
-* Stemming</p>
-<dl class="attribute">
+* Stemming
+* Num2Words</p>
+<dl class="py attribute">
 <dt id="PreProcessor.actions">
-<code class="descname">actions</code><a class="headerlink" href="#PreProcessor.actions" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">actions</code><a class="headerlink" href="#PreProcessor.actions" title="Permalink to this definition">¶</a></dt>
+<dd><p>It’s a list value that holds the order of the tasks of the pre-processing function to be performed by the PreProcessor.</p>
+</dd></dl>
 
-<p>It’s a list value which holds the order of the pre processing functions tasks to be performed by the PreProcessor.</p>
-<dl class="method">
+<dl class="py method">
 <dt id="PreProcessor.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>configuration</em><span class="sig-paren">)</span><a class="headerlink" href="#PreProcessor.__init__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">configuration</span></em><span class="sig-paren">)</span><a class="headerlink" href="#PreProcessor.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instantiates a PreProcessor object with a specific configuration.</p>
+</dd></dl>
 
-<p>Instantiates a PreProcessor object with a specific configuration</p>
-<dl class="method">
+<dl class="py method">
 <dt id="PreProcessor.preProcess">
-<code class="descname">preProcess</code><span class="sig-paren">(</span><em>string</em><span class="sig-paren">)</span><a class="headerlink" href="#PreProcessor.preProcess" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">preProcess</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">string</span></em><span class="sig-paren">)</span><a class="headerlink" href="#PreProcessor.preProcess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a string value after executing all the pre-processing configured tasks.</p>
+</dd></dl>
 
-<p>Return a string value after execute all the pre processing configured tasks.</p>
 <p>Example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sutil.base.Coin</span> <span class="kn">import</span> <span class="n">Coin</span>
 <span class="n">c</span> <span class="o">=</span> <span class="n">Coin</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
@@ -84,12 +87,13 @@
 <span class="k">print</span><span class="p">(</span><span class="n">positives</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This example should print a number close to 30</p>
+<p>This example should print a number close to 30.</p>
 </dd></dl>
 
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -98,13 +102,13 @@
   <h3><a href="../index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Text Package</a></li>
-<li><a class="reference internal" href="#pre-processing">Pre processing</a></li>
+<li><a class="reference internal" href="#preprocessing">Preprocessing</a></li>
 <li><a class="reference internal" href="#classes">Classes</a></li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../neuralnet/neuralnet.html"
-                        title="previous chapter">Neuralnet</a></p>
+  <p class="topless"><a href="../metrics/metrics.html"
+                        title="previous chapter">Metrics Package</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -113,15 +117,15 @@
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -133,14 +137,15 @@
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../neuralnet/neuralnet.html" title="Neuralnet"
+          <a href="../metrics/metrics.html" title="Metrics Package"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">sutil 0.0.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">sutil 0.0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Text Package</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, SoldAI.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
     </div>
   </body>
 </html>
