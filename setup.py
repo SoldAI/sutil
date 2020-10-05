@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="soldai-utils",
-    version="0.0.1",
+    version="0.0.2",
     author="Soldai Research",
     author_email="mcampos@soldai.com",
     description="Soldai utilities for machine learning and text processing",
