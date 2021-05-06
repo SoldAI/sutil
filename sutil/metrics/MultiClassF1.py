@@ -25,9 +25,9 @@ class MultiClassF1:
             tn = np.sum((self.predictions != c) & (self.values != c))
             fp = np.sum((self.predictions == c) & (self.values != c))
             fn = np.sum((self.predictions != c) & (self.values == c))
-            precision = tp/(tp + fp)
-            recall = tp/(tp + fn)
-            f1 = 2 * (precision*recall)/(precision+recall)
+            precision = tp/(tp + fp) if tp + fp > 0 else 0
+            recall = tp/(tp + fn) if tp + fn > 0 else 0
+            f1 = 2 * (precision*recall)/(precision+recall) if precision + recall > 0 else 0
             self.scores[c] = {'tp':tp, 'tn':tn, 'fp':fp, 'fn':fn, 'precision': precision, 'recall': recall, 'f1': f1}
         return self.scores
     
@@ -40,6 +40,11 @@ class MultiClassF1:
                 precision_total += self.scores[c]['precision']
                 recall_total += self.scores[c]['recall']
                 f1_total += self.scores[c]['f1']
+
+        if num_classes == 0:
+            return {'avg_precision': 0, 
+                'avg_recall': 0, 
+                'avg_f1': 0}
                 
         return {'avg_precision': precision_total/num_classes, 
                 'avg_recall': recall_total/num_classes, 
