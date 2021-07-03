@@ -16,10 +16,8 @@ class MultiClassF1:
         self.classes = classes if classes is not None else np.unique(values)
         self.scores = {}
         self.calculateF1()
-        
-    
+   
     def calculateF1(self):
-        
         for c in self.classes:
             tp = np.sum((self.predictions == c) & (self.values == c))
             tn = np.sum((self.predictions != c) & (self.values != c))
@@ -49,3 +47,44 @@ class MultiClassF1:
         return {'avg_precision': precision_total/num_classes, 
                 'avg_recall': recall_total/num_classes, 
                 'avg_f1': f1_total/num_classes}
+
+    def macro_average(self):
+        return self.average()
+
+    def micro_average(self):
+        tp, tn, fp, fn = 0, 0, 0, 0
+        num_classes = 0
+        for c in self.classes:
+            if c in self.scores:
+                num_classes += 1
+                tp += self.scores[c]['tp']
+                tn += self.scores[c]['tn']
+                fp += self.scores[c]['fp']
+                fn += self.scores[c]['fn']
+
+        if num_classes == 0:
+            return {'avg_precision': 0, 
+                'avg_recall': 0, 
+                'avg_f1': 0}
+
+        precision = tp / (tp + fp) if tp + fp > 0 else 0
+        recall = tp / (tp + fn) if tp + fn > 0 else 0
+        f1 = 2 * (precision * recall) / (precision + recall) if precision + recall > 0 else 0
+
+        return {'avg_precision': precision, 
+                'avg_recall': recall, 
+                'avg_f1': f1}
+
+    def report(self):
+        if not self.scores:
+            self.calculateF1()
+
+        print("{:>8} {:>8} {:>8} {:>8}".format('Class', 'Precision', 'Recall', 'F1'))
+
+        for c, m in self.scores:
+            print("{:n} {:2f} {:2f} {:2f}".format(c, m['precision'], m['recall'], m['f1']))
+            print("\n")
+            avg = self.macro_average()
+            print("{:n} {:2f} {:2f} {:2f}".format("Macro Avg", avg['avg_precision'], avg['avg_recall'], avg['avg_f1']))
+            avg = self.micro_average()
+            print("{:n} {:2f} {:2f} {:2f}".format("Micro Avg", avg['avg_precision'], avg['avg_recall'], avg['avg_f1']))
